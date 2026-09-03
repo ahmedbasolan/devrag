@@ -35,6 +35,7 @@ class EvalResult:
 
 
 SAMPLE_QUERIES = [
+    # ── Original 5 ──────────────────────────────────────────
     EvalQuery(
         query="How do I parse Python AST and extract functions?",
         expected_files=["src/parser.py"],
@@ -59,6 +60,90 @@ SAMPLE_QUERIES = [
         query="How are code chunks indexed into ChromaDB?",
         expected_files=["src/retriever.py"],
         expected_names=["_index_chroma", "index_chunks"],
+    ),
+    # ── Functional (specific functions/classes) ─────────────
+    EvalQuery(
+        query="How does user authentication work with JWT tokens?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["login", "register", "User"],
+    ),
+    EvalQuery(
+        query="How does the payment processing service handle transactions?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["PaymentService", "process_payment"],
+    ),
+    EvalQuery(
+        query="How does the Redis cache manager handle invalidation?",
+        expected_files=["mock_data/src/cache.py"],
+        expected_names=["CacheManager", "invalidate_user", "invalidate_product"],
+    ),
+    EvalQuery(
+        query="How are database migrations created and applied?",
+        expected_files=["mock_data/src/db_migration.py"],
+        expected_names=["MigrationManager", "create_migration", "migrate_up"],
+    ),
+    EvalQuery(
+        query="How does the rate limiting decorator prevent abuse?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["rate_limit", "rate_limit_store"],
+    ),
+    EvalQuery(
+        query="How are customer orders created from cart items?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["create_order", "Order", "OrderItem"],
+    ),
+    EvalQuery(
+        query="How does the product search endpoint filter results?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["search_products"],
+    ),
+    EvalQuery(
+        query="How does the notification service send emails?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["NotificationService", "send_order_confirmation"],
+    ),
+    EvalQuery(
+        query="How does the admin dashboard aggregate store statistics?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["admin_stats"],
+    ),
+    EvalQuery(
+        query="How does the cache warming pre-populate frequently accessed data?",
+        expected_files=["mock_data/src/cache.py"],
+        expected_names=["CacheWarmer", "warm_products"],
+    ),
+    # ── Cross-file / conceptual ─────────────────────────────
+    EvalQuery(
+        query="How does authentication flow across the entire application?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["User", "login", "jwt_required"],
+    ),
+    EvalQuery(
+        query="How does a product go from listing to being delivered to a customer?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["Product", "Order", "create_order", "update_order_status"],
+    ),
+    EvalQuery(
+        query="How does the caching layer interact with the database?",
+        expected_files=["mock_data/src/cache.py"],
+        expected_names=["CacheManager", "get_or_set"],
+    ),
+    # ── Design decisions ────────────────────────────────────
+    EvalQuery(
+        query="Why was Flask chosen over Django for this project?",
+        expected_files=["mock_data/docs/decisions.md"],
+        expected_names=["ADR-001"],
+    ),
+    EvalQuery(
+        query="What is the cache invalidation strategy and why was it chosen?",
+        expected_files=["mock_data/docs/decisions.md"],
+        expected_names=["ADR-004"],
+    ),
+    # ── Edge cases ──────────────────────────────────────────
+    EvalQuery(
+        query="What happens when a product is out of stock during checkout?",
+        expected_files=["mock_data/src/app.py"],
+        expected_names=["create_order"],
     ),
 ]
 
@@ -114,8 +199,9 @@ def evaluate_retrieval(
 
 def _is_expected_match(chunk, eq: EvalQuery) -> bool:
     """Check if a chunk matches expected file or name."""
+    chunk_file = chunk.source_file.replace("\\", "/")
     for ef in eq.expected_files:
-        if ef in chunk.source_file:
+        if ef in chunk_file:
             return True
     for en in eq.expected_names:
         if en == chunk.name:

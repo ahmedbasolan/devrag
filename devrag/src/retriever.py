@@ -209,9 +209,14 @@ class HybridRetriever:
     def search_rrf(
         self, query: str, top_k: int = 10, bm25_weight: float = 1.0, chroma_weight: float = 1.0
     ) -> List[RankedResult]:
-        """Hybrid search using Reciprocal Rank Fusion."""
-        bm25_results = self.search_bm25(query, top_k=top_k * 2)
-        chroma_results = self.search_chroma(query, top_k=top_k * 2)
+        """Hybrid search using Reciprocal Rank Fusion with file-level boosting.
+
+        After RRF merging, boosts chunks from files that appear in the top results.
+        This counteracts the dilution effect where large files produce many small chunks
+        that individually score lower than focused chunks from smaller files.
+        """
+        bm25_results = self.search_bm25(query, top_k=top_k * 3)
+        chroma_results = self.search_chroma(query, top_k=top_k * 3)
 
         rrf_scores: dict[str, float] = {}
         rrf_chunks: dict[str, CodeChunk] = {}
@@ -228,13 +233,46 @@ class HybridRetriever:
             rrf_scores[key] = rrf_scores.get(key, 0) + chroma_weight / (k + rank + 1)
             rrf_chunks[key] = result.chunk
 
+        # ── File-level boosting ──────────────────────────────
+        # Count how many times each file appears in the top results
+        file_counts: dict[str, int] = {}
         sorted_keys = sorted(rrf_scores.keys(), key=lambda k: rrf_scores[k], reverse=True)
+        for key in sorted_keys[:top_k * 2]:
+            file_path = rrf_chunks[key].source_file
+            file_counts[file_path] = file_counts.get(file_path, 0) + 1
+
+        # Boost files that appear in multiple top results
+        # The more a file appears, the more its other chunks should be boosted
+        boosted_scores: dict[str, float] = {}
+        for key, score in rrf_scores.items():
+            file_path = rrf_chunks[key].source_file
+            file_count = file_counts.get(file_path, 0)
+            if file_count >= 2:
+                # Boost: more appearances = higher multiplier (capped at 1.5x)
+                boost = 1.0 + min(file_count * 0.1, 0.5)
+                boosted_scores[key] = score * boost
+            else:
+                boosted_scores[key] = score
+
+        # Also boost markdown doc chunks for decision-type queries
+        decision_keywords = {"why", "strategy", "decision", "chosen", "approach", "trade-off", "tradeoff"}
+        query_lower = query.lower()
+        is_decision_query = any(kw in query_lower for kw in decision_keywords)
+        if is_decision_query:
+            for key, chunk in rrf_chunks.items():
+                if chunk.source_file.endswith(".md") and "adr" in chunk.source_file.lower():
+                    boosted_scores[key] = boosted_scores.get(key, rrf_scores.get(key, 0)) * 1.3
+                elif chunk.chunk_type == "markdown" and chunk.metadata.get("heading", "").startswith("ADR"):
+                    boosted_scores[key] = boosted_scores.get(key, rrf_scores.get(key, 0)) * 1.3
+
+        # Re-sort by boosted scores
+        sorted_keys = sorted(boosted_scores.keys(), key=lambda k: boosted_scores[k], reverse=True)
 
         results = []
         for key in sorted_keys[:top_k]:
             results.append(RankedResult(
                 chunk=rrf_chunks[key],
-                score=rrf_scores[key],
+                score=boosted_scores[key],
                 source="rrf",
             ))
 

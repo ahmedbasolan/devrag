@@ -1,9 +1,9 @@
 {
   "metrics": {
-    "hit_rate_at_5": 0.8,
-    "hit_rate_at_10": 0.8,
-    "mrr": 0.5,
-    "total_queries": 5
+    "hit_rate_at_5": 0.8571428571428571,
+    "hit_rate_at_10": 0.9523809523809523,
+    "mrr": 0.6537037037037037,
+    "total_queries": 21
   },
   "results": [
     {
@@ -17,7 +17,7 @@
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
           "name": "parse_python_file",
           "type": "function",
-          "score": 0.03252247488101534,
+          "score": 0.04878371232152301,
           "source": "rrf"
         },
         {
@@ -25,7 +25,7 @@
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
           "name": "_parse_class",
           "type": "function",
-          "score": 0.031754032258064516,
+          "score": 0.047631048387096774,
           "source": "rrf"
         },
         {
@@ -33,7 +33,7 @@
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
           "name": "_parse_function",
           "type": "function",
-          "score": 0.03057889822595705,
+          "score": 0.04586834733893557,
           "source": "rrf"
         },
         {
@@ -41,15 +41,15 @@
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
           "name": "ingest_directory",
           "type": "function",
-          "score": 0.030303030303030304,
+          "score": 0.045454545454545456,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
-          "name": "Dependencies",
-          "type": "markdown",
-          "score": 0.029273504273504274,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "parse_markdown_file",
+          "type": "function",
+          "score": 0.043478260869565216,
           "source": "rrf"
         }
       ]
@@ -58,14 +58,14 @@
       "query": "How does the hybrid retrieval work with BM25 and vector search?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 0.5,
+      "mrr": 1.0,
       "top_results": [
         {
           "rank": 1,
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
           "name": "search_bm25",
           "type": "method",
-          "score": 0.03149801587301587,
+          "score": 0.04724702380952381,
           "source": "rrf"
         },
         {
@@ -73,31 +73,31 @@
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
           "name": "HybridRetriever",
           "type": "class",
-          "score": 0.030834914611005692,
+          "score": 0.046252371916508536,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
-          "name": "Design Trade-offs",
-          "type": "markdown",
-          "score": 0.030798389007344232,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "search_rrf",
+          "type": "method",
+          "score": 0.04582555970149254,
           "source": "rrf"
         },
         {
           "rank": 4,
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
-          "name": "search_rrf",
+          "name": "_build_bm25",
           "type": "method",
-          "score": 0.03076923076923077,
+          "score": 0.04420368364030336,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
-          "name": "Dependencies",
-          "type": "markdown",
-          "score": 0.029906956136464335,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "index_chunks",
+          "type": "method",
+          "score": 0.0411036036036036,
           "source": "rrf"
         }
       ]
@@ -113,7 +113,7 @@
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
           "name": "Architecture",
           "type": "markdown",
-          "score": 0.03278688524590164,
+          "score": 0.04918032786885246,
           "source": "rrf"
         },
         {
@@ -121,31 +121,31 @@
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
           "name": "Dependencies",
           "type": "markdown",
-          "score": 0.031754032258064516,
+          "score": 0.047631048387096774,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
-          "name": "Search",
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Design Trade-offs",
           "type": "markdown",
-          "score": 0.030309988518943745,
+          "score": 0.04532030895047706,
           "source": "rrf"
         },
         {
           "rank": 4,
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
-          "name": "Design Trade-offs",
+          "name": "3. Run",
           "type": "markdown",
-          "score": 0.03021353930031804,
+          "score": 0.043560606060606064,
           "source": "rrf"
         },
         {
           "rank": 5,
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
-          "name": "3. Run",
+          "name": ":gear: DevRAG",
           "type": "markdown",
-          "score": 0.02904040404040404,
+          "score": 0.04066345639379347,
           "source": "rrf"
         }
       ]
@@ -154,46 +154,46 @@
       "query": "How are markdown files chunked and parsed?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 0.5,
+      "mrr": 1.0,
       "top_results": [
         {
           "rank": 1,
-          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\tests\\eval_rag.py",
-          "name": "_is_expected_match",
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "parse_markdown_file",
           "type": "function",
-          "score": 0.030776515151515152,
+          "score": 0.04459016393442623,
           "source": "rrf"
         },
         {
           "rank": 2,
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
-          "name": "parse_markdown_file",
+          "name": "_split_long_section",
           "type": "function",
-          "score": 0.029726775956284153,
+          "score": 0.042813765182186235,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
-          "name": ":gear: DevRAG",
-          "type": "markdown",
-          "score": 0.02921395544346364,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "ingest_directory",
+          "type": "function",
+          "score": 0.04265832997176281,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
-          "name": "_split_long_section",
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\tests\\eval_rag.py",
+          "name": "_is_expected_match",
           "type": "function",
-          "score": 0.028782894736842105,
+          "score": 0.0375,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
-          "name": "ingest_directory",
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\app.py",
+          "name": "main",
           "type": "function",
-          "score": 0.028438886647841874,
+          "score": 0.035652985074626865,
           "source": "rrf"
         }
       ]
@@ -202,14 +202,14 @@
       "query": "How are code chunks indexed into ChromaDB?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 0.5,
+      "mrr": 1.0,
       "top_results": [
         {
           "rank": 1,
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
           "name": "__init__",
           "type": "method",
-          "score": 0.03252247488101534,
+          "score": 0.04878371232152301,
           "source": "rrf"
         },
         {
@@ -217,7 +217,7 @@
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
           "name": "index_chunks",
           "type": "method",
-          "score": 0.032266458495966696,
+          "score": 0.048027663934426236,
           "source": "rrf"
         },
         {
@@ -225,23 +225,791 @@
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
           "name": "HybridRetriever",
           "type": "class",
-          "score": 0.030536130536130537,
+          "score": 0.045804195804195806,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
-          "name": "Architecture",
-          "type": "markdown",
-          "score": 0.030117753623188408,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "_index_chroma",
+          "type": "method",
+          "score": 0.04549632352941176,
           "source": "rrf"
         },
         {
           "rank": 5,
           "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
-          "name": "_index_chroma",
+          "name": "clear",
           "type": "method",
-          "score": 0.030117753623188408,
+          "score": 0.04477611940298507,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does user authentication work with JWT tokens?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 0.25,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Authentication",
+          "type": "markdown",
+          "score": 0.047631048387096774,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Login",
+          "type": "markdown",
+          "score": 0.047317436661698964,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Overview",
+          "type": "markdown",
+          "score": 0.0469208211143695,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "login",
+          "type": "function",
+          "score": 0.04582555970149254,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "register",
+          "type": "function",
+          "score": 0.04379795396419437,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does the payment processing service handle transactions?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "PaymentService",
+          "type": "class",
+          "score": 0.04800307219662058,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "process_payment",
+          "type": "method",
+          "score": 0.04727047146401985,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Overview",
+          "type": "markdown",
+          "score": 0.04590163934426229,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "NotificationService",
+          "type": "class",
+          "score": 0.04379795396419437,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Design Trade-offs",
+          "type": "markdown",
+          "score": 0.03441176470588236,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does the Redis cache manager handle invalidation?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheManager",
+          "type": "class",
+          "score": 0.04727047146401985,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.04697822363591876,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "delete",
+          "type": "method",
+          "score": 0.04549632352941176,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheWarmer",
+          "type": "class",
+          "score": 0.04502688172043011,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "cached",
+          "type": "function",
+          "score": 0.04486607142857142,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How are database migrations created and applied?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\db_migration.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.04878371232152301,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\db_migration.py",
+          "name": "MigrationManager",
+          "type": "class",
+          "score": 0.04724702380952381,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\db_migration.py",
+          "name": "migrate_down",
+          "type": "method",
+          "score": 0.046153846153846156,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\db_migration.py",
+          "name": "_save_applied",
+          "type": "method",
+          "score": 0.04586834733893557,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\db_migration.py",
+          "name": "_get_pending",
+          "type": "method",
+          "score": 0.04532030895047706,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does the rate limiting decorator prevent abuse?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 0.2,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Design Trade-offs",
+          "type": "markdown",
+          "score": 0.062118171683389074,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "cached",
+          "type": "function",
+          "score": 0.047619047619047616,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.04347616754935002,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "get_stats",
+          "type": "method",
+          "score": 0.04285714285714286,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "rate_limit",
+          "type": "function",
+          "score": 0.042622950819672135,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How are customer orders created from cart items?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 0.5,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Create Order",
+          "type": "markdown",
+          "score": 0.0469208211143695,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "create_order",
+          "type": "function",
+          "score": 0.04632929436920884,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "Order",
+          "type": "class",
+          "score": 0.046252371916508536,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Dashboard Stats",
+          "type": "markdown",
+          "score": 0.04486607142857142,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "User",
+          "type": "class",
+          "score": 0.04391025641025641,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does the product search endpoint filter results?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 0.3333333333333333,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\tests\\eval_rag.py",
+          "name": "evaluate_retrieval",
+          "type": "function",
+          "score": 0.04409722222222222,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "search_chroma",
+          "type": "method",
+          "score": 0.0427705223880597,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "search_products",
+          "type": "function",
+          "score": 0.04227921734531994,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Search",
+          "type": "markdown",
+          "score": 0.04194639604475671,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "search_bm25",
+          "type": "method",
+          "score": 0.04058823529411765,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does the notification service send emails?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "NotificationService",
+          "type": "class",
+          "score": 0.04918032786885246,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "_send",
+          "type": "method",
+          "score": 0.047631048387096774,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "send_shipping_update",
+          "type": "method",
+          "score": 0.047619047619047616,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "send_order_confirmation",
+          "type": "method",
+          "score": 0.04727047146401985,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Authentication",
+          "type": "markdown",
+          "score": 0.04114921223354959,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does the admin dashboard aggregate store statistics?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 0.3333333333333333,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Dashboard Stats",
+          "type": "markdown",
+          "score": 0.047631048387096774,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Overview",
+          "type": "markdown",
+          "score": 0.04724702380952381,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "admin_stats",
+          "type": "function",
+          "score": 0.040152055119980996,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Design Trade-offs",
+          "type": "markdown",
+          "score": 0.039285714285714285,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\decisions.md",
+          "name": "ADR-004: Cache Invalidation Strategy",
+          "type": "markdown",
+          "score": 0.03800682885189928,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does the cache warming pre-populate frequently accessed data?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheWarmer",
+          "type": "class",
+          "score": 0.048027663934426236,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.04658160808858931,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "cached",
+          "type": "function",
+          "score": 0.045548654244306416,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheManager",
+          "type": "class",
+          "score": 0.04327521793275218,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "get",
+          "type": "method",
+          "score": 0.043185584092792044,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does authentication flow across the entire application?",
+      "hit_at_5": false,
+      "hit_at_10": true,
+      "mrr": 0.1111111111111111,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Login",
+          "type": "markdown",
+          "score": 0.047317436661698964,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Overview",
+          "type": "markdown",
+          "score": 0.04724702380952381,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Authentication",
+          "type": "markdown",
+          "score": 0.04616477272727273,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Register",
+          "type": "markdown",
+          "score": 0.04513574660633484,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Create Product (Vendor only)",
+          "type": "markdown",
+          "score": 0.04096989966555184,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does a product go from listing to being delivered to a customer?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 0.5,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\api.md",
+          "name": "Overview",
+          "type": "markdown",
+          "score": 0.048399687743950044,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "get_product",
+          "type": "function",
+          "score": 0.045454545454545456,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "create_product",
+          "type": "function",
+          "score": 0.04523809523809523,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "to_dict",
+          "type": "method",
+          "score": 0.04379795396419437,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "search_products",
+          "type": "function",
+          "score": 0.04138127853881278,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does the caching layer interact with the database?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 0.3333333333333333,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\decisions.md",
+          "name": "ADR-004: Cache Invalidation Strategy",
+          "type": "markdown",
+          "score": 0.039117647058823535,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\decisions.md",
+          "name": "ADR-003: SQLite for Development",
+          "type": "markdown",
+          "score": 0.03451926414439431,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "__module_doc__",
+          "type": "module_docstring",
+          "score": 0.02459016393442623,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheWarmer",
+          "type": "class",
+          "score": 0.024193548387096774,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.023809523809523808,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "Why was Flask chosen over Django for this project?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\decisions.md",
+          "name": "ADR-001: Use Flask over Django",
+          "type": "markdown",
+          "score": 0.042622950819672135,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "to_dict",
+          "type": "method",
+          "score": 0.040415913200723325,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "list_products",
+          "type": "function",
+          "score": 0.03616557734204793,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Design Trade-offs",
+          "type": "markdown",
+          "score": 0.02928692699490662,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\docs\\decisions.md",
+          "name": "ADR-003: SQLite for Development",
+          "type": "markdown",
+          "score": 0.025606060606060608,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "What is the cache invalidation strategy and why was it chosen?",
+      "hit_at_5": false,
+      "hit_at_10": true,
+      "mrr": 0.16666666666666666,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Design Trade-offs",
+          "type": "markdown",
+          "score": 0.05619281045751633,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.046536796536796536,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "cached",
+          "type": "function",
+          "score": 0.04616477272727273,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheWarmer",
+          "type": "class",
+          "score": 0.0444468832309043,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheManager",
+          "type": "class",
+          "score": 0.041595441595441596,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "What happens when a product is out of stock during checkout?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "create_order",
+          "type": "function",
+          "score": 0.048399687743950044,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "create_product",
+          "type": "function",
+          "score": 0.04651442307692308,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "Product",
+          "type": "class",
+          "score": 0.04651442307692308,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "get_product",
+          "type": "function",
+          "score": 0.04255533199195171,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\mock_data\\src\\app.py",
+          "name": "to_dict",
+          "type": "method",
+          "score": 0.04220779220779221,
           "source": "rrf"
         }
       ]
