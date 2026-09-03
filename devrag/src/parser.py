@@ -153,25 +153,61 @@ def _get_end_line(node, lines: List[str]) -> int:
     return node.lineno + 10
 
 
-def parse_markdown_file(file_path: str, chunk_size: int = 500) -> List[CodeChunk]:
-    """Parse a markdown file into context-aware chunks split on headings."""
+def parse_markdown_file(file_path: str, chunk_size: int = 1000) -> List[CodeChunk]:
+    """Parse a markdown file into context-aware chunks split on headings.
+
+    Improvements over basic splitting:
+    - Preserves fenced code blocks as atomic units
+    - Keeps heading + content together
+    - Attaches heading hierarchy as metadata
+    - Splits on paragraph boundaries, not mid-paragraph
+    """
     with open(file_path, "r", encoding="utf-8", errors="replace") as f:
         content = f.read()
 
-    sections = re.split(r"(?=^#{1,4}\s)", content, flags=re.MULTILINE)
+    # Extract fenced code blocks and protect them from splitting
+    code_blocks = []
+    placeholder = "\x00CODE_BLOCK_{}\x00"
+
+    def protect_code(match):
+        idx = len(code_blocks)
+        code_blocks.append(match.group(0))
+        return placeholder.format(idx)
+
+    protected = re.sub(r'```[\s\S]*?```', protect_code, content)
+
+    # Split on heading boundaries
+    sections = re.split(r"(?=^#{1,4}\s)", protected, flags=re.MULTILINE)
     sections = [s.strip() for s in sections if s.strip()]
 
     chunks: List[CodeChunk] = []
     current_offset = 1
+    heading_stack: List[str] = []  # Track heading hierarchy
 
     for section in sections:
         lines_in_section = section.count("\n") + 1
         heading_match = re.match(r"^(#{1,4})\s+(.+)", section)
         heading = heading_match.group(2).strip() if heading_match else None
+        heading_level = len(heading_match.group(1)) if heading_match else 0
 
-        if len(section) > chunk_size:
-            sub_chunks = _split_long_section(section, chunk_size)
+        # Update heading stack
+        if heading:
+            # Pop deeper or equal headings
+            while heading_stack and len(heading_stack) >= heading_level:
+                heading_stack.pop()
+            heading_stack.append(heading)
+
+        # Restore code blocks in this section
+        restored = section
+        for i, block in enumerate(code_blocks):
+            restored = restored.replace(placeholder.format(i), block)
+
+        if len(restored) > chunk_size:
+            sub_chunks = _split_long_section(restored, chunk_size)
             for sub in sub_chunks:
+                # Restore code blocks in sub-chunks
+                for i, block in enumerate(code_blocks):
+                    sub = sub.replace(placeholder.format(i), block)
                 chunks.append(CodeChunk(
                     content=sub,
                     source_file=file_path,
@@ -179,17 +215,25 @@ def parse_markdown_file(file_path: str, chunk_size: int = 500) -> List[CodeChunk
                     name=heading,
                     start_line=current_offset,
                     end_line=current_offset + sub.count("\n"),
-                    metadata={"heading": heading},
+                    metadata={
+                        "heading": heading,
+                        "heading_path": list(heading_stack),
+                        "heading_level": heading_level,
+                    },
                 ))
         else:
             chunks.append(CodeChunk(
-                content=section,
+                content=restored,
                 source_file=file_path,
                 chunk_type="markdown",
                 name=heading,
                 start_line=current_offset,
                 end_line=current_offset + lines_in_section - 1,
-                metadata={"heading": heading},
+                metadata={
+                    "heading": heading,
+                    "heading_path": list(heading_stack),
+                    "heading_level": heading_level,
+                },
             ))
 
         current_offset += lines_in_section
@@ -198,8 +242,23 @@ def parse_markdown_file(file_path: str, chunk_size: int = 500) -> List[CodeChunk
 
 
 def _split_long_section(section: str, chunk_size: int) -> List[str]:
-    """Split a long markdown section into smaller chunks on paragraph boundaries."""
-    paragraphs = re.split(r"\n\n+", section)
+    """Split a long markdown section into smaller chunks on paragraph boundaries.
+
+    Preserves code blocks as atomic units and never splits mid-paragraph.
+    """
+    # Protect code blocks from splitting
+    code_blocks = []
+    placeholder = "\x00CB_{}\x00"
+
+    def protect_code(match):
+        idx = len(code_blocks)
+        code_blocks.append(match.group(0))
+        return placeholder.format(idx)
+
+    protected = re.sub(r'```[\s\S]*?```', protect_code, section)
+
+    # Split on paragraph boundaries
+    paragraphs = re.split(r"\n\n+", protected)
     result = []
     current = ""
 
@@ -213,7 +272,14 @@ def _split_long_section(section: str, chunk_size: int) -> List[str]:
     if current.strip():
         result.append(current.strip())
 
-    return result if result else [section]
+    # Restore code blocks
+    restored_result = []
+    for chunk in result:
+        for i, block in enumerate(code_blocks):
+            chunk = chunk.replace(placeholder.format(i), block)
+        restored_result.append(chunk)
+
+    return restored_result if restored_result else [section]
 
 
 def ingest_directory(

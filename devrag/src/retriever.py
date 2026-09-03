@@ -6,6 +6,7 @@ Merges results via Reciprocal Rank Fusion (RRF).
 """
 
 import os
+import re
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
 
@@ -79,8 +80,49 @@ class HybridRetriever:
 
     @staticmethod
     def _tokenize(text: str) -> List[str]:
-        """Simple whitespace + lowercase tokenizer for BM25."""
-        return text.lower().split()
+        """Code-aware tokenizer that splits identifiers into meaningful tokens.
+
+        Handles snake_case, camelCase, dotted names, and preserves string literals.
+        """
+        tokens = []
+        # Protect string literals and comments from splitting
+        protected = []
+        placeholder = "\x00{}\x00"
+
+        def protect(match):
+            protected.append(match.group(0))
+            return placeholder.format(len(protected) - 1)
+
+        # Extract triple-quoted strings, single/double quoted strings, and comments
+        cleaned = re.sub(r'""".*?"""', protect, text, flags=re.DOTALL)
+        cleaned = re.sub(r"'''.*?'''", protect, cleaned, flags=re.DOTALL)
+        cleaned = re.sub(r'"[^"\n]*"', protect, cleaned)
+        cleaned = re.sub(r"'[^'\n]*'", protect, cleaned)
+        cleaned = re.sub(r"#[^\n]*", protect, cleaned)
+
+        # Split on non-alphanumeric boundaries (handles dots, underscores, hyphens)
+        raw_tokens = re.split(r'[^a-zA-Z0-9]+', cleaned)
+
+        for token in raw_tokens:
+            if not token:
+                continue
+            # Check if this is a protected placeholder
+            placeholder_match = re.match(r'\x00(\d+)\x00', token)
+            if placeholder_match:
+                idx = int(placeholder_match.group(1))
+                # Add the original string literal as a single token
+                tokens.append(protected[idx].lower())
+                continue
+            # Split camelCase: getUserById -> get, User, By, Id
+            # Also split at digit boundaries: BM25Okapi -> BM25, Okapi
+            camel_split = re.sub(r'([a-z])([A-Z])', r'\1 \2', token)
+            camel_split = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1 \2', camel_split)
+            camel_split = re.sub(r'([a-zA-Z])([0-9])', r'\1 \2', camel_split)
+            camel_split = re.sub(r'([0-9])([a-zA-Z])', r'\1 \2', camel_split)
+            for part in camel_split.split():
+                tokens.append(part.lower())
+
+        return tokens
 
     def _index_chroma(self, chunks: List[CodeChunk]) -> int:
         """Index chunks into ChromaDB in batches."""
