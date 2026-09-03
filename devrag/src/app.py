@@ -430,6 +430,20 @@ def main():
     if "chunk_types" not in st.session_state:
         st.session_state.chunk_types = ["function", "class", "method", "markdown", "module_docstring"]
 
+    # ── Auto-load pre-built index ──────────────────────────
+    if not st.session_state.indexed:
+        chroma_dir = st.session_state.retriever.chroma_dir
+        chroma_db = os.path.join(chroma_dir, "chroma.sqlite3")
+        if os.path.exists(chroma_db) and os.path.getsize(chroma_db) > 0:
+            # Pre-built index exists — load it
+            try:
+                count = st.session_state.retriever.collection.count()
+                if count > 0:
+                    st.session_state.indexed = True
+                    st.session_state.chunk_count = count
+            except Exception:
+                pass
+
     # ── Sidebar ────────────────────────────────────────────
     with st.sidebar:
         st.markdown("""
@@ -525,7 +539,7 @@ def main():
     </div>
     """, unsafe_allow_html=True)
 
-    # Empty state
+    # Empty state with example queries
     if not st.session_state.indexed:
         st.markdown("""
         <div class="empty-state">
@@ -535,6 +549,31 @@ def main():
         </div>
         """, unsafe_allow_html=True)
         return
+
+    # Ready state — show example queries
+    if "query_history" not in st.session_state:
+        st.session_state.query_history = []
+
+    if not st.session_state.query_history:
+        st.markdown(f"""
+        <div style="text-align:center; padding:40px 20px 20px; color:{COLORS['text_dim']};">
+            <div style="font-size:14px; margin-bottom:16px;">Try asking:</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        example_queries = [
+            "How does user authentication work?",
+            "What is the cache invalidation strategy?",
+            "How are database migrations handled?",
+            "How does the rate limiting work?",
+            "What payment gateways are supported?",
+        ]
+        for eq in example_queries:
+            st.markdown(f"""
+            <div style="text-align:center; margin:4px 0;">
+                <code style="background:{COLORS['bg_card']}; border:1px solid {COLORS['border']}; border-radius:6px; padding:6px 14px; font-size:13px; color:{COLORS['text_dim']}; cursor:default;">{eq}</code>
+            </div>
+            """, unsafe_allow_html=True)
 
     # Chat
     query = st.chat_input("Ask a question about the code...")

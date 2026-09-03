@@ -1,5 +1,4 @@
 # DevRAG
-devrag/.chroma/
 devrag/__pycache__/
 devrag/**/*.pyc
 devrag/.env

@@ -1,86 +1,45 @@
-# :gear: DevRAG
+# ⚡ DevRAG
 
-A developer-focused local RAG system that ingests code repositories and markdown docs to answer technical queries. Zero-cost, privacy-first, runs entirely on your machine.
+Ask questions about any codebase. Get answers with source citations.
 
-## Architecture
+DevRAG is a local RAG system that ingests Python code and markdown docs, then answers technical questions in plain English. Zero-cost, privacy-first, runs entirely on your machine.
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         DevRAG                                    │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌──────────────┐    ┌──────────────────────────────────────────┐   │
-│  │  Streamlit   │    │          Hybrid Retrieval Engine         │   │
-│  │    (UI)      │    │                                          │   │
-│  │              │    │  ┌────────────┐    ┌─────────────────┐   │   │
-│  │  Search Bar  │───>│  │   BM25     │    │   ChromaDB      │   │   │
-│  │  Results     │<───│  │ (Sparse)   │    │   + Embeddings  │   │   │
-│  │  Citations   │    │  │            │    │   (Dense)       │   │   │
-│  └──────┬───────┘    │  └─────┬──────┘    └───────┬─────────┘   │   │
-│         │            │        │                    │             │   │
-│         │            │        └────────┬───────────┘             │   │
-│         │            │                 │                         │   │
-│         │            │        ┌────────▼────────┐               │   │
-│         │            │        │  Reciprocal     │               │   │
-│         │            │        │  Rank Fusion    │               │   │
-│         │            │        │  (RRF Merge)    │               │   │
-│         │            │        └────────┬────────┘               │   │
-│         │            │                 │                         │   │
-│         │            │        ┌────────▼────────┐               │   │
-│         │            │        │  Gemini Flash   │               │   │
-│         │            │        │  (Generation)   │               │   │
-│         │            │        └─────────────────┘               │   │
-│         │            └──────────────────────────────────────────┘   │
-│         │                                                           │
-│  ┌──────▼───────────────────────────────────────────────────────┐   │
-│  │                   Data Ingestion Layer                        │   │
-│  │                                                               │   │
-│  │  ┌─────────────────┐    ┌─────────────────┐                  │   │
-│  │  │   AST Parser    │    │  Markdown Parser │                  │   │
-│  │  │   (Python)      │    │  (Structural)    │                  │   │
-│  │  └────────┬────────┘    └────────┬─────────┘                  │   │
-│  │           │                      │                           │   │
-│  │           └──────────┬───────────┘                           │   │
-│  │                      │                                       │   │
-│  │              ┌───────▼────────┐                              │   │
-│  │              │  Code Chunks   │                              │   │
-│  │              │  (Structured)  │                              │   │
-│  │              └────────────────┘                              │   │
-│  └──────────────────────────────────────────────────────────────┘   │
-│                                                                     │
-│  ┌──────────────────────────────────────────────────────────────┐   │
-│  │                   Evaluation Layer                            │   │
-│  │                                                               │   │
-│  │  Hit Rate @5 │ Hit Rate @10 │ MRR │ 5 Sample Queries        │   │
-│  └──────────────────────────────────────────────────────────────┘   │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-```
+## Example Questions
+
+Here's what you can ask DevRAG about its own codebase:
+
+| Question | What You Learn |
+|----------|----------------|
+| *How does user authentication work?* | JWT token flow, login/register endpoints, password hashing |
+| *What is the cache invalidation strategy?* | TTL-based with event-driven invalidation, per-entity clearing |
+| *How are database migrations handled?* | MigrationManager with up/down SQL, JSON state tracking |
+| *How does the rate limiting work?* | Per-IP sliding window decorator, 100 req/min default |
+| *What payment gateways are supported?* | Stripe and PayPal via PaymentService abstraction |
+| *How does the product search work?* | Full-text search across name, description, category |
+
+DevRAG explains **what** the code does and **why** it matters — not how every line works.
 
 ## Quickstart
 
 ### 1. Clone & Install
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/your-username/devrag.git
 cd devrag
 pip install -r requirements.txt
 ```
 
-### 2. Configure (optional)
-
-```bash
-cp .env.example .env
-# Edit .env with your Gemini API key (free tier works)
-```
-
-### 3. Run
+### 2. Run
 
 ```bash
 streamlit run src/app.py
 ```
 
-Open http://localhost:8501. Paste any local repo path in the sidebar, click **Index Directory**, then ask questions.
+Open [http://localhost:8501](http://localhost:8501). The app comes pre-indexed with its own source code — start asking questions immediately.
+
+### 3. Index Your Own Code
+
+Enter any Python project path in the sidebar and click **Index**. Ask questions about your own codebase.
 
 ### 4. Docker (alternative)
 
@@ -88,57 +47,76 @@ Open http://localhost:8501. Paste any local repo path in the sidebar, click **In
 docker compose up app
 ```
 
-## Evaluation
+### 5. Smart Answers (optional)
 
-Run the built-in evaluation suite:
+For AI-powered explanations instead of raw code snippets:
+
+```bash
+cp .env.example .env
+# Add your Gemini API key (free tier works)
+```
+
+## How It Works
+
+```
+Your Question
+     │
+     ▼
+┌─────────────┐   ┌─────────────┐
+│    BM25     │   │  ChromaDB   │
+│  (keyword)  │   │  (semantic) │
+└──────┬──────┘   └──────┬──────┘
+       └────────┬────────┘
+                │
+         Reciprocal Rank Fusion
+                │
+                ▼
+        Top Source Chunks
+                │
+                ▼
+     Gemini Flash (optional)
+                │
+                ▼
+     Plain English Answer
+        + Citations
+```
+
+**Hybrid retrieval** combines keyword search (fast, exact) with semantic search (understands meaning). Results from both are merged using Reciprocal Rank Fusion — no training required.
+
+## Evaluation
 
 ```bash
 python tests/eval_rag.py --repo-path /path/to/your/repo
 ```
 
-Output includes Hit Rate @5, Hit Rate @10, and MRR across 5 sample queries.
+Built-in evaluation suite with 21 queries covering functional, cross-file, and design decision questions. Metrics: Hit Rate @5, Hit Rate @10, MRR.
 
 ## Project Structure
 
 ```
 devrag/
 ├── src/
-│   ├── parser.py       # AST + Markdown parsing
-│   ├── retriever.py    # BM25 + ChromaDB + RRF
+│   ├── parser.py       # AST + Markdown parsing → CodeChunk objects
+│   ├── retriever.py    # BM25 + ChromaDB + RRF hybrid search
 │   └── app.py          # Streamlit UI + Gemini generation
 ├── tests/
-│   └── eval_rag.py     # RAG evaluation metrics
-├── docs/
-├── .chroma/            # Persisted vector DB
+│   └── eval_rag.py     # 21-query evaluation suite
+├── mock_data/          # Sample codebase for demos
+├── .chroma/            # Pre-built index (ships ready to use)
 ├── requirements.txt
 ├── docker-compose.yml
-├── Dockerfile
-├── .env.example
-└── .gitignore
+└── Dockerfile
 ```
 
-## Design Trade-offs
+## Design Decisions
 
-| Decision | Rationale |
-|----------|-----------|
-| **AST over regex** | Python's `ast` module produces exact function/class boundaries. Regex-based parsing breaks on nested definitions and decorators. |
-| **rank_bm25 over Elasticsearch** | Zero infrastructure. BM25Okapi is fast enough for local repos (<100k chunks). Elasticsearch would add complexity for marginal gains. |
-| **ChromaDB over FAISS** | ChromaDB provides persistent storage and metadata filtering out-of-the-box. FAISS is faster but requires custom persistence. |
-| **Reciprocal Rank Fusion** | Simple to implement, no training required. Combines sparse/dense signals without learning a weighting function. k=60 is the standard constant from the original RRF paper. |
-| **Gemini over local LLMs** | Gemini 2.0 Flash free tier is sufficient for code Q&A. Local LLMs require GPU and add deployment complexity. Falls back gracefully without API key. |
-| **sentence-transformers/all-MiniLM-L6-v2** | 80MB model, fast inference, strong code understanding. No GPU required. |
-| **Streamlit over Gradio** | Better for multi-page apps with session state. Chat input API is cleaner for conversational RAG. |
-
-## Dependencies
-
-All zero-cost:
-
-- `sentence-transformers` - Local embeddings (all-MiniLM-L6-v2)
-- `chromadb` - Persistent vector store
-- `rank_bm25` - BM25 sparse retrieval
-- `streamlit` - Web UI
-- `google-generativeai` - Gemini API (free tier)
-- Python stdlib `ast` - Code parsing
+| Choice | Why |
+|--------|-----|
+| **AST parsing** | Exact function/class boundaries. Regex breaks on decorators and nesting. |
+| **BM25 + ChromaDB** | Keyword search catches exact names; semantic search catches concepts. Neither alone is enough. |
+| **Reciprocal Rank Fusion** | Simple, no training, combines sparse/dense signals. k=60 from the original paper. |
+| **Gemini Flash** | Free tier sufficient for code Q&A. Falls back gracefully without API key. |
+| **Local embeddings** | 80MB model, no GPU, no API calls. Privacy-first. |
 
 ## License
 
