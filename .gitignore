@@ -1,0 +1,17 @@
+# DevRAG
+devrag/.chroma/
+devrag/__pycache__/
+devrag/**/*.pyc
+devrag/.env
+devrag/*.egg-info/
+devrag/dist/
+devrag/build/
+devrag/.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

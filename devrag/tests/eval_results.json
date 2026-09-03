@@ -1,0 +1,250 @@
+{
+  "metrics": {
+    "hit_rate_at_5": 0.8,
+    "hit_rate_at_10": 1.0,
+    "mrr": 0.7333333333333333,
+    "total_queries": 5
+  },
+  "results": [
+    {
+      "query": "How do I parse Python AST and extract functions?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "parse_python_file",
+          "type": "function",
+          "score": 0.03200204813108039,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "__module_doc__",
+          "type": "module_docstring",
+          "score": 0.03177805800756621,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "_get_end_line",
+          "type": "function",
+          "score": 0.03131881575727918,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "ingest_directory",
+          "type": "function",
+          "score": 0.030776515151515152,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\app.py",
+          "name": "_fallback",
+          "type": "function",
+          "score": 0.029877369007803793,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How does the hybrid retrieval work with BM25 and vector search?",
+      "hit_at_5": false,
+      "hit_at_10": true,
+      "mrr": 0.16666666666666666,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "__module_doc__",
+          "type": "module_docstring",
+          "score": 0.03278688524590164,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\tests\\eval_rag.py",
+          "name": "__module_doc__",
+          "type": "module_docstring",
+          "score": 0.030090497737556562,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Design Trade-offs",
+          "type": "markdown",
+          "score": 0.029850746268656716,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Dependencies",
+          "type": "markdown",
+          "score": 0.029386529386529386,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\app.py",
+          "name": "generate_response",
+          "type": "function",
+          "score": 0.02928692699490662,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How to build a Streamlit UI with search and citations?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 0.5,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Dependencies",
+          "type": "markdown",
+          "score": 0.031054405392392875,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\app.py",
+          "name": "generate_response",
+          "type": "function",
+          "score": 0.030886196246139225,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "__module_doc__",
+          "type": "module_docstring",
+          "score": 0.03057889822595705,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "3. Run",
+          "type": "markdown",
+          "score": 0.030536130536130537,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": "Design Trade-offs",
+          "type": "markdown",
+          "score": 0.030090497737556562,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How are markdown files chunked and parsed?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "_split_long_section",
+          "type": "function",
+          "score": 0.031024531024531024,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "parse_markdown_file",
+          "type": "function",
+          "score": 0.030886196246139225,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\app.py",
+          "name": "generate_response",
+          "type": "function",
+          "score": 0.029906956136464335,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\README.md",
+          "name": ":gear: DevRAG",
+          "type": "markdown",
+          "score": 0.028949545078577336,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "index_chunks",
+          "type": "method",
+          "score": 0.026785714285714288,
+          "source": "rrf"
+        }
+      ]
+    },
+    {
+      "query": "How are code chunks indexed into ChromaDB?",
+      "hit_at_5": true,
+      "hit_at_10": true,
+      "mrr": 1.0,
+      "top_results": [
+        {
+          "rank": 1,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "index_chunks",
+          "type": "method",
+          "score": 0.032018442622950824,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "clear",
+          "type": "method",
+          "score": 0.030309988518943745,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\app.py",
+          "name": "generate_response",
+          "type": "function",
+          "score": 0.03009207275993712,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\parser.py",
+          "name": "__module_doc__",
+          "type": "module_docstring",
+          "score": 0.030017921146953404,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\OneDrive\\Desktop\\My Projects\\Engineering\\devrag\\src\\retriever.py",
+          "name": "_index_chroma",
+          "type": "method",
+          "score": 0.029910714285714284,
+          "source": "rrf"
+        }
+      ]
+    }
+  ]
+}

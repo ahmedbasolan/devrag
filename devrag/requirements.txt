@@ -1,0 +1,21 @@
+# DevRAG - Dependencies
+# Zero-cost local RAG system
+
+# Core
+streamlit>=1.30.0
+python-dotenv>=1.0.0
+
+# Parsing
+# ast is stdlib
+
+# Retrieval
+rank-bm25>=0.2.2
+chromadb>=0.4.22
+sentence-transformers>=2.3.0
+numpy>=1.24.0
+
+# Generation
+google-genai>=1.0.0
+
+# Dev
+pytest>=7.4.0

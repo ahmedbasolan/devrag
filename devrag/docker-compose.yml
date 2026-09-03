@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+      - chroma_data:/app/.chroma
+    env_file:
+      - .env
+    environment:
+      - CHROMA_DIR=/app/.chroma
+
+  eval:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - chroma_data:/app/.chroma
+    env_file:
+      - .env
+    command: python tests/eval_rag.py
+    profiles:
+      - test
+
+volumes:
+  chroma_data:
