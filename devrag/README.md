@@ -49,17 +49,22 @@ docker compose up app
 
 ### 5. Smart Answers (optional)
 
-For AI-powered explanations instead of raw code snippets, you have two options:
+For AI-powered explanations instead of raw code snippets, choose your provider:
 
-**Option A: Enter your API key in the UI**
-- Click "Add your Gemini API key" in the sidebar
-- Get a free key from [Google AI Studio](https://aistudio.google.com/apikey)
-- Your key stays in your browser and is never stored on any server
+**Option A: Enter your API key in the UI (Recommended)**
+- Select your provider (Gemini, Groq, or OpenAI)
+- Enter your API key — your key stays in your browser only
+
+| Provider | Cost | Get Key |
+|----------|------|---------|
+| **Gemini** | Free tier | [Google AI Studio](https://aistudio.google.com/apikey) |
+| **Groq** | Free tier | [Groq Console](https://console.groq.com/keys) |
+| **OpenAI** | Pay per use | [OpenAI Platform](https://platform.openai.com/api-keys) |
 
 **Option B: Use a .env file**
 ```bash
 cp .env.example .env
-# Add your Gemini API key (free tier works)
+# Add your API key for your chosen provider
 ```
 
 ## How It Works

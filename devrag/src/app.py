@@ -295,7 +295,7 @@ def inject_css():
 
 def _get_api_key():
     # Check environment variable first
-    key = os.getenv("GEMINI_API_KEY", "")
+    key = os.getenv("GEMINI_API_KEY", "") or os.getenv("GROQ_API_KEY", "") or os.getenv("OPENAI_API_KEY", "")
     if key:
         return key
     # Check session state (for UI-entered keys)
@@ -308,6 +308,14 @@ def _get_api_key():
     return ""
 
 
+def _get_provider():
+    try:
+        import streamlit as st
+        return st.session_state.get("provider", "gemini")
+    except RuntimeError:
+        return "gemini"
+
+
 def generate_response(query: str, chunks: list[CodeChunk]) -> str:
     if not chunks:
         return "Nothing found. Index a directory first."
@@ -318,28 +326,55 @@ def generate_response(query: str, chunks: list[CodeChunk]) -> str:
         context += f"```\n{c.content[:2000]}\n```\n\n"
 
     api_key = _get_api_key()
+    provider = _get_provider()
+
     if not api_key:
         return _fallback(query, chunks)
 
-    try:
-        from google import genai
+    prompt = (
+        f"You are explaining a codebase to a smart person who doesn't write code. "
+        f"Answer the question in plain English. Use analogies. "
+        f"Don't explain HOW the code works — explain WHAT it does and WHY it matters. "
+        f"If you reference code, explain it in one sentence. "
+        f"Keep it short — 2 to 4 sentences max.\n\n"
+        f"CODE CONTEXT:\n{context}\n\nQuestion: {query}"
+    )
 
-        client = genai.Client(api_key=api_key)
-        response = client.models.generate_content(
-            model="gemini-3.6-flash",
-            contents=(
-                f"You are explaining a codebase to a smart person who doesn't write code. "
-                f"Answer the question in plain English. Use analogies. "
-                f"Don't explain HOW the code works — explain WHAT it does and WHY it matters. "
-                f"If you reference code, explain it in one sentence. "
-                f"Keep it short — 2 to 4 sentences max.\n\n"
-                f"CODE CONTEXT:\n{context}\n\nQuestion: {query}"
-            ),
-        )
-        return response.text
+    try:
+        if provider == "gemini":
+            from google import genai
+            client = genai.Client(api_key=api_key)
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=prompt,
+            )
+            return response.text
+
+        elif provider == "groq":
+            from groq import Groq
+            client = Groq(api_key=api_key)
+            response = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=500,
+            )
+            return response.choices[0].message.content
+
+        elif provider == "openai":
+            from openai import OpenAI
+            client = OpenAI(api_key=api_key)
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=500,
+            )
+            return response.choices[0].message.content
+
+        else:
+            return _fallback(query, chunks)
 
     except Exception as e:
-        return f"Gemini error: {e}\n\n" + _fallback(query, chunks)
+        return f"{provider.title()} error: {e}\n\n" + _fallback(query, chunks)
 
 
 def _fallback(query: str, chunks: list[CodeChunk]) -> str:
@@ -511,11 +546,15 @@ def main():
 
         # API key status
         api_key = _get_api_key()
+        provider = _get_provider()
+        provider_names = {"gemini": "Gemini", "groq": "Groq", "openai": "OpenAI"}
+        provider_colors = {"gemini": "#4285F4", "groq": "#F55036", "openai": "#10A37F"}
+
         if api_key:
             st.markdown(f"""
             <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:{COLORS['success']};">
-                <span style="width:6px; height:6px; border-radius:50%; background:{COLORS['success']}; display:inline-block;"></span>
-                Gemini connected
+                <span style="width:6px; height:6px; border-radius:50%; background:{provider_colors.get(provider, COLORS['success'])}; display:inline-block;"></span>
+                {provider_names.get(provider, provider)} connected
             </div>
             """, unsafe_allow_html=True)
             if st.button("Change API Key", type="secondary", use_container_width=True):
@@ -535,21 +574,40 @@ def main():
         # API key change modal
         if st.session_state.get("show_key_change", False):
             with st.expander("🔑 Update API Key", expanded=True):
+                # Provider selection
+                new_provider = st.selectbox(
+                    "Provider",
+                    options=["gemini", "groq", "openai"],
+                    format_func=lambda x: {"gemini": "Google Gemini", "groq": "Groq", "openai": "OpenAI"}[x],
+                    key="new_provider_select"
+                )
+                placeholders = {"gemini": "AIzaSy...", "groq": "gsk_...", "openai": "sk-..."}
                 new_key = st.text_input(
-                    "Gemini API Key",
+                    "API Key",
                     type="password",
-                    placeholder="AIzaSy...",
+                    placeholder=placeholders[new_provider],
                     key="new_api_key_input"
                 )
                 col1, col2 = st.columns(2)
                 with col1:
                     if st.button("Save", type="primary", use_container_width=True):
                         if new_key:
-                            if not new_key.startswith("AIza"):
-                                st.error("❌ Key should start with AIza")
-                            else:
-                                os.environ["GEMINI_API_KEY"] = new_key
+                            # Validate
+                            valid = True
+                            if new_provider == "gemini" and not new_key.startswith("AIza"):
+                                st.error("❌ Gemini keys start with AIza")
+                                valid = False
+                            elif new_provider == "groq" and not new_key.startswith("gsk_"):
+                                st.error("❌ Groq keys start with gsk_")
+                                valid = False
+                            elif new_provider == "openai" and not new_key.startswith("sk-"):
+                                st.error("❌ OpenAI keys start with sk-")
+                                valid = False
+
+                            if valid:
+                                os.environ[f"{new_provider.upper()}_API_KEY"] = new_key
                                 st.session_state.api_key = new_key
+                                st.session_state.provider = new_provider
                                 st.session_state.show_key_change = False
                                 st.success("✅ API key updated!")
                                 st.rerun()
@@ -617,69 +675,92 @@ def main():
             <div style="font-size:48px; margin-bottom:16px;">🔑</div>
             <h2 style="color:{COLORS['text']}; margin-bottom:8px;">Welcome to DevRAG</h2>
             <p style="color:{COLORS['text_dim']}; font-size:14px; max-width:400px; margin:0 auto;">
-                To get AI-powered answers about your code, you'll need a free Gemini API key.
+                Choose your AI provider and enter your API key to get started.
             </p>
         </div>
         """, unsafe_allow_html=True)
 
-        # Setup steps
-        col1, col2 = st.columns([1, 1])
+        # Provider selection
+        st.markdown(f"""
+        <div style="text-align:center; margin:20px 0 10px; color:{COLORS['text']}; font-weight:600;">
+            Choose your AI provider
+        </div>
+        """, unsafe_allow_html=True)
 
-        with col1:
-            st.markdown(f"""
-            <div style="background:{COLORS['bg_card']}; border:1px solid {COLORS['border']}; border-radius:8px; padding:20px; height:140px;">
-                <div style="font-size:24px; margin-bottom:8px;">1️⃣</div>
-                <h4 style="color:{COLORS['text']}; margin:0 0 8px 0;">Get a free API key</h4>
-                <p style="color:{COLORS['text_dim']}; font-size:13px; margin:0;">
-                    Visit Google AI Studio and create a free API key. Takes 30 seconds.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-            st.link_button("Get API Key →", "https://aistudio.google.com/apikey", type="secondary")
+        providers = {
+            "gemini": {"name": "Google Gemini", "desc": "Free tier available", "color": "#4285F4", "url": "https://aistudio.google.com/apikey", "placeholder": "AIzaSy..."},
+            "groq": {"name": "Groq", "desc": "Fast inference, free tier", "color": "#F55036", "url": "https://console.groq.com/keys", "placeholder": "gsk_..."},
+            "openai": {"name": "OpenAI", "desc": "GPT-4o mini", "color": "#10A37F", "url": "https://platform.openai.com/api-keys", "placeholder": "sk-..."},
+        }
 
-        with col2:
-            st.markdown(f"""
-            <div style="background:{COLORS['bg_card']}; border:1px solid {COLORS['border']}; border-radius:8px; padding:20px; height:140px;">
-                <div style="font-size:24px; margin-bottom:8px;">2️⃣</div>
-                <h4 style="color:{COLORS['text']}; margin:0 0 8px 0;">Enter your key below</h4>
-                <p style="color:{COLORS['text_dim']}; font-size:13px; margin:0;">
-                    Your key stays in your browser only. Never stored on any server.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
+        cols = st.columns(3)
+        for idx, (key, info) in enumerate(providers.items()):
+            with cols[idx]:
+                st.markdown(f"""
+                <div style="background:{COLORS['bg_card']}; border:2px solid {COLORS['border']}; border-radius:8px; padding:16px; text-align:center; height:100px;">
+                    <div style="font-size:20px; font-weight:700; color:{info['color']};">{info['name']}</div>
+                    <div style="font-size:12px; color:{COLORS['text_dim']}; margin-top:4px;">{info['desc']}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+        selected_provider = st.radio(
+            "Select provider",
+            options=list(providers.keys()),
+            format_func=lambda x: providers[x]["name"],
+            horizontal=True,
+            label_visibility="collapsed",
+        )
+
+        provider_info = providers[selected_provider]
 
         # API key input
-        st.markdown("<div style='height:16px;'></div>", unsafe_allow_html=True)
-
         with st.form("api_key_form"):
+            st.markdown(f"**{provider_info['name']}** API Key")
             user_api_key = st.text_input(
-                "Your Gemini API Key",
+                "API Key",
                 type="password",
-                placeholder="AIzaSy...",
-                help="Get your free key from Google AI Studio (starts with AIzaSy)"
+                placeholder=provider_info["placeholder"],
+                label_visibility="collapsed",
             )
             submitted = st.form_submit_button("Start Using DevRAG →", type="primary", use_container_width=True)
 
             if submitted and user_api_key:
                 # Validate key format
-                if not user_api_key.startswith("AIza"):
-                    st.error("❌ This doesn't look like a Gemini API key. Gemini keys start with **AIza**. You may have entered a Groq or OpenAI key.")
-                    st.info("💡 **Gemini API keys** start with `AIzaSy` and are free from [Google AI Studio](https://aistudio.google.com/apikey)")
-                else:
-                    os.environ["GEMINI_API_KEY"] = user_api_key
+                valid = True
+                if selected_provider == "gemini" and not user_api_key.startswith("AIza"):
+                    st.error("❌ Gemini keys start with **AIzaSy**")
+                    valid = False
+                elif selected_provider == "groq" and not user_api_key.startswith("gsk_"):
+                    st.error("❌ Groq keys start with **gsk_**")
+                    valid = False
+                elif selected_provider == "openai" and not user_api_key.startswith("sk-"):
+                    st.error("❌ OpenAI keys start with **sk-**")
+                    valid = False
+
+                if valid:
+                    os.environ[f"{selected_provider.upper()}_API_KEY"] = user_api_key
                     st.session_state.api_key = user_api_key
-                    st.success("✅ API key saved!")
+                    st.session_state.provider = selected_provider
+                    st.success(f"✅ {provider_info['name']} connected!")
                     st.balloons()
                     st.rerun()
             elif submitted:
                 st.error("Please enter an API key")
 
+        # Get key link
+        st.markdown(f"""
+        <div style="text-align:center; margin-top:12px;">
+            <a href="{provider_info['url']}" target="_blank" style="color:{COLORS['accent']}; font-size:13px;">
+                Don't have a key? Get one free →
+            </a>
+        </div>
+        """, unsafe_allow_html=True)
+
         # Skip option
         st.markdown(f"""
         <div style="text-align:center; margin-top:16px;">
             <span style="color:{COLORS['text_muted']}; font-size:13px;">
-                Don't have an API key? You can still use DevRAG in 
-                <strong>fallback mode</strong> (raw code snippets instead of AI explanations).
+                Or continue in <strong>fallback mode</strong> (raw code snippets instead of AI explanations).
             </span>
         </div>
         """, unsafe_allow_html=True)
