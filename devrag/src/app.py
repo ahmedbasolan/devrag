@@ -48,6 +48,30 @@ def inject_css():
         font-family: {FONT};
     }}
 
+    /* ── Animations ──────────────────────────────────────── */
+    @keyframes fadeIn {{
+        from {{ opacity: 0; transform: translateY(10px); }}
+        to {{ opacity: 1; transform: translateY(0); }}
+    }}
+    @keyframes slideIn {{
+        from {{ opacity: 0; transform: translateX(-10px); }}
+        to {{ opacity: 1; transform: translateX(0); }}
+    }}
+    @keyframes pulse {{
+        0%, 100% {{ opacity: 1; }}
+        50% {{ opacity: 0.5; }}
+    }}
+    @keyframes spin {{
+        0% {{ transform: rotate(0deg); }}
+        100% {{ transform: rotate(360deg); }}
+    }}
+    .stChatMessage {{
+        animation: fadeIn 0.3s ease-out;
+    }}
+    .stExpander {{
+        animation: slideIn 0.2s ease-out;
+    }}
+
     /* ── Header ──────────────────────────────────────────── */
     .devrag-header {{
         display: flex;
@@ -578,28 +602,51 @@ def main():
     # Chat
     query = st.chat_input("Ask a question about the code...")
     if query:
-        # Search with more results than needed, then filter
-        raw_results = st.session_state.retriever.search_rrf(query, top_k=st.session_state.top_k * 3)
-
-        # Apply filters
-        filtered_results = []
-        for r in raw_results:
-            c = r.chunk
-            # File type filter
-            ext = Path(c.source_file).suffix.lstrip(".")
-            if ext not in st.session_state.file_types:
-                continue
-            # Chunk type filter
-            if c.chunk_type not in st.session_state.chunk_types:
-                continue
-            filtered_results.append(r)
-            if len(filtered_results) >= st.session_state.top_k:
-                break
-
-        chunks = [r.chunk for r in filtered_results]
-        answer = generate_response(query, chunks)
-
+        # Show user message immediately
         st.chat_message("user").write(query)
+
+        # Search phase
+        with st.status("🔍 Searching codebase...", expanded=False) as status:
+            st.write("Tokenizing query...")
+            raw_results = st.session_state.retriever.search_rrf(query, top_k=st.session_state.top_k * 3)
+            st.write(f"Found {len(raw_results)} potential matches")
+
+            # Apply filters
+            filtered_results = []
+            for r in raw_results:
+                c = r.chunk
+                ext = Path(c.source_file).suffix.lstrip(".")
+                if ext not in st.session_state.file_types:
+                    continue
+                if c.chunk_type not in st.session_state.chunk_types:
+                    continue
+                filtered_results.append(r)
+                if len(filtered_results) >= st.session_state.top_k:
+                    break
+
+            st.write(f"Filtered to {len(filtered_results)} results")
+            status.update(label="✅ Search complete", state="complete", expanded=False)
+
+        # Generation phase
+        with st.status("🤖 Thinking...", expanded=False) as status:
+            st.write("Analyzing code context...")
+            chunks = [r.chunk for r in filtered_results]
+            answer = generate_response(query, chunks)
+            status.update(label="✅ Answer ready", state="complete", expanded=False)
+
+        # Show answer with animation
+        st.markdown("""
+        <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stMarkdown {
+            animation: fadeIn 0.3s ease-out;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
         st.chat_message("assistant").markdown(answer)
 
         render_sources(filtered_results)
