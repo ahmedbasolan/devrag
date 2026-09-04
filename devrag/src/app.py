@@ -509,7 +509,7 @@ def main():
 
         st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
 
-        # API key status and input
+        # API key status
         api_key = _get_api_key()
         if api_key:
             st.markdown(f"""
@@ -518,6 +518,9 @@ def main():
                 Gemini connected
             </div>
             """, unsafe_allow_html=True)
+            if st.button("Change API Key", type="secondary", use_container_width=True):
+                st.session_state.show_key_change = True
+                st.rerun()
         else:
             st.markdown(f"""
             <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:{COLORS['text_muted']};">
@@ -525,26 +528,34 @@ def main():
                 No API key — fallback mode
             </div>
             """, unsafe_allow_html=True)
+            if st.button("Add API Key", type="secondary", use_container_width=True):
+                st.session_state.show_key_change = True
+                st.rerun()
 
-            # Allow users to enter their API key in the UI
-            with st.expander("🔑 Add your Gemini API key", expanded=False):
-                st.markdown("""
-                Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey).
-                Your key stays in your browser and is never stored on any server.
-                """, unsafe_allow_html=True)
-                user_api_key = st.text_input(
+        # API key change modal
+        if st.session_state.get("show_key_change", False):
+            with st.expander("🔑 Update API Key", expanded=True):
+                new_key = st.text_input(
                     "Gemini API Key",
                     type="password",
                     placeholder="AIza...",
-                    label_visibility="collapsed",
-                    key="user_api_key_input"
+                    key="new_api_key_input"
                 )
-                if user_api_key:
-                    # Save to session state and .env file
-                    os.environ["GEMINI_API_KEY"] = user_api_key
-                    st.session_state.api_key = user_api_key
-                    st.success("API key saved for this session!")
-                    st.rerun()
+                col1, col2 = st.columns(2)
+                with col1:
+                    if st.button("Save", type="primary", use_container_width=True):
+                        if new_key:
+                            os.environ["GEMINI_API_KEY"] = new_key
+                            st.session_state.api_key = new_key
+                            st.session_state.show_key_change = False
+                            st.success("API key updated!")
+                            st.rerun()
+                        else:
+                            st.error("Please enter a key")
+                with col2:
+                    if st.button("Cancel", use_container_width=True):
+                        st.session_state.show_key_change = False
+                        st.rerun()
 
         # ── Search filters ──────────────────────────────────
         if st.session_state.indexed:
@@ -593,6 +604,82 @@ def main():
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # Check if API key is set
+    api_key = _get_api_key()
+    if not api_key:
+        # Show API key setup screen
+        st.markdown(f"""
+        <div style="text-align:center; padding:60px 40px; background:{COLORS['bg_card']}; border:1px solid {COLORS['border']}; border-radius:12px; margin:20px 0;">
+            <div style="font-size:48px; margin-bottom:16px;">🔑</div>
+            <h2 style="color:{COLORS['text']}; margin-bottom:8px;">Welcome to DevRAG</h2>
+            <p style="color:{COLORS['text_dim']}; font-size:14px; max-width:400px; margin:0 auto;">
+                To get AI-powered answers about your code, you'll need a free Gemini API key.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Setup steps
+        col1, col2 = st.columns([1, 1])
+
+        with col1:
+            st.markdown(f"""
+            <div style="background:{COLORS['bg_card']}; border:1px solid {COLORS['border']}; border-radius:8px; padding:20px; height:140px;">
+                <div style="font-size:24px; margin-bottom:8px;">1️⃣</div>
+                <h4 style="color:{COLORS['text']}; margin:0 0 8px 0;">Get a free API key</h4>
+                <p style="color:{COLORS['text_dim']}; font-size:13px; margin:0;">
+                    Visit Google AI Studio and create a free API key. Takes 30 seconds.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            st.link_button("Get API Key →", "https://aistudio.google.com/apikey", type="secondary")
+
+        with col2:
+            st.markdown(f"""
+            <div style="background:{COLORS['bg_card']}; border:1px solid {COLORS['border']}; border-radius:8px; padding:20px; height:140px;">
+                <div style="font-size:24px; margin-bottom:8px;">2️⃣</div>
+                <h4 style="color:{COLORS['text']}; margin:0 0 8px 0;">Enter your key below</h4>
+                <p style="color:{COLORS['text_dim']}; font-size:13px; margin:0;">
+                    Your key stays in your browser only. Never stored on any server.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # API key input
+        st.markdown("<div style='height:16px;'></div>", unsafe_allow_html=True)
+
+        with st.form("api_key_form"):
+            user_api_key = st.text_input(
+                "Your Gemini API Key",
+                type="password",
+                placeholder="AIza...",
+                help="Paste your API key from Google AI Studio"
+            )
+            submitted = st.form_submit_button("Start Using DevRAG →", type="primary", use_container_width=True)
+
+            if submitted and user_api_key:
+                os.environ["GEMINI_API_KEY"] = user_api_key
+                st.session_state.api_key = user_api_key
+                st.success("✅ API key saved! Redirecting...")
+                st.rerun()
+            elif submitted:
+                st.error("Please enter a valid API key")
+
+        # Skip option
+        st.markdown(f"""
+        <div style="text-align:center; margin-top:16px;">
+            <span style="color:{COLORS['text_muted']}; font-size:13px;">
+                Don't have an API key? You can still use DevRAG in 
+                <strong>fallback mode</strong> (raw code snippets instead of AI explanations).
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("Continue without AI →", type="secondary", use_container_width=True):
+            st.session_state.api_key = ""
+            st.rerun()
+
+        return
 
     # Empty state with example queries
     if not st.session_state.indexed:
