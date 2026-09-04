@@ -538,18 +538,21 @@ def main():
                 new_key = st.text_input(
                     "Gemini API Key",
                     type="password",
-                    placeholder="AIza...",
+                    placeholder="AIzaSy...",
                     key="new_api_key_input"
                 )
                 col1, col2 = st.columns(2)
                 with col1:
                     if st.button("Save", type="primary", use_container_width=True):
                         if new_key:
-                            os.environ["GEMINI_API_KEY"] = new_key
-                            st.session_state.api_key = new_key
-                            st.session_state.show_key_change = False
-                            st.success("API key updated!")
-                            st.rerun()
+                            if not new_key.startswith("AIza"):
+                                st.error("❌ Key should start with AIza")
+                            else:
+                                os.environ["GEMINI_API_KEY"] = new_key
+                                st.session_state.api_key = new_key
+                                st.session_state.show_key_change = False
+                                st.success("✅ API key updated!")
+                                st.rerun()
                         else:
                             st.error("Please enter a key")
                 with col2:
@@ -652,18 +655,24 @@ def main():
             user_api_key = st.text_input(
                 "Your Gemini API Key",
                 type="password",
-                placeholder="AIza...",
-                help="Paste your API key from Google AI Studio"
+                placeholder="AIzaSy...",
+                help="Get your free key from Google AI Studio (starts with AIzaSy)"
             )
             submitted = st.form_submit_button("Start Using DevRAG →", type="primary", use_container_width=True)
 
             if submitted and user_api_key:
-                os.environ["GEMINI_API_KEY"] = user_api_key
-                st.session_state.api_key = user_api_key
-                st.success("✅ API key saved! Redirecting...")
-                st.rerun()
+                # Validate key format
+                if not user_api_key.startswith("AIza"):
+                    st.error("❌ This doesn't look like a Gemini API key. Gemini keys start with **AIza**. You may have entered a Groq or OpenAI key.")
+                    st.info("💡 **Gemini API keys** start with `AIzaSy` and are free from [Google AI Studio](https://aistudio.google.com/apikey)")
+                else:
+                    os.environ["GEMINI_API_KEY"] = user_api_key
+                    st.session_state.api_key = user_api_key
+                    st.success("✅ API key saved!")
+                    st.balloons()
+                    st.rerun()
             elif submitted:
-                st.error("Please enter a valid API key")
+                st.error("Please enter an API key")
 
         # Skip option
         st.markdown(f"""
