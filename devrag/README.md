@@ -49,8 +49,14 @@ docker compose up app
 
 ### 5. Smart Answers (optional)
 
-For AI-powered explanations instead of raw code snippets:
+For AI-powered explanations instead of raw code snippets, you have two options:
 
+**Option A: Enter your API key in the UI**
+- Click "Add your Gemini API key" in the sidebar
+- Get a free key from [Google AI Studio](https://aistudio.google.com/apikey)
+- Your key stays in your browser and is never stored on any server
+
+**Option B: Use a .env file**
 ```bash
 cp .env.example .env
 # Add your Gemini API key (free tier works)

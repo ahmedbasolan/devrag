@@ -294,7 +294,18 @@ def inject_css():
 # ---------------------------------------------------------------------------
 
 def _get_api_key():
-    return os.getenv("GEMINI_API_KEY", "")
+    # Check environment variable first
+    key = os.getenv("GEMINI_API_KEY", "")
+    if key:
+        return key
+    # Check session state (for UI-entered keys)
+    try:
+        import streamlit as st
+        if "api_key" in st.session_state:
+            return st.session_state.api_key
+    except RuntimeError:
+        pass
+    return ""
 
 
 def generate_response(query: str, chunks: list[CodeChunk]) -> str:
@@ -498,7 +509,7 @@ def main():
 
         st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
 
-        # API key status
+        # API key status and input
         api_key = _get_api_key()
         if api_key:
             st.markdown(f"""
@@ -514,6 +525,26 @@ def main():
                 No API key — fallback mode
             </div>
             """, unsafe_allow_html=True)
+
+            # Allow users to enter their API key in the UI
+            with st.expander("🔑 Add your Gemini API key", expanded=False):
+                st.markdown("""
+                Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey).
+                Your key stays in your browser and is never stored on any server.
+                """, unsafe_allow_html=True)
+                user_api_key = st.text_input(
+                    "Gemini API Key",
+                    type="password",
+                    placeholder="AIza...",
+                    label_visibility="collapsed",
+                    key="user_api_key_input"
+                )
+                if user_api_key:
+                    # Save to session state and .env file
+                    os.environ["GEMINI_API_KEY"] = user_api_key
+                    st.session_state.api_key = user_api_key
+                    st.success("API key saved for this session!")
+                    st.rerun()
 
         # ── Search filters ──────────────────────────────────
         if st.session_state.indexed:
