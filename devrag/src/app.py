@@ -291,7 +291,7 @@ def generate_response(query: str, chunks: list[CodeChunk]) -> str:
 
         client = genai.Client(api_key=api_key)
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.6-flash",
             contents=(
                 f"You are explaining a codebase to a smart person who doesn't write code. "
                 f"Answer the question in plain English. Use analogies. "
