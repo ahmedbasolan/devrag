@@ -8,7 +8,6 @@ Merges results via Reciprocal Rank Fusion (RRF).
 import os
 import re
 from dataclasses import dataclass
-from typing import List, Optional, Tuple
 
 import chromadb
 import numpy as np
@@ -16,7 +15,6 @@ from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
 
 from .parser import CodeChunk
-
 
 CHROMA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".chroma")
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
@@ -34,11 +32,11 @@ class HybridRetriever:
 
     def __init__(self, chroma_dir: str = CHROMA_DIR):
         self.chroma_dir = chroma_dir
-        self._embedder: Optional[SentenceTransformer] = None
-        self._chroma_client: Optional[chromadb.ClientAPI] = None
-        self._collection: Optional[chromadb.Collection] = None
-        self._bm25: Optional[BM25Okapi] = None
-        self._bm25_chunks: List[CodeChunk] = []
+        self._embedder: SentenceTransformer | None = None
+        self._chroma_client: chromadb.ClientAPI | None = None
+        self._collection: chromadb.Collection | None = None
+        self._bm25: BM25Okapi | None = None
+        self._bm25_chunks: list[CodeChunk] = []
         self._chunk_map: dict[str, CodeChunk] = {}
 
     @property
@@ -58,7 +56,7 @@ class HybridRetriever:
             )
         return self._collection
 
-    def index_chunks(self, chunks: List[CodeChunk]) -> int:
+    def index_chunks(self, chunks: list[CodeChunk]) -> int:
         """Index chunks into both BM25 and ChromaDB. Returns count indexed."""
         if not chunks:
             return 0
@@ -71,15 +69,13 @@ class HybridRetriever:
 
         return count
 
-    def _build_bm25(self, chunks: List[CodeChunk]) -> None:
+    def _build_bm25(self, chunks: list[CodeChunk]) -> None:
         """Build BM25 index from chunks."""
-        tokenized = [
-            self._tokenize(c.content) for c in chunks
-        ]
+        tokenized = [self._tokenize(c.content) for c in chunks]
         self._bm25 = BM25Okapi(tokenized)
 
     @staticmethod
-    def _tokenize(text: str) -> List[str]:
+    def _tokenize(text: str) -> list[str]:
         """Code-aware tokenizer that splits identifiers into meaningful tokens.
 
         Handles snake_case, camelCase, dotted names, and preserves string literals.
@@ -101,13 +97,13 @@ class HybridRetriever:
         cleaned = re.sub(r"#[^\n]*", protect, cleaned)
 
         # Split on non-alphanumeric boundaries (handles dots, underscores, hyphens)
-        raw_tokens = re.split(r'[^a-zA-Z0-9]+', cleaned)
+        raw_tokens = re.split(r"[^a-zA-Z0-9]+", cleaned)
 
         for token in raw_tokens:
             if not token:
                 continue
             # Check if this is a protected placeholder
-            placeholder_match = re.match(r'\x00(\d+)\x00', token)
+            placeholder_match = re.match(r"\x00(\d+)\x00", token)
             if placeholder_match:
                 idx = int(placeholder_match.group(1))
                 # Add the original string literal as a single token
@@ -115,16 +111,16 @@ class HybridRetriever:
                 continue
             # Split camelCase: getUserById -> get, User, By, Id
             # Also split at digit boundaries: BM25Okapi -> BM25, Okapi
-            camel_split = re.sub(r'([a-z])([A-Z])', r'\1 \2', token)
-            camel_split = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1 \2', camel_split)
-            camel_split = re.sub(r'([a-zA-Z])([0-9])', r'\1 \2', camel_split)
-            camel_split = re.sub(r'([0-9])([a-zA-Z])', r'\1 \2', camel_split)
+            camel_split = re.sub(r"([a-z])([A-Z])", r"\1 \2", token)
+            camel_split = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", camel_split)
+            camel_split = re.sub(r"([a-zA-Z])([0-9])", r"\1 \2", camel_split)
+            camel_split = re.sub(r"([0-9])([a-zA-Z])", r"\1 \2", camel_split)
             for part in camel_split.split():
                 tokens.append(part.lower())
 
         return tokens
 
-    def _index_chroma(self, chunks: List[CodeChunk]) -> int:
+    def _index_chroma(self, chunks: list[CodeChunk]) -> int:
         """Index chunks into ChromaDB in batches."""
         batch_size = 100
         total = 0
@@ -154,7 +150,7 @@ class HybridRetriever:
 
         return total
 
-    def search_bm25(self, query: str, top_k: int = 10) -> List[RankedResult]:
+    def search_bm25(self, query: str, top_k: int = 10) -> list[RankedResult]:
         """Sparse keyword search via BM25."""
         if self._bm25 is None or not self._bm25_chunks:
             return []
@@ -166,15 +162,17 @@ class HybridRetriever:
         results = []
         for idx in top_indices:
             if scores[idx] > 0:
-                results.append(RankedResult(
-                    chunk=self._bm25_chunks[idx],
-                    score=float(scores[idx]),
-                    source="bm25",
-                ))
+                results.append(
+                    RankedResult(
+                        chunk=self._bm25_chunks[idx],
+                        score=float(scores[idx]),
+                        source="bm25",
+                    )
+                )
 
         return results
 
-    def search_chroma(self, query: str, top_k: int = 10) -> List[RankedResult]:
+    def search_chroma(self, query: str, top_k: int = 10) -> list[RankedResult]:
         """Dense vector search via ChromaDB + sentence-transformers."""
         if self.collection.count() == 0:
             return []
@@ -186,7 +184,6 @@ class HybridRetriever:
 
         ranked = []
         for i in range(len(results["ids"][0])):
-            doc_id = results["ids"][0][i]
             distance = results["distances"][0][i] if results["distances"] else 0
             metadata = results["metadatas"][0][i] if results["metadatas"] else {}
             document = results["documents"][0][i] if results["documents"] else ""
@@ -208,7 +205,7 @@ class HybridRetriever:
 
     def search_rrf(
         self, query: str, top_k: int = 10, bm25_weight: float = 1.0, chroma_weight: float = 1.0
-    ) -> List[RankedResult]:
+    ) -> list[RankedResult]:
         """Hybrid search using Reciprocal Rank Fusion with file-level boosting.
 
         After RRF merging, boosts chunks from files that appear in the top results.
@@ -237,7 +234,7 @@ class HybridRetriever:
         # Count how many times each file appears in the top results
         file_counts: dict[str, int] = {}
         sorted_keys = sorted(rrf_scores.keys(), key=lambda k: rrf_scores[k], reverse=True)
-        for key in sorted_keys[:top_k * 2]:
+        for key in sorted_keys[: top_k * 2]:
             file_path = rrf_chunks[key].source_file
             file_counts[file_path] = file_counts.get(file_path, 0) + 1
 
@@ -255,14 +252,25 @@ class HybridRetriever:
                 boosted_scores[key] = score
 
         # Also boost markdown doc chunks for decision-type queries
-        decision_keywords = {"why", "strategy", "decision", "chosen", "approach", "trade-off", "tradeoff"}
+        decision_keywords = {
+            "why",
+            "strategy",
+            "decision",
+            "chosen",
+            "approach",
+            "trade-off",
+            "tradeoff",
+        }
         query_lower = query.lower()
         is_decision_query = any(kw in query_lower for kw in decision_keywords)
         if is_decision_query:
             for key, chunk in rrf_chunks.items():
-                if chunk.source_file.endswith(".md") and "adr" in chunk.source_file.lower():
-                    boosted_scores[key] = boosted_scores.get(key, rrf_scores.get(key, 0)) * 1.3
-                elif chunk.chunk_type == "markdown" and chunk.metadata.get("heading", "").startswith("ADR"):
+                if (
+                    chunk.source_file.endswith(".md")
+                    and "adr" in chunk.source_file.lower()
+                    or chunk.chunk_type == "markdown"
+                    and chunk.metadata.get("heading", "").startswith("ADR")
+                ):
                     boosted_scores[key] = boosted_scores.get(key, rrf_scores.get(key, 0)) * 1.3
 
         # Re-sort by boosted scores
@@ -270,11 +278,13 @@ class HybridRetriever:
 
         results = []
         for key in sorted_keys[:top_k]:
-            results.append(RankedResult(
-                chunk=rrf_chunks[key],
-                score=boosted_scores[key],
-                source="rrf",
-            ))
+            results.append(
+                RankedResult(
+                    chunk=rrf_chunks[key],
+                    score=boosted_scores[key],
+                    source="rrf",
+                )
+            )
 
         return results
 
