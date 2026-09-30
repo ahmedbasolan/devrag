@@ -1,9 +1,19 @@
 {
   "metrics": {
     "hit_rate_at_5": 0.8571428571428571,
-    "hit_rate_at_10": 0.9523809523809523,
-    "mrr": 0.6537037037037037,
+    "hit_rate_at_10": 0.9047619047619048,
+    "mrr": 0.4511904761904762,
     "total_queries": 21
+  },
+  "corpus": {
+    "repo_path": "C:\\Users\\ahmed\\Projects\\devrag\\devrag",
+    "chunk_count": 137,
+    "excluded_files": [
+      "eval_rag.py",
+      "test_generator.py",
+      "test_parser.py",
+      "test_retriever.py"
+    ]
   },
   "results": [
     {
@@ -14,7 +24,7 @@
       "top_results": [
         {
           "rank": 1,
-          "file": "src/parser.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\parser.py",
           "name": "parse_python_file",
           "type": "function",
           "score": 0.04878371232152301,
@@ -22,34 +32,34 @@
         },
         {
           "rank": 2,
-          "file": "src/parser.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\parser.py",
           "name": "_parse_class",
           "type": "function",
-          "score": 0.047631048387096774,
+          "score": 0.04724702380952381,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "src/parser.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\parser.py",
           "name": "_parse_function",
           "type": "function",
-          "score": 0.04586834733893557,
+          "score": 0.046536796536796536,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "src/parser.py",
-          "name": "ingest_directory",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\parser.py",
+          "name": "parse_markdown_file",
           "type": "function",
-          "score": 0.045454545454545456,
+          "score": 0.04348739495798319,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "src/parser.py",
-          "name": "parse_markdown_file",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\parser.py",
+          "name": "ingest_directory",
           "type": "function",
-          "score": 0.043478260869565216,
+          "score": 0.0428921568627451,
           "source": "rrf"
         }
       ]
@@ -58,46 +68,46 @@
       "query": "How does the hybrid retrieval work with BM25 and vector search?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.3333333333333333,
       "top_results": [
         {
           "rank": 1,
-          "file": "src/retriever.py",
-          "name": "search_bm25",
-          "type": "method",
-          "score": 0.04724702380952381,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.08160542128727519,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "src/retriever.py",
-          "name": "HybridRetriever",
-          "type": "class",
-          "score": 0.046252371916508536,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "How It Works",
+          "type": "markdown",
+          "score": 0.04878371232152301,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "src/retriever.py",
-          "name": "search_rrf",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\retriever.py",
+          "name": "search_bm25",
           "type": "method",
-          "score": 0.04582555970149254,
+          "score": 0.046875,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "src/retriever.py",
-          "name": "_build_bm25",
-          "type": "method",
-          "score": 0.04420368364030336,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Design Decisions",
+          "type": "markdown",
+          "score": 0.046536796536796536,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "src/retriever.py",
-          "name": "index_chunks",
-          "type": "method",
-          "score": 0.0411036036036036,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\retriever.py",
+          "name": "HybridRetriever",
+          "type": "class",
+          "score": 0.046536796536796536,
           "source": "rrf"
         }
       ]
@@ -110,42 +120,42 @@
       "top_results": [
         {
           "rank": 1,
-          "file": "README.md",
-          "name": "Architecture",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
           "type": "markdown",
-          "score": 0.04918032786885246,
+          "score": 0.06839723202740014,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "README.md",
-          "name": "Dependencies",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "How It Works",
           "type": "markdown",
           "score": 0.047631048387096774,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "README.md",
-          "name": "Design Trade-offs",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "2. Run",
           "type": "markdown",
-          "score": 0.04532030895047706,
+          "score": 0.047317436661698964,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "README.md",
-          "name": "3. Run",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Design Decisions",
           "type": "markdown",
-          "score": 0.043560606060606064,
+          "score": 0.04412719013627515,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "README.md",
-          "name": ":gear: DevRAG",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
           "type": "markdown",
-          "score": 0.04066345639379347,
+          "score": 0.04310868245294475,
           "source": "rrf"
         }
       ]
@@ -154,46 +164,46 @@
       "query": "How are markdown files chunked and parsed?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "src/parser.py",
-          "name": "parse_markdown_file",
-          "type": "function",
-          "score": 0.04459016393442623,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.07680391231559196,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "src/parser.py",
-          "name": "_split_long_section",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\parser.py",
+          "name": "parse_markdown_file",
           "type": "function",
-          "score": 0.042813765182186235,
+          "score": 0.044327006039689386,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "src/parser.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\parser.py",
           "name": "ingest_directory",
           "type": "function",
-          "score": 0.04265832997176281,
+          "score": 0.04334719334719335,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "tests/eval_rag.py",
-          "name": "_is_expected_match",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\parser.py",
+          "name": "_split_long_section",
           "type": "function",
-          "score": 0.0375,
+          "score": 0.04266826923076923,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "src/app.py",
-          "name": "main",
-          "type": "function",
-          "score": 0.035652985074626865,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
+          "type": "markdown",
+          "score": 0.03922988943957301,
           "source": "rrf"
         }
       ]
@@ -206,42 +216,42 @@
       "top_results": [
         {
           "rank": 1,
-          "file": "src/retriever.py",
-          "name": "__init__",
-          "type": "method",
-          "score": 0.04878371232152301,
-          "source": "rrf"
-        },
-        {
-          "rank": 2,
-          "file": "src/retriever.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\retriever.py",
           "name": "index_chunks",
           "type": "method",
           "score": 0.048027663934426236,
           "source": "rrf"
         },
         {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\retriever.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.04800307219662058,
+          "source": "rrf"
+        },
+        {
           "rank": 3,
-          "file": "src/retriever.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\retriever.py",
           "name": "HybridRetriever",
           "type": "class",
-          "score": 0.045804195804195806,
+          "score": 0.045454545454545456,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "src/retriever.py",
-          "name": "_index_chroma",
-          "type": "method",
-          "score": 0.04549632352941176,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "How It Works",
+          "type": "markdown",
+          "score": 0.04502688172043011,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "src/retriever.py",
-          "name": "clear",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\retriever.py",
+          "name": "_index_chroma",
           "type": "method",
-          "score": 0.04477611940298507,
+          "score": 0.044816053511705686,
           "source": "rrf"
         }
       ]
@@ -254,42 +264,42 @@
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/docs/api.md",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
           "name": "Authentication",
           "type": "markdown",
-          "score": 0.047631048387096774,
+          "score": 0.04727047146401985,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/docs/api.md",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
           "name": "Login",
           "type": "markdown",
-          "score": 0.047317436661698964,
+          "score": 0.04697822363591876,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/docs/api.md",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
           "name": "Overview",
           "type": "markdown",
-          "score": 0.0469208211143695,
+          "score": 0.046536796536796536,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/app.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
           "name": "login",
           "type": "function",
-          "score": 0.04582555970149254,
+          "score": 0.04549632352941176,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/src/app.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
           "name": "register",
           "type": "function",
-          "score": 0.04379795396419437,
+          "score": 0.04316770186335404,
           "source": "rrf"
         }
       ]
@@ -298,46 +308,46 @@
       "query": "How does the payment processing service handle transactions?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.3333333333333333,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/app.py",
-          "name": "PaymentService",
-          "type": "class",
-          "score": 0.04800307219662058,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.06308480252142225,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/src/app.py",
-          "name": "process_payment",
-          "type": "method",
-          "score": 0.04727047146401985,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
+          "type": "markdown",
+          "score": 0.04878371232152301,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/docs/api.md",
-          "name": "Overview",
-          "type": "markdown",
-          "score": 0.04590163934426229,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "PaymentService",
+          "type": "class",
+          "score": 0.04724702380952381,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/app.py",
-          "name": "NotificationService",
-          "type": "class",
-          "score": 0.04379795396419437,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "process_payment",
+          "type": "method",
+          "score": 0.046886446886446886,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "README.md",
-          "name": "Design Trade-offs",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
+          "name": "Overview",
           "type": "markdown",
-          "score": 0.03441176470588236,
+          "score": 0.04553146483342147,
           "source": "rrf"
         }
       ]
@@ -346,46 +356,46 @@
       "query": "How does the Redis cache manager handle invalidation?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/cache.py",
-          "name": "CacheManager",
-          "type": "class",
-          "score": 0.04727047146401985,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.06907661324825505,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/src/cache.py",
-          "name": "__init__",
-          "type": "method",
-          "score": 0.04697822363591876,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheManager",
+          "type": "class",
+          "score": 0.0469208211143695,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/cache.py",
-          "name": "delete",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "__init__",
           "type": "method",
-          "score": 0.04549632352941176,
+          "score": 0.04658160808858931,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/cache.py",
-          "name": "CacheWarmer",
-          "type": "class",
-          "score": 0.04502688172043011,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "delete",
+          "type": "method",
+          "score": 0.04486607142857142,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/src/cache.py",
-          "name": "cached",
-          "type": "function",
-          "score": 0.04486607142857142,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheWarmer",
+          "type": "class",
+          "score": 0.04464285714285714,
           "source": "rrf"
         }
       ]
@@ -394,46 +404,46 @@
       "query": "How are database migrations created and applied?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/db_migration.py",
-          "name": "__init__",
-          "type": "method",
-          "score": 0.04878371232152301,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.08043622038187255,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/src/db_migration.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\db_migration.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.04838709677419355,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
+          "type": "markdown",
+          "score": 0.047667087011349314,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\db_migration.py",
           "name": "MigrationManager",
           "type": "class",
           "score": 0.04724702380952381,
           "source": "rrf"
         },
         {
-          "rank": 3,
-          "file": "mock_data/src/db_migration.py",
+          "rank": 5,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\db_migration.py",
           "name": "migrate_down",
           "type": "method",
-          "score": 0.046153846153846156,
-          "source": "rrf"
-        },
-        {
-          "rank": 4,
-          "file": "mock_data/src/db_migration.py",
-          "name": "_save_applied",
-          "type": "method",
-          "score": 0.04586834733893557,
-          "source": "rrf"
-        },
-        {
-          "rank": 5,
-          "file": "mock_data/src/db_migration.py",
-          "name": "_get_pending",
-          "type": "method",
-          "score": 0.04532030895047706,
+          "score": 0.045454545454545456,
           "source": "rrf"
         }
       ]
@@ -446,42 +456,42 @@
       "top_results": [
         {
           "rank": 1,
-          "file": "README.md",
-          "name": "Design Trade-offs",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
           "type": "markdown",
-          "score": 0.062118171683389074,
+          "score": 0.08791807507560932,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/src/cache.py",
-          "name": "cached",
-          "type": "function",
-          "score": 0.047619047619047616,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
+          "type": "markdown",
+          "score": 0.04632929436920884,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.04347616754935002,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\src\\generator.py",
+          "name": "_check_rate_limit",
+          "type": "function",
+          "score": 0.04376068376068376,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/cache.py",
-          "name": "get_stats",
-          "type": "method",
-          "score": 0.04285714285714286,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Design Decisions",
+          "type": "markdown",
+          "score": 0.04265832997176281,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/src/app.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
           "name": "rate_limit",
           "type": "function",
-          "score": 0.042622950819672135,
+          "score": 0.04227921734531994,
           "source": "rrf"
         }
       ]
@@ -494,42 +504,42 @@
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/docs/api.md",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
           "name": "Create Order",
           "type": "markdown",
-          "score": 0.0469208211143695,
-          "source": "rrf"
-        },
-        {
-          "rank": 2,
-          "file": "mock_data/src/app.py",
-          "name": "create_order",
-          "type": "function",
-          "score": 0.04632929436920884,
-          "source": "rrf"
-        },
-        {
-          "rank": 3,
-          "file": "mock_data/src/app.py",
-          "name": "Order",
-          "type": "class",
           "score": 0.046252371916508536,
           "source": "rrf"
         },
         {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "Order",
+          "type": "class",
+          "score": 0.04549632352941176,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "create_order",
+          "type": "function",
+          "score": 0.045423497267759565,
+          "source": "rrf"
+        },
+        {
           "rank": 4,
-          "file": "mock_data/docs/api.md",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
           "name": "Dashboard Stats",
           "type": "markdown",
-          "score": 0.04486607142857142,
+          "score": 0.0445054945054945,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/src/app.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
           "name": "User",
           "type": "class",
-          "score": 0.04391025641025641,
+          "score": 0.043560606060606064,
           "source": "rrf"
         }
       ]
@@ -538,46 +548,46 @@
       "query": "How does the product search endpoint filter results?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 0.3333333333333333,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "tests/eval_rag.py",
-          "name": "evaluate_retrieval",
-          "type": "function",
-          "score": 0.04409722222222222,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.06912483325971894,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "src/retriever.py",
-          "name": "search_chroma",
-          "type": "method",
-          "score": 0.0427705223880597,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "search_products",
+          "type": "function",
+          "score": 0.04516129032258064,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/app.py",
-          "name": "search_products",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "list_products",
           "type": "function",
-          "score": 0.04227921734531994,
+          "score": 0.04311774461028192,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/docs/api.md",
-          "name": "Search",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "How It Works",
           "type": "markdown",
-          "score": 0.04194639604475671,
+          "score": 0.04311774461028192,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "src/retriever.py",
-          "name": "search_bm25",
-          "type": "method",
-          "score": 0.04058823529411765,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
+          "type": "markdown",
+          "score": 0.04295081967213115,
           "source": "rrf"
         }
       ]
@@ -586,46 +596,46 @@
       "query": "How does the notification service send emails?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/app.py",
-          "name": "NotificationService",
-          "type": "class",
-          "score": 0.04918032786885246,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.06442611442611443,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/src/app.py",
-          "name": "_send",
-          "type": "method",
-          "score": 0.047631048387096774,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "NotificationService",
+          "type": "class",
+          "score": 0.04878371232152301,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/app.py",
-          "name": "send_shipping_update",
-          "type": "method",
-          "score": 0.047619047619047616,
-          "source": "rrf"
-        },
-        {
-          "rank": 4,
-          "file": "mock_data/src/app.py",
-          "name": "send_order_confirmation",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "_send",
           "type": "method",
           "score": 0.04727047146401985,
           "source": "rrf"
         },
         {
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "send_shipping_update",
+          "type": "method",
+          "score": 0.04724702380952381,
+          "source": "rrf"
+        },
+        {
           "rank": 5,
-          "file": "mock_data/docs/api.md",
-          "name": "Authentication",
-          "type": "markdown",
-          "score": 0.04114921223354959,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "send_order_confirmation",
+          "type": "method",
+          "score": 0.046886446886446886,
           "source": "rrf"
         }
       ]
@@ -634,46 +644,46 @@
       "query": "How does the admin dashboard aggregate store statistics?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 0.3333333333333333,
+      "mrr": 0.2,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/docs/api.md",
-          "name": "Dashboard Stats",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
           "type": "markdown",
-          "score": 0.047631048387096774,
+          "score": 0.06410855126608551,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/docs/api.md",
-          "name": "Overview",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
           "type": "markdown",
-          "score": 0.04724702380952381,
+          "score": 0.047317436661698964,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/app.py",
-          "name": "admin_stats",
-          "type": "function",
-          "score": 0.040152055119980996,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
+          "name": "Dashboard Stats",
+          "type": "markdown",
+          "score": 0.04727047146401985,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "README.md",
-          "name": "Design Trade-offs",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
+          "name": "Overview",
           "type": "markdown",
-          "score": 0.039285714285714285,
+          "score": 0.046875,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/docs/decisions.md",
-          "name": "ADR-004: Cache Invalidation Strategy",
-          "type": "markdown",
-          "score": 0.03800682885189928,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "admin_stats",
+          "type": "function",
+          "score": 0.04353905496624879,
           "source": "rrf"
         }
       ]
@@ -682,46 +692,46 @@
       "query": "How does the cache warming pre-populate frequently accessed data?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/cache.py",
-          "name": "CacheWarmer",
-          "type": "class",
-          "score": 0.048027663934426236,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.07190676880920224,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/src/cache.py",
-          "name": "__init__",
-          "type": "method",
-          "score": 0.04658160808858931,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheWarmer",
+          "type": "class",
+          "score": 0.04697822363591876,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/cache.py",
-          "name": "cached",
-          "type": "function",
-          "score": 0.045548654244306416,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.04546498277841562,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/cache.py",
-          "name": "CacheManager",
-          "type": "class",
-          "score": 0.04327521793275218,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "cached",
+          "type": "function",
+          "score": 0.04446640316205534,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/src/cache.py",
-          "name": "get",
-          "type": "method",
-          "score": 0.043185584092792044,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheManager",
+          "type": "class",
+          "score": 0.04272727272727273,
           "source": "rrf"
         }
       ]
@@ -729,47 +739,47 @@
     {
       "query": "How does authentication flow across the entire application?",
       "hit_at_5": false,
-      "hit_at_10": true,
-      "mrr": 0.1111111111111111,
+      "hit_at_10": false,
+      "mrr": 0.0,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/docs/api.md",
-          "name": "Login",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
           "type": "markdown",
-          "score": 0.047317436661698964,
+          "score": 0.07073034492389331,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/docs/api.md",
-          "name": "Overview",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
           "type": "markdown",
-          "score": 0.04724702380952381,
+          "score": 0.04918032786885246,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/docs/api.md",
-          "name": "Authentication",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
+          "name": "Login",
           "type": "markdown",
-          "score": 0.04616477272727273,
+          "score": 0.04658160808858931,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/docs/api.md",
-          "name": "Register",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
+          "name": "Overview",
           "type": "markdown",
-          "score": 0.04513574660633484,
+          "score": 0.046153846153846156,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/docs/api.md",
-          "name": "Create Product (Vendor only)",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\api.md",
+          "name": "Register",
           "type": "markdown",
-          "score": 0.04096989966555184,
+          "score": 0.04415584415584416,
           "source": "rrf"
         }
       ]
@@ -778,46 +788,46 @@
       "query": "How does a product go from listing to being delivered to a customer?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 0.5,
+      "mrr": 1.0,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/docs/api.md",
-          "name": "Overview",
-          "type": "markdown",
-          "score": 0.048399687743950044,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "get_product",
+          "type": "function",
+          "score": 0.045804195804195806,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/src/app.py",
-          "name": "get_product",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "create_product",
           "type": "function",
-          "score": 0.045454545454545456,
+          "score": 0.04464285714285714,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/app.py",
-          "name": "create_product",
-          "type": "function",
-          "score": 0.04523809523809523,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.04343434343434343,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/app.py",
-          "name": "to_dict",
-          "type": "method",
-          "score": 0.04379795396419437,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
+          "type": "markdown",
+          "score": 0.04324067474459491,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/src/app.py",
-          "name": "search_products",
-          "type": "function",
-          "score": 0.04138127853881278,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "to_dict",
+          "type": "method",
+          "score": 0.043185584092792044,
           "source": "rrf"
         }
       ]
@@ -826,46 +836,46 @@
       "query": "How does the caching layer interact with the database?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 0.3333333333333333,
+      "mrr": 0.2,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/docs/decisions.md",
-          "name": "ADR-004: Cache Invalidation Strategy",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
           "type": "markdown",
-          "score": 0.039117647058823535,
+          "score": 0.0659344256162795,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/docs/decisions.md",
-          "name": "ADR-003: SQLite for Development",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
           "type": "markdown",
-          "score": 0.03451926414439431,
+          "score": 0.04571692449780651,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/cache.py",
-          "name": "__module_doc__",
-          "type": "module_docstring",
-          "score": 0.02459016393442623,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\decisions.md",
+          "name": "ADR-004: Cache Invalidation Strategy",
+          "type": "markdown",
+          "score": 0.03780821917808219,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/cache.py",
-          "name": "CacheWarmer",
-          "type": "class",
-          "score": 0.024193548387096774,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\decisions.md",
+          "name": "ADR-003: SQLite for Development",
+          "type": "markdown",
+          "score": 0.033513957307060756,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/src/cache.py",
-          "name": "__init__",
-          "type": "method",
-          "score": 0.023809523809523808,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "__module_doc__",
+          "type": "module_docstring",
+          "score": 0.02459016393442623,
           "source": "rrf"
         }
       ]
@@ -874,46 +884,46 @@
       "query": "Why was Flask chosen over Django for this project?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.3333333333333333,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/docs/decisions.md",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.06567810299153584,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "3. Index Your Own Code",
+          "type": "markdown",
+          "score": 0.047631048387096774,
+          "source": "rrf"
+        },
+        {
+          "rank": 3,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\docs\\decisions.md",
           "name": "ADR-001: Use Flask over Django",
           "type": "markdown",
           "score": 0.042622950819672135,
           "source": "rrf"
         },
         {
-          "rank": 2,
-          "file": "mock_data/src/app.py",
+          "rank": 4,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
           "name": "to_dict",
           "type": "method",
-          "score": 0.040415913200723325,
-          "source": "rrf"
-        },
-        {
-          "rank": 3,
-          "file": "mock_data/src/app.py",
-          "name": "list_products",
-          "type": "function",
-          "score": 0.03616557734204793,
-          "source": "rrf"
-        },
-        {
-          "rank": 4,
-          "file": "README.md",
-          "name": "Design Trade-offs",
-          "type": "markdown",
-          "score": 0.02928692699490662,
+          "score": 0.03906646372399797,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/docs/decisions.md",
-          "name": "ADR-003: SQLite for Development",
-          "type": "markdown",
-          "score": 0.025606060606060608,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "list_products",
+          "type": "function",
+          "score": 0.035338137472283815,
           "source": "rrf"
         }
       ]
@@ -922,46 +932,46 @@
       "query": "What is the cache invalidation strategy and why was it chosen?",
       "hit_at_5": false,
       "hit_at_10": true,
-      "mrr": 0.16666666666666666,
+      "mrr": 0.125,
       "top_results": [
         {
           "rank": 1,
-          "file": "README.md",
-          "name": "Design Trade-offs",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Evaluation",
           "type": "markdown",
-          "score": 0.05619281045751633,
+          "score": 0.0869526344759814,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "mock_data/src/cache.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
           "name": "__init__",
           "type": "method",
-          "score": 0.046536796536796536,
+          "score": 0.045548654244306416,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/cache.py",
-          "name": "cached",
-          "type": "function",
-          "score": 0.04616477272727273,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\README.md",
+          "name": "Example Questions",
+          "type": "markdown",
+          "score": 0.045423497267759565,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/cache.py",
-          "name": "CacheWarmer",
-          "type": "class",
-          "score": 0.0444468832309043,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "cached",
+          "type": "function",
+          "score": 0.04511533242876527,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/src/cache.py",
-          "name": "CacheManager",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\cache.py",
+          "name": "CacheWarmer",
           "type": "class",
-          "score": 0.041595441595441596,
+          "score": 0.04348739495798319,
           "source": "rrf"
         }
       ]
@@ -974,7 +984,7 @@
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/app.py",
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
           "name": "create_order",
           "type": "function",
           "score": 0.048399687743950044,
@@ -982,34 +992,34 @@
         },
         {
           "rank": 2,
-          "file": "mock_data/src/app.py",
-          "name": "create_product",
-          "type": "function",
-          "score": 0.04651442307692308,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "Product",
+          "type": "class",
+          "score": 0.046875,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/app.py",
-          "name": "Product",
-          "type": "class",
-          "score": 0.04651442307692308,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "create_product",
+          "type": "function",
+          "score": 0.046153846153846156,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/app.py",
-          "name": "get_product",
-          "type": "function",
-          "score": 0.04255533199195171,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "to_dict",
+          "type": "method",
+          "score": 0.04220779220779221,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/src/app.py",
-          "name": "to_dict",
-          "type": "method",
-          "score": 0.04220779220779221,
+          "file": "C:\\Users\\ahmed\\Projects\\devrag\\devrag\\mock_data\\src\\app.py",
+          "name": "get_product",
+          "type": "function",
+          "score": 0.04139703083365055,
           "source": "rrf"
         }
       ]

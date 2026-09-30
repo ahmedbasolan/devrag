@@ -102,6 +102,21 @@ python tests/eval_rag.py --repo-path /path/to/your/repo
 
 Built-in evaluation suite with 21 queries covering functional, cross-file, and design decision questions. Metrics: Hit Rate @5, Hit Rate @10, MRR.
 
+Latest run against this repo:
+
+| Metric | Result |
+|--------|--------|
+| Hit Rate @5 | 85.7% (18/21) |
+| Hit Rate @10 | 90.5% (19/21) |
+| MRR | 0.61 |
+
+MRR moves by a few points between runs (0.60-0.63) because the embedding step
+is not bit-identical across processes; Hit Rate is stable.
+
+Test files are excluded from the corpus by default. A test file imports and calls the same functions the queries ask about, so including `test_retriever.py` pushes duplicate names ahead of the real definitions — that alone drops Hit Rate @5 to 76.2%. Pass `--include-tests` to reproduce that. Build output, caches, and `node_modules` are always skipped.
+
+The 3 remaining misses are known-hard queries: one asks about a Streamlit UI feature that lives in `app.py` while `README.md` ranks higher, one asks about cross-application auth flow, and one about a cache strategy that is documented in an ADR.
+
 ## Project Structure
 
 ```
