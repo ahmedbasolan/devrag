@@ -500,7 +500,7 @@ def main():
     if "chunk_types" not in st.session_state:
         st.session_state.chunk_types = ["function", "class", "method", "markdown", "module_docstring"]
 
-    # ── Auto-load pre-built index ──────────────────────────
+    # ── Auto-load pre-built index, or build one from DevRAG's own source ──
     if not st.session_state.indexed:
         chroma_dir = st.session_state.retriever.chroma_dir
         chroma_db = os.path.join(chroma_dir, "chroma.sqlite3")
@@ -513,6 +513,13 @@ def main():
                     st.session_state.chunk_count = count
             except Exception:
                 pass
+        if not st.session_state.indexed:
+            # First run: the index isn't committed, so build it once here
+            with st.spinner("First run: indexing DevRAG's own source..."):
+                chunks = ingest_directory(str(Path(__file__).parent.parent))
+                st.session_state.retriever.index_chunks(chunks)
+                st.session_state.indexed = True
+                st.session_state.chunk_count = len(chunks)
 
     # ── Sidebar ────────────────────────────────────────────
     with st.sidebar:

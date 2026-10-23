@@ -14,3 +14,6 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Local vector index (rebuilt on first run)
+.chroma/

@@ -24,8 +24,8 @@ DevRAG explains **what** the code does and **why** it matters — not how every 
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/your-username/devrag.git
-cd devrag
+git clone https://github.com/ahmedbasolan/devrag.git
+cd devrag/devrag
 pip install -r requirements.txt
 ```
 
@@ -35,7 +35,7 @@ pip install -r requirements.txt
 streamlit run src/app.py
 ```
 
-Open [http://localhost:8501](http://localhost:8501). The app comes pre-indexed with its own source code — start asking questions immediately.
+Open [http://localhost:8501](http://localhost:8501). On first run the app indexes its own source code (takes a few seconds), so you can start asking questions immediately.
 
 ### 3. Index Your Own Code
 

@@ -12,7 +12,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.parser import ingest_directory
 from src.retriever import HybridRetriever
@@ -177,7 +178,8 @@ def evaluate_retrieval(
         top_result_dicts = [
             {
                 "rank": i + 1,
-                "file": sr.chunk.source_file,
+                # Relative so committed results don't leak local machine paths
+                "file": Path(os.path.relpath(sr.chunk.source_file, PROJECT_ROOT)).as_posix(),
                 "name": sr.chunk.name,
                 "type": sr.chunk.chunk_type,
                 "score": sr.score,
