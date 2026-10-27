@@ -25,9 +25,9 @@ Open [http://localhost:8501](http://localhost:8501). On first run the app indexe
 - **Hybrid RAG** — BM25 sparse + ChromaDB dense embeddings + Reciprocal Rank Fusion
 - **Code-aware tokenizer** — Handles snake_case, camelCase, dotted names, string literals
 - **Multi-provider** — Gemini, Groq, OpenAI with graceful fallback
-- **Smart file-level boosting** — RRF enhanced with file frequency and ADR keyword detection
+- **Code-first ranking** — docs weigh half in the merge (except "why" questions, where ADRs win), at most 2 leading results per file
 - **Beautiful Streamlit UI** — Dark theme, animations, expandable result cards
-- **Built-in evaluation** — 21 queries with Hit Rate@k and MRR metrics
+- **Measured on code it wasn't built against** — Hit@5 0.71 on a held-out repo (from 0.14), plus a 21-query regression suite on its own source; see [devrag/README.md](devrag/README.md#evaluation)
 - **Stress tested** — Edge cases, adversarial inputs, repeated queries
 
 ## License
