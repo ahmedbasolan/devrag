@@ -1,0 +1,20 @@
+{
+  "split": "dev",
+  "note": "Used while developing the retrieval fix: results on this set are not an unbiased estimate.",
+  "repo": "https://github.com/ahmedbasolan/dubai-property-bot",
+  "commit": "5580c90",
+  "queries": [
+    {"query": "How is net yield calculated from rents and sale prices?", "expected_files": ["src/db_setup.py"]},
+    {"query": "How are Ejari rent CSV exports loaded and cleaned?", "expected_files": ["src/dld_loader.py"]},
+    {"query": "How is the chat endpoint rate limited per IP?", "expected_files": ["api/main.py"]},
+    {"query": "How are wildcard characters escaped in SQL LIKE filters?", "expected_files": ["src/rag.py", "src/filters.py"]},
+    {"query": "How are community market reports generated from DuckDB?", "expected_files": ["src/build_reports.py"]},
+    {"query": "How is the monthly mortgage payment calculated?", "expected_files": ["src/calculators.py"]},
+    {"query": "How are bedrooms and budget extracted from a natural-language question?", "expected_files": ["src/filters.py"]},
+    {"query": "Where is the LLM max tokens budget configured?", "expected_files": ["src/config.py"]},
+    {"query": "How are the reports embedded into ChromaDB?", "expected_files": ["src/ingest.py"]},
+    {"query": "How does the Bayut provider fetch live listings?", "expected_files": ["src/bayut_provider.py"]},
+    {"query": "What does the API answer when no LLM key is configured?", "expected_files": ["api/main.py", "src/data_answer.py"]},
+    {"query": "How are community investment scores weighted?", "expected_files": ["src/db_setup.py"]}
+  ]
+}
