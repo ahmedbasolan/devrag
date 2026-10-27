@@ -37,7 +37,9 @@ from src.retriever import HybridRetriever  # noqa: E402
 def head_commit(repo_path: Path) -> str:
     return subprocess.run(
         ["git", "-C", str(repo_path), "rev-parse", "HEAD"],
-        capture_output=True, text=True, check=True,
+        capture_output=True,
+        text=True,
+        check=True,
     ).stdout.strip()
 
 
@@ -52,8 +54,14 @@ def score(eval_set: dict, repo_path: Path, top_k: int = 10) -> dict:
         ranked = retriever.search_rrf(q["query"], top_k=top_k)
         files = [Path(r.chunk.source_file).resolve().relative_to(root).as_posix() for r in ranked]
         rank = next((i + 1 for i, f in enumerate(files) if f in q["expected_files"]), None)
-        results.append({"query": q["query"], "expected_files": q["expected_files"],
-                        "rank": rank, "top_files": files[:5]})
+        results.append(
+            {
+                "query": q["query"],
+                "expected_files": q["expected_files"],
+                "rank": rank,
+                "top_files": files[:5],
+            }
+        )
 
     n = len(results)
     return {
@@ -79,17 +87,21 @@ def main() -> int:
     eval_set = json.loads(args.eval_set.read_text(encoding="utf-8"))
     commit = head_commit(args.repo_path)
     if not commit.startswith(eval_set["commit"]):
-        print(f"{args.repo_path} is at {commit[:7]}; this set is pinned to {eval_set['commit']}. "
-              f"Run: git -C {args.repo_path} checkout {eval_set['commit']}")
+        print(
+            f"{args.repo_path} is at {commit[:7]}; this set is pinned to {eval_set['commit']}. "
+            f"Run: git -C {args.repo_path} checkout {eval_set['commit']}"
+        )
         return 2
 
     report = score(eval_set, args.repo_path)
     for r in report["results"]:
         mark = "HIT " if r["rank"] and r["rank"] <= 5 else "MISS"
         print(f"{mark} rank={r['rank']}  {r['query']}\n      top: {r['top_files'][:3]}")
-    print(f"\n[{report['split']}] {Path(report['repo']).name}@{report['commit']}: "
-          f"Hit@5 {report['hit_rate_at_5']:.2f}  Hit@10 {report['hit_rate_at_10']:.2f}  "
-          f"MRR {report['mrr']:.2f}  (n={report['total_queries']}, {report['chunks']} chunks)")
+    print(
+        f"\n[{report['split']}] {Path(report['repo']).name}@{report['commit']}: "
+        f"Hit@5 {report['hit_rate_at_5']:.2f}  Hit@10 {report['hit_rate_at_10']:.2f}  "
+        f"MRR {report['mrr']:.2f}  (n={report['total_queries']}, {report['chunks']} chunks)"
+    )
     if args.out:
         args.out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     return 0

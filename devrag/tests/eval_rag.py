@@ -14,8 +14,8 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.parser import ingest_directory
-from src.retriever import HybridRetriever
+from src.parser import ingest_directory  # noqa: E402
+from src.retriever import HybridRetriever  # noqa: E402
 
 
 @dataclass

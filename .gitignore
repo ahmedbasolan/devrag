@@ -10,10 +10,6 @@ devrag/**/.pytest_cache/
 devrag/**/__pycache__/
 .chroma/
 
-# CI
-.github/workflows/*.yml
-!github/workflows/*.yml
-
 # OS
 .DS_Store
 Thumbs.db
