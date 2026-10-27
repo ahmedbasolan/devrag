@@ -6,6 +6,9 @@ devrag/*.egg-info/
 devrag/dist/
 devrag/build/
 devrag/.pytest_cache/
+devrag/**/.pytest_cache/
+devrag/**/__pycache__/
+.chroma/
 
 # OS
 .DS_Store

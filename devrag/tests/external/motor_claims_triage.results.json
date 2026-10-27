@@ -1,0 +1,209 @@
+{
+  "split": "held-out",
+  "repo": "https://github.com/ahmedbasolan/motor-claims-triage",
+  "commit": "036d5b5",
+  "chunks": 310,
+  "hit_rate_at_5": 0.7142857142857143,
+  "hit_rate_at_10": 0.8571428571428571,
+  "mrr": 0.23273809523809524,
+  "total_queries": 14,
+  "results": [
+    {
+      "query": "How does the system decide whether a claim is covered by the policy?",
+      "expected_files": [
+        "motor_claims/coverage.py"
+      ],
+      "rank": 10,
+      "top_files": [
+        "README.md",
+        "README.md",
+        "tests/test_core.py",
+        "api.py",
+        "tests/test_core.py"
+      ]
+    },
+    {
+      "query": "How are excluded uses like ride-hailing detected from the accident description?",
+      "expected_files": [
+        "motor_claims/coverage.py"
+      ],
+      "rank": 4,
+      "top_files": [
+        "README.md",
+        "tests/test_core.py",
+        "tests/test_core.py",
+        "motor_claims/coverage.py",
+        "motor_claims/models.py"
+      ]
+    },
+    {
+      "query": "How is the fraud risk of a claim scored?",
+      "expected_files": [
+        "motor_claims/scoring.py"
+      ],
+      "rank": 3,
+      "top_files": [
+        "README.md",
+        "tests/test_core.py",
+        "motor_claims/scoring.py",
+        "tests/test_core.py",
+        "README.md"
+      ]
+    },
+    {
+      "query": "What makes a claim complex?",
+      "expected_files": [
+        "motor_claims/scoring.py"
+      ],
+      "rank": null,
+      "top_files": [
+        "README.md",
+        "README.md",
+        "api.py",
+        "api.py",
+        "tests/test_core.py"
+      ]
+    },
+    {
+      "query": "How are repeat claims within 90 days detected?",
+      "expected_files": [
+        "motor_claims/scoring.py"
+      ],
+      "rank": 4,
+      "top_files": [
+        "README.md",
+        "tests/test_core.py",
+        "tests/test_eval.py",
+        "motor_claims/scoring.py",
+        "tests/test_core.py"
+      ]
+    },
+    {
+      "query": "How is the final fast-track, review or investigate recommendation chosen?",
+      "expected_files": [
+        "motor_claims/recommendation.py"
+      ],
+      "rank": 4,
+      "top_files": [
+        "README.md",
+        "README.md",
+        "motor_claims/models.py",
+        "motor_claims/recommendation.py",
+        "motor_claims/narrative.py"
+      ]
+    },
+    {
+      "query": "How is the human-readable explanation for the claims handler written?",
+      "expected_files": [
+        "motor_claims/narrative.py"
+      ],
+      "rank": 8,
+      "top_files": [
+        "README.md",
+        "README.md",
+        "eval/outcomes.py",
+        "eval/SCHEMA.md",
+        "eval/SCHEMA.md"
+      ]
+    },
+    {
+      "query": "Where are the synthetic test claims generated?",
+      "expected_files": [
+        "motor_claims/mock_data.py"
+      ],
+      "rank": null,
+      "top_files": [
+        "README.md",
+        "tests/test_eval.py",
+        "tests/test_eval.py",
+        "tests/test_core.py",
+        "README.md"
+      ]
+    },
+    {
+      "query": "What fields does a claim have?",
+      "expected_files": [
+        "motor_claims/models.py"
+      ],
+      "rank": 3,
+      "top_files": [
+        "README.md",
+        "README.md",
+        "motor_claims/models.py",
+        "motor_claims/scoring.py",
+        "eval/outcomes.py"
+      ]
+    },
+    {
+      "query": "Which API endpoint triages every claim at once?",
+      "expected_files": [
+        "api.py"
+      ],
+      "rank": 5,
+      "top_files": [
+        "README.md",
+        "tests/test_api_integration.py",
+        "tests/test_api_integration.py",
+        "tests/test_core.py",
+        "api.py"
+      ]
+    },
+    {
+      "query": "How are claim outcomes recorded as feedback?",
+      "expected_files": [
+        "api.py",
+        "eval/outcomes.py"
+      ],
+      "rank": 3,
+      "top_files": [
+        "README.md",
+        "README.md",
+        "api.py",
+        "eval/outcomes.py",
+        "tests/test_eval.py"
+      ]
+    },
+    {
+      "query": "How are precision and recall computed for each fraud indicator?",
+      "expected_files": [
+        "eval/harness.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "README.md",
+        "eval/harness.py",
+        "eval/harness.py",
+        "tests/test_eval.py",
+        "tests/test_eval.py"
+      ]
+    },
+    {
+      "query": "How does threshold sensitivity analysis work?",
+      "expected_files": [
+        "eval/harness.py"
+      ],
+      "rank": 4,
+      "top_files": [
+        "tests/test_eval.py",
+        "tests/test_eval.py",
+        "README.md",
+        "eval/harness.py",
+        "eval/harness.py"
+      ]
+    },
+    {
+      "query": "How does the triage pipeline combine coverage, scoring and the recommendation?",
+      "expected_files": [
+        "motor_claims/triage.py"
+      ],
+      "rank": 3,
+      "top_files": [
+        "README.md",
+        "README.md",
+        "motor_claims/triage.py",
+        "tests/test_api_integration.py",
+        "motor_claims/recommendation.py"
+      ]
+    }
+  ]
+}

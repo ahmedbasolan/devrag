@@ -1,0 +1,22 @@
+{
+  "split": "held-out",
+  "note": "Written before the retrieval fix and run once after it. Do not tune against this set.",
+  "repo": "https://github.com/ahmedbasolan/motor-claims-triage",
+  "commit": "036d5b5",
+  "queries": [
+    {"query": "How does the system decide whether a claim is covered by the policy?", "expected_files": ["motor_claims/coverage.py"]},
+    {"query": "How are excluded uses like ride-hailing detected from the accident description?", "expected_files": ["motor_claims/coverage.py"]},
+    {"query": "How is the fraud risk of a claim scored?", "expected_files": ["motor_claims/scoring.py"]},
+    {"query": "What makes a claim complex?", "expected_files": ["motor_claims/scoring.py"]},
+    {"query": "How are repeat claims within 90 days detected?", "expected_files": ["motor_claims/scoring.py"]},
+    {"query": "How is the final fast-track, review or investigate recommendation chosen?", "expected_files": ["motor_claims/recommendation.py"]},
+    {"query": "How is the human-readable explanation for the claims handler written?", "expected_files": ["motor_claims/narrative.py"]},
+    {"query": "Where are the synthetic test claims generated?", "expected_files": ["motor_claims/mock_data.py"]},
+    {"query": "What fields does a claim have?", "expected_files": ["motor_claims/models.py"]},
+    {"query": "Which API endpoint triages every claim at once?", "expected_files": ["api.py"]},
+    {"query": "How are claim outcomes recorded as feedback?", "expected_files": ["api.py", "eval/outcomes.py"]},
+    {"query": "How are precision and recall computed for each fraud indicator?", "expected_files": ["eval/harness.py"]},
+    {"query": "How does threshold sensitivity analysis work?", "expected_files": ["eval/harness.py"]},
+    {"query": "How does the triage pipeline combine coverage, scoring and the recommendation?", "expected_files": ["motor_claims/triage.py"]}
+  ]
+}

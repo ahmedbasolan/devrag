@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          cd devrag
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio ruff mypy
+
+      - name: Run linting
+        run: |
+          cd devrag
+          ruff check .
+          ruff format --check .
+
+      - name: Run tests
+        run: |
+          cd devrag
+          pytest tests/ -v --tb=short
+
+      - name: Run evaluation
+        run: |
+          cd devrag
+          pip install streamlit
+          python tests/eval_rag.py
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          cd devrag
+          docker build -t devrag:latest .
+        continue-on-error: true

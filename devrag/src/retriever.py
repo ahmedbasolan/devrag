@@ -5,10 +5,11 @@ Sparse BM25 keyword search + dense vector search (ChromaDB + sentence-transforme
 Merges results via Reciprocal Rank Fusion (RRF).
 """
 
+import contextlib
 import os
 import re
 from dataclasses import dataclass
-from typing import List, Optional, Tuple
+from pathlib import Path
 
 import chromadb
 import numpy as np
@@ -17,9 +18,22 @@ from sentence_transformers import SentenceTransformer
 
 from .parser import CodeChunk
 
-
 CHROMA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".chroma")
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+
+
+# Markdown's weight in the merge relative to code (see search_rrf).
+DOC_WEIGHT = 0.5
+# Most results one file may take before other files' results come first.
+PER_FILE = 2
+# Questions about design choices, where docs and ADRs are the answer.
+DECISION_KEYWORDS = ("why", "strategy", "decision", "chosen", "approach", "trade-off", "tradeoff")
+
+
+def _is_decision_record(chunk: CodeChunk) -> bool:
+    return (chunk.source_file.lower().endswith(".md") and "adr" in chunk.source_file.lower()) or (
+        chunk.chunk_type == "markdown" and chunk.metadata.get("heading", "").startswith("ADR")
+    )
 
 
 @dataclass
@@ -34,11 +48,11 @@ class HybridRetriever:
 
     def __init__(self, chroma_dir: str = CHROMA_DIR):
         self.chroma_dir = chroma_dir
-        self._embedder: Optional[SentenceTransformer] = None
-        self._chroma_client: Optional[chromadb.ClientAPI] = None
-        self._collection: Optional[chromadb.Collection] = None
-        self._bm25: Optional[BM25Okapi] = None
-        self._bm25_chunks: List[CodeChunk] = []
+        self._embedder: SentenceTransformer | None = None
+        self._chroma_client: chromadb.ClientAPI | None = None
+        self._collection: chromadb.Collection | None = None
+        self._bm25: BM25Okapi | None = None
+        self._bm25_chunks: list[CodeChunk] = []
         self._chunk_map: dict[str, CodeChunk] = {}
 
     @property
@@ -58,11 +72,14 @@ class HybridRetriever:
             )
         return self._collection
 
-    def index_chunks(self, chunks: List[CodeChunk]) -> int:
+    def index_chunks(self, chunks: list[CodeChunk]) -> int:
         """Index chunks into both BM25 and ChromaDB. Returns count indexed."""
         if not chunks:
             return 0
 
+        # Ids are list positions, so upserting a smaller corpus over a larger
+        # one left the old tail searchable. Start from an empty collection.
+        self.clear()
         self._bm25_chunks = chunks
         self._chunk_map = {str(i): c for i, c in enumerate(chunks)}
 
@@ -71,15 +88,25 @@ class HybridRetriever:
 
         return count
 
-    def _build_bm25(self, chunks: List[CodeChunk]) -> None:
+    @staticmethod
+    def _index_text(chunk: CodeChunk) -> str:
+        """What gets searched: the chunk plus where it lives.
+
+        A method of BayutProvider in bayut_provider.py often never says "Bayut";
+        its file and class do. Both BM25 and the embedding see this header; the
+        chunk's own content is what is displayed.
+        """
+        where = "/".join(Path(chunk.source_file).parts[-2:])
+        names = " ".join(n for n in (chunk.parent_class, chunk.name) if n)
+        return f"{where} {names}\n{chunk.content}"
+
+    def _build_bm25(self, chunks: list[CodeChunk]) -> None:
         """Build BM25 index from chunks."""
-        tokenized = [
-            self._tokenize(c.content) for c in chunks
-        ]
+        tokenized = [self._tokenize(self._index_text(c)) for c in chunks]
         self._bm25 = BM25Okapi(tokenized)
 
     @staticmethod
-    def _tokenize(text: str) -> List[str]:
+    def _tokenize(text: str) -> list[str]:
         """Code-aware tokenizer that splits identifiers into meaningful tokens.
 
         Handles snake_case, camelCase, dotted names, and preserves string literals.
@@ -101,13 +128,13 @@ class HybridRetriever:
         cleaned = re.sub(r"#[^\n]*", protect, cleaned)
 
         # Split on non-alphanumeric boundaries (handles dots, underscores, hyphens)
-        raw_tokens = re.split(r'[^a-zA-Z0-9]+', cleaned)
+        raw_tokens = re.split(r"[^a-zA-Z0-9]+", cleaned)
 
         for token in raw_tokens:
             if not token:
                 continue
             # Check if this is a protected placeholder
-            placeholder_match = re.match(r'\x00(\d+)\x00', token)
+            placeholder_match = re.match(r"\x00(\d+)\x00", token)
             if placeholder_match:
                 idx = int(placeholder_match.group(1))
                 # Add the original string literal as a single token
@@ -115,16 +142,16 @@ class HybridRetriever:
                 continue
             # Split camelCase: getUserById -> get, User, By, Id
             # Also split at digit boundaries: BM25Okapi -> BM25, Okapi
-            camel_split = re.sub(r'([a-z])([A-Z])', r'\1 \2', token)
-            camel_split = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1 \2', camel_split)
-            camel_split = re.sub(r'([a-zA-Z])([0-9])', r'\1 \2', camel_split)
-            camel_split = re.sub(r'([0-9])([a-zA-Z])', r'\1 \2', camel_split)
+            camel_split = re.sub(r"([a-z])([A-Z])", r"\1 \2", token)
+            camel_split = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", camel_split)
+            camel_split = re.sub(r"([a-zA-Z])([0-9])", r"\1 \2", camel_split)
+            camel_split = re.sub(r"([0-9])([a-zA-Z])", r"\1 \2", camel_split)
             for part in camel_split.split():
                 tokens.append(part.lower())
 
         return tokens
 
-    def _index_chroma(self, chunks: List[CodeChunk]) -> int:
+    def _index_chroma(self, chunks: list[CodeChunk]) -> int:
         """Index chunks into ChromaDB in batches."""
         batch_size = 100
         total = 0
@@ -132,7 +159,7 @@ class HybridRetriever:
         for start in range(0, len(chunks), batch_size):
             batch = chunks[start : start + batch_size]
             ids = [str(start + i) for i in range(len(batch))]
-            documents = [c.content for c in batch]
+            documents = [self._index_text(c) for c in batch]
             metadatas = [
                 {
                     "source_file": c.source_file,
@@ -154,7 +181,7 @@ class HybridRetriever:
 
         return total
 
-    def search_bm25(self, query: str, top_k: int = 10) -> List[RankedResult]:
+    def search_bm25(self, query: str, top_k: int = 10) -> list[RankedResult]:
         """Sparse keyword search via BM25."""
         if self._bm25 is None or not self._bm25_chunks:
             return []
@@ -166,15 +193,17 @@ class HybridRetriever:
         results = []
         for idx in top_indices:
             if scores[idx] > 0:
-                results.append(RankedResult(
-                    chunk=self._bm25_chunks[idx],
-                    score=float(scores[idx]),
-                    source="bm25",
-                ))
+                results.append(
+                    RankedResult(
+                        chunk=self._bm25_chunks[idx],
+                        score=float(scores[idx]),
+                        source="bm25",
+                    )
+                )
 
         return results
 
-    def search_chroma(self, query: str, top_k: int = 10) -> List[RankedResult]:
+    def search_chroma(self, query: str, top_k: int = 10) -> list[RankedResult]:
         """Dense vector search via ChromaDB + sentence-transformers."""
         if self.collection.count() == 0:
             return []
@@ -186,12 +215,13 @@ class HybridRetriever:
 
         ranked = []
         for i in range(len(results["ids"][0])):
-            doc_id = results["ids"][0][i]
             distance = results["distances"][0][i] if results["distances"] else 0
             metadata = results["metadatas"][0][i] if results["metadatas"] else {}
             document = results["documents"][0][i] if results["documents"] else ""
 
-            chunk = CodeChunk(
+            # The stored document carries the path header; return the original
+            # chunk when this process indexed it.
+            chunk = self._chunk_map.get(results["ids"][0][i]) or CodeChunk(
                 content=document,
                 source_file=metadata.get("source_file", ""),
                 chunk_type=metadata.get("chunk_type", ""),
@@ -208,84 +238,67 @@ class HybridRetriever:
 
     def search_rrf(
         self, query: str, top_k: int = 10, bm25_weight: float = 1.0, chroma_weight: float = 1.0
-    ) -> List[RankedResult]:
-        """Hybrid search using Reciprocal Rank Fusion with file-level boosting.
+    ) -> list[RankedResult]:
+        """Hybrid search: BM25 and dense results merged by Reciprocal Rank Fusion.
 
-        After RRF merging, boosts chunks from files that appear in the top results.
-        This counteracts the dilution effect where large files produce many small chunks
-        that individually score lower than focused chunks from smaller files.
+        DevRAG answers questions about code, and docs used to win them: a
+        README chunk sits mid-table in *both* lists and RRF sums the two,
+        beating code that one retriever ranked first. A file-frequency boost
+        then multiplied that, rewarding files for being split into many chunks.
+        On a codebase DevRAG wasn't tuned on, the answering code ranked 4th-17th
+        behind README, CASE_STUDY and REVIEW chunks.
+
+        So: Markdown counts DOC_WEIGHT as much in the merge, except for
+        "why/decision" questions, where design records are the answer. And no
+        file may hold more than PER_FILE of the leading results; its further
+        chunks still follow when nothing else matches.
         """
         bm25_results = self.search_bm25(query, top_k=top_k * 3)
         chroma_results = self.search_chroma(query, top_k=top_k * 3)
 
+        query_lower = query.lower()
+        is_decision_query = any(kw in query_lower for kw in DECISION_KEYWORDS)
+
         rrf_scores: dict[str, float] = {}
         rrf_chunks: dict[str, CodeChunk] = {}
-
         k = 60  # RRF constant
 
-        for rank, result in enumerate(bm25_results):
-            key = f"{result.chunk.source_file}:{result.chunk.name}:{result.chunk.start_line}"
-            rrf_scores[key] = rrf_scores.get(key, 0) + bm25_weight / (k + rank + 1)
-            rrf_chunks[key] = result.chunk
+        for weight, ranked in ((bm25_weight, bm25_results), (chroma_weight, chroma_results)):
+            for rank, result in enumerate(ranked):
+                chunk = result.chunk
+                key = f"{chunk.source_file}:{chunk.name}:{chunk.start_line}"
+                is_doc = chunk.source_file.lower().endswith(".md")
+                factor = 1.0 if is_decision_query or not is_doc else DOC_WEIGHT
+                rrf_scores[key] = rrf_scores.get(key, 0) + factor * weight / (k + rank + 1)
+                rrf_chunks[key] = chunk
 
-        for rank, result in enumerate(chroma_results):
-            key = f"{result.chunk.source_file}:{result.chunk.name}:{result.chunk.start_line}"
-            rrf_scores[key] = rrf_scores.get(key, 0) + chroma_weight / (k + rank + 1)
-            rrf_chunks[key] = result.chunk
-
-        # ── File-level boosting ──────────────────────────────
-        # Count how many times each file appears in the top results
-        file_counts: dict[str, int] = {}
-        sorted_keys = sorted(rrf_scores.keys(), key=lambda k: rrf_scores[k], reverse=True)
-        for key in sorted_keys[:top_k * 2]:
-            file_path = rrf_chunks[key].source_file
-            file_counts[file_path] = file_counts.get(file_path, 0) + 1
-
-        # Boost files that appear in multiple top results
-        # The more a file appears, the more its other chunks should be boosted
-        boosted_scores: dict[str, float] = {}
-        for key, score in rrf_scores.items():
-            file_path = rrf_chunks[key].source_file
-            file_count = file_counts.get(file_path, 0)
-            if file_count >= 2:
-                # Boost: more appearances = higher multiplier (capped at 1.5x)
-                boost = 1.0 + min(file_count * 0.1, 0.5)
-                boosted_scores[key] = score * boost
-            else:
-                boosted_scores[key] = score
-
-        # Also boost markdown doc chunks for decision-type queries
-        decision_keywords = {"why", "strategy", "decision", "chosen", "approach", "trade-off", "tradeoff"}
-        query_lower = query.lower()
-        is_decision_query = any(kw in query_lower for kw in decision_keywords)
         if is_decision_query:
             for key, chunk in rrf_chunks.items():
-                if chunk.source_file.endswith(".md") and "adr" in chunk.source_file.lower():
-                    boosted_scores[key] = boosted_scores.get(key, rrf_scores.get(key, 0)) * 1.3
-                elif chunk.chunk_type == "markdown" and chunk.metadata.get("heading", "").startswith("ADR"):
-                    boosted_scores[key] = boosted_scores.get(key, rrf_scores.get(key, 0)) * 1.3
+                if _is_decision_record(chunk):
+                    rrf_scores[key] *= 1.3
 
-        # Re-sort by boosted scores
-        sorted_keys = sorted(boosted_scores.keys(), key=lambda k: boosted_scores[k], reverse=True)
+        # Leading results: at most PER_FILE per file, by score; the rest follow.
+        seen: dict[str, int] = {}
+        leading, overflow = [], []
+        for key in sorted(rrf_scores, key=lambda x: rrf_scores[x], reverse=True):
+            source = rrf_chunks[key].source_file
+            seen[source] = seen.get(source, 0) + 1
+            (leading if seen[source] <= PER_FILE else overflow).append(key)
 
-        results = []
-        for key in sorted_keys[:top_k]:
-            results.append(RankedResult(
-                chunk=rrf_chunks[key],
-                score=boosted_scores[key],
-                source="rrf",
-            ))
-
-        return results
+        return [
+            RankedResult(chunk=rrf_chunks[key], score=rrf_scores[key], source="rrf")
+            for key in (leading + overflow)[:top_k]
+        ]
 
     def clear(self) -> None:
-        """Clear all indexed data."""
-        if self._chroma_client:
-            try:
-                self._chroma_client.delete_collection("code_chunks")
-                self._collection = None
-            except Exception:
-                pass
+        """Clear all indexed data, including a collection left by an earlier run."""
+        if self._chroma_client is None:
+            # A fresh retriever on an existing directory has no client yet;
+            # skipping the delete reopened the old collection on the next index.
+            self._chroma_client = chromadb.PersistentClient(path=self.chroma_dir)
+        with contextlib.suppress(Exception):  # nothing to delete
+            self._chroma_client.delete_collection("code_chunks")
+        self._collection = None
         self._bm25 = None
         self._bm25_chunks = []
         self._chunk_map = {}

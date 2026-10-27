@@ -4,9 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8501:8501"
+      - "127.0.0.1:8501:8501"
     volumes:
-      - .:/app
+      - ./.chroma:/app/.chroma
     env_file:
       - path: .env
         required: false
@@ -18,7 +18,8 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/app
+      - ./.chroma:/app/.chroma
+      - ./tests:/app/tests
     env_file:
       - path: .env
         required: false

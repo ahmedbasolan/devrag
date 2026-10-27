@@ -1,7 +1,7 @@
 """Stress test DevRAG retrieval and generation."""
 
-import time
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -19,12 +19,12 @@ QUERIES = [
     "How are markdown files split?",
     "Where is the Gemini API configured?",
     # Edge cases
-    "",                          # empty query
-    "xyzzy no match here",       # nonsense
-    "a" * 500,                   # very long query
-    "SELECT * FROM users",       # SQL injection attempt
-    "<script>alert(1)</script>", # XSS attempt
-    "How to hack the system?",   # adversarial
+    "",  # empty query
+    "xyzzy no match here",  # nonsense
+    "a" * 500,  # very long query
+    "SELECT * FROM users",  # SQL injection attempt
+    "<script>alert(1)</script>",  # XSS attempt
+    "How to hack the system?",  # adversarial
     # Technical deep dives
     "What is Reciprocal Rank Fusion and how is it implemented?",
     "How does the AST parser handle syntax errors?",
@@ -37,6 +37,7 @@ QUERIES = [
     "How does the hybrid retrieval work?",
 ]
 
+
 def main():
     print("=" * 60)
     print("DevRAG Stress Test")
@@ -46,12 +47,12 @@ def main():
     print("\n[1] Indexing project...")
     t0 = time.time()
     chunks = ingest_directory(str(Path(__file__).parent))
-    print(f"    {len(chunks)} chunks in {time.time()-t0:.2f}s")
+    print(f"    {len(chunks)} chunks in {time.time() - t0:.2f}s")
 
     retriever = HybridRetriever()
     t0 = time.time()
     count = retriever.index_chunks(chunks)
-    print(f"    Indexed {count} in {time.time()-t0:.2f}s")
+    print(f"    Indexed {count} in {time.time() - t0:.2f}s")
 
     # Search stress test
     print("\n[2] Running 22 queries...")
@@ -75,17 +76,18 @@ def main():
             status = f"ERROR: {e}"
 
         short_q = q[:40] + "..." if len(q) > 40 else q or "(empty)"
-        print(f"    [{i:2d}] {elapsed*1000:6.1f}ms | {status} | {short_q}")
+        print(f"    [{i:2d}] {elapsed * 1000:6.1f}ms | {status} | {short_q}")
 
     # Stats
     print("\n[3] Stats")
     print(f"    Total queries:  {len(QUERIES)}")
     print(f"    Empty results:  {empty}")
     print(f"    Errors:         {errors}")
-    print(f"    Avg latency:    {sum(times)/len(times)*1000:.1f}ms")
-    print(f"    Max latency:    {max(times)*1000:.1f}ms")
-    print(f"    Min latency:    {min(times)*1000:.1f}ms")
+    print(f"    Avg latency:    {sum(times) / len(times) * 1000:.1f}ms")
+    print(f"    Max latency:    {max(times) * 1000:.1f}ms")
+    print(f"    Min latency:    {min(times) * 1000:.1f}ms")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     main()
