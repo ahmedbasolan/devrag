@@ -256,3 +256,40 @@ def test_parse_module_raw():
 
     raw_chunks = [c for c in chunks if c.chunk_type == "module_raw"]
     assert len(raw_chunks) >= 1
+
+
+def test_module_level_settings_are_indexed():
+    """A settings module was invisible: config.py's 32 lines of constants were
+    dropped because only functions, classes and the docstring became chunks, so
+    "where is the max tokens budget configured?" could never be answered."""
+    code = '''"""Settings."""
+import os
+
+LLM_MAX_TOKENS = 1500
+LLM_TEMPERATURE = 0.2
+
+
+def helper():
+    return 1
+
+
+RATE_LIMIT = int(os.environ.get("RATE_LIMIT", "10"))
+'''
+    fname = _write_temp_file(code, ".py")
+    chunks = parse_python_file(fname)
+    os.unlink(fname)
+
+    module_code = [c for c in chunks if c.chunk_type == "module_code"]
+    text = "\n".join(c.content for c in module_code)
+    assert "LLM_MAX_TOKENS = 1500" in text
+    assert "RATE_LIMIT" in text
+    assert "def helper" not in text  # functions keep their own chunk
+
+
+def test_imports_alone_are_not_a_module_chunk():
+    code = '"""Doc."""\nimport os\nfrom pathlib import Path\n\n\ndef f():\n    pass\n'
+    fname = _write_temp_file(code, ".py")
+    chunks = parse_python_file(fname)
+    os.unlink(fname)
+
+    assert not [c for c in chunks if c.chunk_type == "module_code"]

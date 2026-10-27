@@ -1,0 +1,182 @@
+{
+  "split": "dev",
+  "repo": "https://github.com/ahmedbasolan/dubai-property-bot",
+  "commit": "5580c90",
+  "chunks": 781,
+  "hit_rate_at_5": 0.5833333333333334,
+  "hit_rate_at_10": 0.8333333333333334,
+  "mrr": 0.5257936507936508,
+  "total_queries": 12,
+  "results": [
+    {
+      "query": "How is net yield calculated from rents and sale prices?",
+      "expected_files": [
+        "src/db_setup.py"
+      ],
+      "rank": null,
+      "top_files": [
+        "README.md",
+        "src/bayut_provider.py",
+        "docs/plans/2026-10-23-real-dld-data.md",
+        "data/reports/majan.md",
+        "data/reports/arjan.md"
+      ]
+    },
+    {
+      "query": "How are Ejari rent CSV exports loaded and cleaned?",
+      "expected_files": [
+        "src/dld_loader.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "src/dld_loader.py",
+        "src/dld_loader.py",
+        "tests/test_dld_loader.py",
+        "data/reports/meydan.md",
+        "data/reports/arjan.md"
+      ]
+    },
+    {
+      "query": "How is the chat endpoint rate limited per IP?",
+      "expected_files": [
+        "api/main.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "api/main.py",
+        "api/main.py",
+        "tests/test_api.py",
+        "docs/deploy.md",
+        "REVIEW.md"
+      ]
+    },
+    {
+      "query": "How are wildcard characters escaped in SQL LIKE filters?",
+      "expected_files": [
+        "src/rag.py",
+        "src/filters.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "tests/test_filters.py",
+        "src/rag.py",
+        "tests/test_filters.py",
+        "src/rag.py",
+        "README.md"
+      ]
+    },
+    {
+      "query": "How are community market reports generated from DuckDB?",
+      "expected_files": [
+        "src/build_reports.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "src/build_reports.py",
+        "src/rag.py",
+        "REVIEW.md",
+        "src/ingest.py",
+        "src/build_reports.py"
+      ]
+    },
+    {
+      "query": "How is the monthly mortgage payment calculated?",
+      "expected_files": [
+        "src/calculators.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "src/calculators.py",
+        "api/main.py",
+        "src/calculators.py",
+        "eval/test_scoring.py",
+        "REVIEW.md"
+      ]
+    },
+    {
+      "query": "How are bedrooms and budget extracted from a natural-language question?",
+      "expected_files": [
+        "src/filters.py"
+      ],
+      "rank": 7,
+      "top_files": [
+        "tests/test_data_answer.py",
+        "tests/test_data_answer.py",
+        "tests/test_rag.py",
+        "tests/test_rag.py",
+        "tests/test_filters.py"
+      ]
+    },
+    {
+      "query": "Where is the LLM max tokens budget configured?",
+      "expected_files": [
+        "src/config.py"
+      ],
+      "rank": 6,
+      "top_files": [
+        "tests/test_rag.py",
+        "src/rag.py",
+        "tests/test_rag.py",
+        "src/rag.py",
+        "README.md"
+      ]
+    },
+    {
+      "query": "How are the reports embedded into ChromaDB?",
+      "expected_files": [
+        "src/ingest.py"
+      ],
+      "rank": 6,
+      "top_files": [
+        "src/rag.py",
+        "src/config.py",
+        "api/vercel_entry.py",
+        "src/rag.py",
+        "src/build_reports.py"
+      ]
+    },
+    {
+      "query": "How does the Bayut provider fetch live listings?",
+      "expected_files": [
+        "src/bayut_provider.py"
+      ],
+      "rank": 3,
+      "top_files": [
+        "api/main.py",
+        "api/main.py",
+        "src/bayut_provider.py",
+        "src/bayut_provider.py",
+        "docs/plans/2026-10-23-real-dld-data.md"
+      ]
+    },
+    {
+      "query": "What does the API answer when no LLM key is configured?",
+      "expected_files": [
+        "api/main.py",
+        "src/data_answer.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "api/main.py",
+        "src/rag.py",
+        "src/rag.py",
+        "tests/test_api.py",
+        "src/bayut_provider.py"
+      ]
+    },
+    {
+      "query": "How are community investment scores weighted?",
+      "expected_files": [
+        "src/db_setup.py"
+      ],
+      "rank": null,
+      "top_files": [
+        "api/main.py",
+        "api/main.py",
+        "tests/test_rag.py",
+        "src/data_answer.py",
+        "tests/test_data_answer.py"
+      ]
+    }
+  ]
+}

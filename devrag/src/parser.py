@@ -88,6 +88,11 @@ def parse_python_file(file_path: str) -> list[CodeChunk]:
         elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             chunks.append(_parse_function(node, file_path, lines))
 
+    # A file with nothing else falls through to one module_raw chunk below,
+    # which already covers its top-level code.
+    if chunks:
+        chunks.extend(_module_code_chunks(tree, file_path, lines))
+
     if not chunks:
         chunks.append(
             CodeChunk(
@@ -99,6 +104,47 @@ def parse_python_file(file_path: str) -> list[CodeChunk]:
             )
         )
 
+    return chunks
+
+
+def _module_code_chunks(tree: ast.Module, file_path: str, lines: list[str]) -> list[CodeChunk]:
+    """Top-level code outside functions and classes: settings, constants, SQL.
+
+    Without this a settings module indexed only its docstring, so a question
+    like "where is the token budget configured?" had nothing to match. Runs of
+    consecutive statements become one chunk; a def or class ends a run.
+    Imports and the module docstring are skipped: they carry no answer.
+    """
+    chunks: list[CodeChunk] = []
+    run: list[ast.stmt] = []
+
+    def flush() -> None:
+        if run:
+            start, end = run[0].lineno, run[-1].end_lineno or run[-1].lineno
+            chunks.append(
+                CodeChunk(
+                    content="\n".join(lines[start - 1 : end]),
+                    source_file=file_path,
+                    chunk_type="module_code",
+                    name=f"module code (L{start})",
+                    start_line=start,
+                    end_line=end,
+                )
+            )
+            run.clear()
+
+    for i, node in enumerate(tree.body):
+        is_docstring = (
+            i == 0
+            and isinstance(node, ast.Expr)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+        )
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            flush()
+        elif not (is_docstring or isinstance(node, (ast.Import, ast.ImportFrom))):
+            run.append(node)
+    flush()
     return chunks
 
 
