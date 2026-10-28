@@ -1,0 +1,64 @@
+{
+  "split": "held-out",
+  "note": "Written before tests were dropped from the default index, scored once before and once after. Do not tune against this set. Tests live in a tests/ directory (backend/tests/).",
+  "repo": "https://github.com/ahmedbasolan/Sift",
+  "commit": "0fa5bcd",
+  "queries": [
+    {
+      "query": "How are uploaded documents split into chunks before indexing?",
+      "expected_files": ["backend/app/ingest.py"]
+    },
+    {
+      "query": "How are PowerPoint slides turned into text?",
+      "expected_files": ["backend/app/ingest.py"]
+    },
+    {
+      "query": "What happens when an upload is larger than the size limit?",
+      "expected_files": ["backend/app/api/upload.py"]
+    },
+    {
+      "query": "How are uploaded filenames sanitized?",
+      "expected_files": ["backend/app/api/upload.py"]
+    },
+    {
+      "query": "How does the API key middleware protect the endpoints?",
+      "expected_files": ["backend/app/auth.py"]
+    },
+    {
+      "query": "How are keyword and vector search results combined?",
+      "expected_files": ["backend/app/search.py"]
+    },
+    {
+      "query": "What does the app do when Groq rate-limits a request?",
+      "expected_files": ["backend/app/llm.py"]
+    },
+    {
+      "query": "How are risk findings parsed out of the model's reply?",
+      "expected_files": ["backend/app/analysis.py"]
+    },
+    {
+      "query": "How is the confidence score read from the executive summary?",
+      "expected_files": ["backend/app/analysis.py"]
+    },
+    {
+      "query": "How is an analysis exported as an HTML report?",
+      "expected_files": ["backend/app/report.py", "backend/app/api/report.py"]
+    },
+    {
+      "query": "What does chat return when no LLM key is configured?",
+      "expected_files": ["backend/app/api/chat.py"]
+    },
+    {
+      "query": "How are chunks embedded and stored in the vector database?",
+      "expected_files": ["backend/app/embeddings.py"]
+    },
+    {
+      "query": "Where are settings like chunk size and the Groq model configured?",
+      "expected_files": ["backend/app/config.py"]
+    },
+    {
+      "query": "How are uploads and analyses stored in the database?",
+      "expected_files": ["backend/app/database.py"]
+    }
+  ]
+}
