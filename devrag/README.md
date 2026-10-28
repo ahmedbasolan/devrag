@@ -117,6 +117,8 @@ git -C ../motor-claims-triage checkout 036d5b5
 python tests/eval_external.py tests/external/motor_claims_triage.json --repo-path ../motor-claims-triage
 ```
 
+CI runs all four sets on every push and pull request, against each set's committed `.results.json`. The build fails if Hit@5 drops or MRR falls more than 0.02, and the log names the questions that ranked worse. A change that raises the scores commits the new results (`--out`), so the floor only moves up.
+
 **Tests left out.** Before this change a test file ranked above the answer on every one of the four repos, and ranked first on 1 to 4 questions per repo: a test names the same functions as the code it checks. With tests left out, none does. Across the 54 questions, 25 moved up, 28 stayed where they were, and 1 moved down: on the dev set, "How are community market reports generated from DuckDB?" went from 1st to 4th. Removing tests changes word statistics for the whole corpus, and `rag.py` now edges out `build_reports.py` there.
 
 **Code-first ranking.** Docs used to win questions about code. A README chunk sits mid-table in both the keyword and the semantic ranking, Reciprocal Rank Fusion sums the two, and a file-frequency boost then multiplied every chunk of any file split into many chunks. On the dev set the semantic search alone ranked the answering file 1st or 2nd for 7 of 12 questions, and the merged result put it 4th to 17th. Now:
@@ -139,7 +141,7 @@ The last three have no clear effect on these small sets (removing any one moves 
 | Hit@10 | 90.5% (19/21) | 100% (21/21) | 100% (21/21) |
 | MRR | 0.45–0.67 between runs | 0.85 | **0.49** |
 
-The drop is the limitation above, caused by this file. The suite indexes this README, and its Evaluation section explains how retrieval works, so it ranks first for questions such as "How are code chunks indexed into ChromaDB?". The same retriever scores 0.85 on the commit before the section was first rewritten, 0.54 on that commit, and 0.49 with the further explanation added here. Leaving tests out does not move it (0.537 → 0.540 on the same README), since this suite already excluded test files. Any edit to this README changes the number, and CI runs the suite on every push but does not fail on a drop, which is why the first fall went unnoticed. This suite indexes the code it was written alongside, so it is a regression check rather than evidence the retriever works on other code.
+The drop is the limitation above, caused by this file. The suite indexes this README, and its Evaluation section explains how retrieval works, so it ranks first for questions such as "How are code chunks indexed into ChromaDB?". The same retriever scores 0.85 on the commit before the section was first rewritten, 0.54 on that commit, and 0.49 with the further explanation added here. Leaving tests out does not move it (0.537 → 0.540 on the same README), since this suite already excluded test files. Any edit to this README changes the number, and CI runs the suite on every push but does not fail on a drop, which is why the first fall went unnoticed. The sets on other repos above now gate CI instead; this one stays ungated because editing this file moves it. This suite indexes the code it was written alongside, so it is a regression check rather than evidence the retriever works on other code.
 
 ## Project Structure
 
