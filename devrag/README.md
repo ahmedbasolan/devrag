@@ -106,8 +106,8 @@ A question counts as a hit when the file that answers it is in the top 5 (Hit@5)
 |-----|----------:|----------|--------------------|------------------------|
 | [customs-copilot](https://github.com/ahmedbasolan/customs-copilot) @719704c, **held-out** | 14 | — | 0.86 · 0.93 · 0.51 | **0.93 · 0.93 · 0.61** |
 | [Sift](https://github.com/ahmedbasolan/Sift) @0fa5bcd, **held-out** | 14 | — | 0.86 · 0.93 · 0.57 | **0.93 · 1.00 · 0.65** |
-| [motor-claims-triage](https://github.com/ahmedbasolan/motor-claims-triage) @036d5b5, held-out before | 14 | 0.14 · 0.43 · 0.08 | 0.71 · 0.86 · 0.23 | 0.79 · 1.00 · 0.35 |
-| [dubai-property-bot](https://github.com/ahmedbasolan/dubai-property-bot) @5580c90, dev | 12 | 0.25 · 0.42 · 0.17 | 0.58 · 0.83 · 0.53 | 0.75 · 0.92 · 0.54 |
+| [motor-claims-triage](https://github.com/ahmedbasolan/motor-claims-triage) @036d5b5, held-out before | 14 | 0.14 · 0.43 · 0.08 | 0.71 · 0.86 · 0.23 | 0.79 · 1.00 · 0.36 |
+| [dubai-property-bot](https://github.com/ahmedbasolan/dubai-property-bot) @5580c90, dev | 12 | 0.25 · 0.42 · 0.17 | 0.58 · 0.83 · 0.53 | 0.75 · 0.83 · 0.54 |
 
 The customs-copilot and Sift questions were committed before tests were left out, then scored once before and once after. The two layouts cover the usual places tests live: beside the code (customs-copilot) and in a `tests/` directory (Sift). motor-claims-triage was the held-out set for code-first ranking and has now been scored a second time, so it is no longer unseen, but nothing was tuned on it. The dev set was used while building code-first ranking, so its numbers are optimistic. All sets are small: one question moves Hit@5 by 0.07–0.08.
 
@@ -117,7 +117,9 @@ git -C ../motor-claims-triage checkout 036d5b5
 python tests/eval_external.py tests/external/motor_claims_triage.json --repo-path ../motor-claims-triage
 ```
 
-CI runs all four sets on every push and pull request, against each set's committed `.results.json`. The build fails if Hit@5 drops or MRR falls more than 0.02, and the log names the questions that ranked worse. A change that raises the scores commits the new results (`--out`), so the floor only moves up.
+CI runs all four sets on every push and pull request, against each set's committed `.results.json`. The build fails if Hit@5 drops or MRR falls more than 0.02, and the log names the questions that ranked worse. A change that moves the scores commits the new results (`--out`), so any lowered baseline shows up in the diff.
+
+**Clone folder name.** Each chunk is indexed with its folder and file name, and for a file at the root of a repo that folder used to be whatever the repo was cloned into: the same files scored Hit@5 0.93 as `customs-copilot/` and 1.00 as `customs_copilot/`. Paths are now taken from the folder being indexed, and all four sets score the same under either name. Hit@5 did not move on any set. Eight questions moved one place, and one dropped out of the top 10 on the dev set ("How are community investment scores weighted?", 10th before), which is why its Hit@10 fell from 0.92 to 0.83. The last column includes this fix.
 
 **Tests left out.** Before this change a test file ranked above the answer on every one of the four repos, and ranked first on 1 to 4 questions per repo: a test names the same functions as the code it checks. With tests left out, none does. Across the 54 questions, 25 moved up, 28 stayed where they were, and 1 moved down: on the dev set, "How are community market reports generated from DuckDB?" went from 1st to 4th. Removing tests changes word statistics for the whole corpus, and `rag.py` now edges out `build_reports.py` there.
 
@@ -131,7 +133,7 @@ CI runs all four sets on every push and pull request, against each set's committ
 
 The last three have no clear effect on these small sets (removing any one moves dev Hit@5 or MRR by a single question either way); they stay because each fixes a failure that can be shown directly, and each has a test.
 
-**Known limitation.** Docs are now what outranks the answer. On motor-claims-triage, whose README explains each module in prose, `README.md` ranks first on all 14 questions and the answer is usually 2nd or 3rd (MRR 0.35). Markdown already counts half in the merge; a doc that restates the code in the question's own words still wins.
+**Known limitation.** Docs are now what outranks the answer. On motor-claims-triage, whose README explains each module in prose, `README.md` ranks first on all 14 questions and the answer is usually 2nd or 3rd (MRR 0.36). Markdown already counts half in the merge; a doc that restates the code in the question's own words still wins.
 
 **On DevRAG's own source** (`tests/eval_rag.py`, 21 questions, test files excluded):
 

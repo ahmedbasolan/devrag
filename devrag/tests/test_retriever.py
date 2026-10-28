@@ -272,6 +272,23 @@ def test_file_path_is_searchable():
     assert top and top[0].chunk.source_file.endswith("bayut_provider.py")
 
 
+def test_clone_folder_name_is_not_indexed(tmp_path):
+    """Root-level files were indexed as "<clone folder>/app.py", so the same
+    repo cloned as customs-copilot and customs_copilot scored differently."""
+    from src.parser import ingest_directory
+
+    files = {"app.py": "def export():\n    return 1\n", "pkg/core.py": "def run():\n    pass\n"}
+    indexed = []
+    for folder in ("customs-copilot", "customs_copilot"):
+        for rel, text in files.items():
+            (tmp_path / folder / rel).parent.mkdir(parents=True, exist_ok=True)
+            (tmp_path / folder / rel).write_text(text)
+        chunks = ingest_directory(str(tmp_path / folder))
+        indexed.append(sorted(HybridRetriever._index_text(c) for c in chunks))
+    assert indexed[0] == indexed[1]
+    assert any(t.startswith("pkg/core.py ") for t in indexed[0])
+
+
 def test_one_file_cannot_fill_the_top_results():
     """A README split into many chunks took the top 5 for most questions, so the
     code that answered them ranked 4th to 17th."""

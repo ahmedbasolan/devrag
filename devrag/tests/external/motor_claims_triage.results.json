@@ -5,7 +5,7 @@
   "chunks": 151,
   "hit_rate_at_5": 0.7857142857142857,
   "hit_rate_at_10": 1.0,
-  "mrr": 0.35147392290249435,
+  "mrr": 0.36437074829931976,
   "total_queries": 14,
   "results": [
     {
@@ -18,8 +18,8 @@
         "README.md",
         "README.md",
         "motor_claims/coverage.py",
-        "api.py",
-        "api.py"
+        "motor_claims/triage.py",
+        "motor_claims/scoring.py"
       ]
     },
     {
@@ -27,13 +27,13 @@
       "expected_files": [
         "motor_claims/coverage.py"
       ],
-      "rank": 3,
+      "rank": 2,
       "top_files": [
         "README.md",
-        "README.md",
         "motor_claims/coverage.py",
+        "motor_claims/mock_data.py",
         "motor_claims/models.py",
-        "motor_claims/mock_data.py"
+        "motor_claims/models.py"
       ]
     },
     {
@@ -55,13 +55,13 @@
       "expected_files": [
         "motor_claims/scoring.py"
       ],
-      "rank": 9,
+      "rank": 8,
       "top_files": [
         "README.md",
         "README.md",
+        "motor_claims/triage.py",
         "api.py",
-        "api.py",
-        "motor_claims/triage.py"
+        "motor_claims/mock_data.py"
       ]
     },
     {
@@ -73,9 +73,9 @@
       "top_files": [
         "README.md",
         "motor_claims/scoring.py",
-        "README.md",
         "motor_claims/scoring.py",
-        "motor_claims/triage.py"
+        "README.md",
+        "motor_claims/mock_data.py"
       ]
     },
     {
@@ -144,8 +144,8 @@
         "README.md",
         "api.py",
         "api.py",
-        "README.md",
-        "motor_claims/triage.py"
+        "motor_claims/models.py",
+        "README.md"
       ]
     },
     {
@@ -160,7 +160,7 @@
         "README.md",
         "api.py",
         "eval/outcomes.py",
-        "api.py"
+        "eval/outcomes.py"
       ]
     },
     {
@@ -182,12 +182,12 @@
       "expected_files": [
         "eval/harness.py"
       ],
-      "rank": 2,
+      "rank": 3,
       "top_files": [
         "README.md",
-        "eval/harness.py",
-        "eval/harness.py",
         "README.md",
+        "eval/harness.py",
+        "eval/harness.py",
         "eval/SCHEMA.md"
       ]
     },
@@ -196,11 +196,11 @@
       "expected_files": [
         "motor_claims/triage.py"
       ],
-      "rank": 3,
+      "rank": 2,
       "top_files": [
         "README.md",
-        "README.md",
         "motor_claims/triage.py",
+        "README.md",
         "motor_claims/recommendation.py",
         "motor_claims/narrative.py"
       ]

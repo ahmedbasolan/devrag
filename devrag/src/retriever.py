@@ -95,8 +95,12 @@ class HybridRetriever:
         A method of BayutProvider in bayut_provider.py often never says "Bayut";
         its file and class do. Both BM25 and the embedding see this header; the
         chunk's own content is what is displayed.
+
+        The path is taken from the ingest root, so a file at the root of a repo
+        is just its name: from the absolute path it carried the folder the repo
+        was cloned into, and scores changed with that folder's name.
         """
-        where = "/".join(Path(chunk.source_file).parts[-2:])
+        where = "/".join(Path(chunk.relative_path or chunk.source_file).parts[-2:])
         names = " ".join(n for n in (chunk.parent_class, chunk.name) if n)
         return f"{where} {names}\n{chunk.content}"
 
