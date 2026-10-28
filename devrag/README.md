@@ -39,7 +39,9 @@ Open [http://localhost:8501](http://localhost:8501). On first run the app indexe
 
 ### 3. Index Your Own Code
 
-Enter any Python project path in the sidebar and click **Index**. Ask questions about your own codebase.
+Put the project under this `devrag/` folder (for example `git clone <your-repo> devrag/my-repo`), enter its path in the sidebar and click **Index**. The app refuses paths outside its own folder, so a hosted copy can't be pointed at the server's files.
+
+Python and Markdown files are indexed. Tests (`test_*.py`, `*_test.py`, `conftest.py`, and anything under a `tests/` or `test/` directory) are left out by default, because they name the same functions as the code they test and outrank it.
 
 ### 4. Docker (alternative)
 
@@ -98,14 +100,16 @@ Your Question
 
 A question counts as a hit when the file that answers it is in the top 5 (Hit@5) or top 10 (Hit@10); MRR rewards ranking it first.
 
-**On codebases DevRAG was not built against** (`tests/eval_external.py`). These are the numbers that test "any codebase": two other repositories pinned to a commit, indexed exactly as the app indexes your folder (Python and Markdown, tests included), with each answer file picked from the code by hand. A README ranking first counts as a miss.
+**On codebases DevRAG was not built against** (`tests/eval_external.py`). These are the numbers that test "any codebase": other repositories pinned to a commit, indexed exactly as the app indexes your folder, with each answer file picked from the code by hand. A README ranking first counts as a miss. Each cell is Hit@5 · Hit@10 · MRR.
 
-| Set | Questions | Before | After |
-|-----|----------:|--------|-------|
-| [motor-claims-triage](https://github.com/ahmedbasolan/motor-claims-triage) @036d5b5, **held-out** | 14 | Hit@5 0.14 · Hit@10 0.43 · MRR 0.08 | **Hit@5 0.71 · Hit@10 0.86 · MRR 0.23** |
-| [dubai-property-bot](https://github.com/ahmedbasolan/dubai-property-bot) @5580c90, dev | 12 | Hit@5 0.25 · Hit@10 0.42 · MRR 0.17 | Hit@5 0.58 · Hit@10 0.83 · MRR 0.53 |
+| Set | Questions | Original | Code-first ranking | + tests left out (now) |
+|-----|----------:|----------|--------------------|------------------------|
+| [customs-copilot](https://github.com/ahmedbasolan/customs-copilot) @719704c, **held-out** | 14 | — | 0.86 · 0.93 · 0.51 | **0.93 · 0.93 · 0.61** |
+| [Sift](https://github.com/ahmedbasolan/Sift) @0fa5bcd, **held-out** | 14 | — | 0.86 · 0.93 · 0.57 | **0.93 · 1.00 · 0.65** |
+| [motor-claims-triage](https://github.com/ahmedbasolan/motor-claims-triage) @036d5b5, held-out before | 14 | 0.14 · 0.43 · 0.08 | 0.71 · 0.86 · 0.23 | 0.79 · 1.00 · 0.35 |
+| [dubai-property-bot](https://github.com/ahmedbasolan/dubai-property-bot) @5580c90, dev | 12 | 0.25 · 0.42 · 0.17 | 0.58 · 0.83 · 0.53 | 0.75 · 0.92 · 0.54 |
 
-The held-out questions were committed before any retrieval change and run once after it; the dev set was used while making the change, so its numbers are optimistic. Both sets are small: one question moves Hit@5 by 0.07–0.08.
+The customs-copilot and Sift questions were committed before tests were left out, then scored once before and once after. The two layouts cover the usual places tests live: beside the code (customs-copilot) and in a `tests/` directory (Sift). motor-claims-triage was the held-out set for code-first ranking and has now been scored a second time, so it is no longer unseen, but nothing was tuned on it. The dev set was used while building code-first ranking, so its numbers are optimistic. All sets are small: one question moves Hit@5 by 0.07–0.08.
 
 ```bash
 git clone https://github.com/ahmedbasolan/motor-claims-triage ../motor-claims-triage
@@ -113,7 +117,9 @@ git -C ../motor-claims-triage checkout 036d5b5
 python tests/eval_external.py tests/external/motor_claims_triage.json --repo-path ../motor-claims-triage
 ```
 
-**What changed.** Docs used to win questions about code. A README chunk sits mid-table in both the keyword and the semantic ranking, Reciprocal Rank Fusion sums the two, and a file-frequency boost then multiplied every chunk of any file split into many chunks. On the dev set the semantic search alone ranked the answering file 1st or 2nd for 7 of 12 questions, and the merged result put it 4th to 17th. Now:
+**Tests left out.** Before this change a test file ranked above the answer on every one of the four repos, and ranked first on 1 to 4 questions per repo: a test names the same functions as the code it checks. With tests left out, none does. Across the 54 questions, 25 moved up, 28 stayed where they were, and 1 moved down: on the dev set, "How are community market reports generated from DuckDB?" went from 1st to 4th. Removing tests changes word statistics for the whole corpus, and `rag.py` now edges out `build_reports.py` there.
+
+**Code-first ranking.** Docs used to win questions about code. A README chunk sits mid-table in both the keyword and the semantic ranking, Reciprocal Rank Fusion sums the two, and a file-frequency boost then multiplied every chunk of any file split into many chunks. On the dev set the semantic search alone ranked the answering file 1st or 2nd for 7 of 12 questions, and the merged result put it 4th to 17th. Now:
 
 - Markdown counts half as much in the merge, except for "why / decision" questions, where design records are the answer. Taking this out drops dev MRR from 0.52 to 0.32 in the same run; it is the one change with a clear effect.
 - No file takes more than 2 of the leading results; its further chunks follow other files' results instead of being dropped.
@@ -123,17 +129,17 @@ python tests/eval_external.py tests/external/motor_claims_triage.json --repo-pat
 
 The last three have no clear effect on these small sets (removing any one moves dev Hit@5 or MRR by a single question either way); they stay because each fixes a failure that can be shown directly, and each has a test.
 
-**Known limitation.** On the held-out set the answer is usually 3rd to 5th rather than 1st (MRR 0.23): the README and test files still rank above it. The app indexes a user's tests, and a test names the same functions as the code it checks. Leaving tests out of the app's default corpus is the obvious next change, measured on a new held-out set.
+**Known limitation.** Docs are now what outranks the answer. On motor-claims-triage, whose README explains each module in prose, `README.md` ranks first on all 14 questions and the answer is usually 2nd or 3rd (MRR 0.35). Markdown already counts half in the merge; a doc that restates the code in the question's own words still wins.
 
 **On DevRAG's own source** (`tests/eval_rag.py`, 21 questions, test files excluded):
 
-| Metric | Before | After (identical across 3 runs) |
-|--------|--------|------|
-| Hit@5 | 85.7% (18/21) | 95.2% (20/21) |
-| Hit@10 | 90.5% (19/21) | 100% (21/21) |
-| MRR | 0.45–0.67 between runs | 0.85 |
+| Metric | Original | Code-first ranking | Now, with this README |
+|--------|----------|--------------------|-----------------------|
+| Hit@5 | 85.7% (18/21) | 95.2% (20/21) | 95.2% (20/21) |
+| Hit@10 | 90.5% (19/21) | 100% (21/21) | 100% (21/21) |
+| MRR | 0.45–0.67 between runs | 0.85 | **0.49** |
 
-This suite indexes the code it was written alongside, so it is a regression check rather than evidence the retriever works on other code. CI runs it on every push.
+The drop is the limitation above, caused by this file. The suite indexes this README, and its Evaluation section explains how retrieval works, so it ranks first for questions such as "How are code chunks indexed into ChromaDB?". The same retriever scores 0.85 on the commit before the section was first rewritten, 0.54 on that commit, and 0.49 with the further explanation added here. Leaving tests out does not move it (0.537 → 0.540 on the same README), since this suite already excluded test files. Any edit to this README changes the number, and CI runs the suite on every push but does not fail on a drop, which is why the first fall went unnoticed. This suite indexes the code it was written alongside, so it is a regression check rather than evidence the retriever works on other code.
 
 ## Project Structure
 
