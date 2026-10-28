@@ -1,0 +1,64 @@
+{
+  "split": "held-out",
+  "note": "Written before tests were dropped from the default index, scored once before and once after. Do not tune against this set. Test files sit beside the code here (test_*.py at the repo root).",
+  "repo": "https://github.com/ahmedbasolan/customs-copilot",
+  "commit": "719704c",
+  "queries": [
+    {
+      "query": "How does the app decide whether a document is a bill of lading, an invoice or a packing list?",
+      "expected_files": ["detection.py"]
+    },
+    {
+      "query": "What happens when the text of a PDF can't be read for auto-detection?",
+      "expected_files": ["detection.py"]
+    },
+    {
+      "query": "How are PDF pages turned into images for the vision model?",
+      "expected_files": ["extraction.py"]
+    },
+    {
+      "query": "How is an uploaded file's real type identified, regardless of its filename?",
+      "expected_files": ["extraction.py"]
+    },
+    {
+      "query": "Which AI providers and models can be used for extraction?",
+      "expected_files": ["extraction.py"]
+    },
+    {
+      "query": "How is the model's JSON reply turned into declaration fields?",
+      "expected_files": ["extraction.py"]
+    },
+    {
+      "query": "How are the document images sent to Anthropic's API?",
+      "expected_files": ["extraction.py"]
+    },
+    {
+      "query": "What makes an HS code valid?",
+      "expected_files": ["validation.py"]
+    },
+    {
+      "query": "How is the consignee's TRN checked?",
+      "expected_files": ["validation.py"]
+    },
+    {
+      "query": "What format must a container number have?",
+      "expected_files": ["validation.py"]
+    },
+    {
+      "query": "What happens when the gross weight is lower than the net weight?",
+      "expected_files": ["validation.py"]
+    },
+    {
+      "query": "How is a shipment with several containers or HS codes validated?",
+      "expected_files": ["validation.py"]
+    },
+    {
+      "query": "How is the reviewed declaration exported as JSON?",
+      "expected_files": ["app.py"]
+    },
+    {
+      "query": "How are the mock shipping documents for the demo generated?",
+      "expected_files": ["generate_mock_docs.py"]
+    }
+  ]
+}

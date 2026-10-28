@@ -2,10 +2,10 @@
   "split": "held-out",
   "repo": "https://github.com/ahmedbasolan/motor-claims-triage",
   "commit": "036d5b5",
-  "chunks": 310,
-  "hit_rate_at_5": 0.7142857142857143,
-  "hit_rate_at_10": 0.8571428571428571,
-  "mrr": 0.23273809523809524,
+  "chunks": 151,
+  "hit_rate_at_5": 0.7857142857142857,
+  "hit_rate_at_10": 1.0,
+  "mrr": 0.35147392290249435,
   "total_queries": 14,
   "results": [
     {
@@ -13,13 +13,13 @@
       "expected_files": [
         "motor_claims/coverage.py"
       ],
-      "rank": 10,
+      "rank": 3,
       "top_files": [
         "README.md",
         "README.md",
-        "tests/test_core.py",
+        "motor_claims/coverage.py",
         "api.py",
-        "tests/test_core.py"
+        "api.py"
       ]
     },
     {
@@ -27,13 +27,13 @@
       "expected_files": [
         "motor_claims/coverage.py"
       ],
-      "rank": 4,
+      "rank": 3,
       "top_files": [
         "README.md",
-        "tests/test_core.py",
-        "tests/test_core.py",
+        "README.md",
         "motor_claims/coverage.py",
-        "motor_claims/models.py"
+        "motor_claims/models.py",
+        "motor_claims/mock_data.py"
       ]
     },
     {
@@ -41,13 +41,13 @@
       "expected_files": [
         "motor_claims/scoring.py"
       ],
-      "rank": 3,
+      "rank": 2,
       "top_files": [
         "README.md",
-        "tests/test_core.py",
         "motor_claims/scoring.py",
-        "tests/test_core.py",
-        "README.md"
+        "motor_claims/models.py",
+        "eval/harness.py",
+        "motor_claims/scoring.py"
       ]
     },
     {
@@ -55,13 +55,13 @@
       "expected_files": [
         "motor_claims/scoring.py"
       ],
-      "rank": null,
+      "rank": 9,
       "top_files": [
         "README.md",
         "README.md",
         "api.py",
         "api.py",
-        "tests/test_core.py"
+        "motor_claims/triage.py"
       ]
     },
     {
@@ -69,13 +69,13 @@
       "expected_files": [
         "motor_claims/scoring.py"
       ],
-      "rank": 4,
+      "rank": 2,
       "top_files": [
         "README.md",
-        "tests/test_core.py",
-        "tests/test_eval.py",
         "motor_claims/scoring.py",
-        "tests/test_core.py"
+        "README.md",
+        "motor_claims/scoring.py",
+        "motor_claims/triage.py"
       ]
     },
     {
@@ -83,12 +83,12 @@
       "expected_files": [
         "motor_claims/recommendation.py"
       ],
-      "rank": 4,
+      "rank": 3,
       "top_files": [
         "README.md",
         "README.md",
-        "motor_claims/models.py",
         "motor_claims/recommendation.py",
+        "motor_claims/models.py",
         "motor_claims/narrative.py"
       ]
     },
@@ -97,7 +97,7 @@
       "expected_files": [
         "motor_claims/narrative.py"
       ],
-      "rank": 8,
+      "rank": 7,
       "top_files": [
         "README.md",
         "README.md",
@@ -111,13 +111,13 @@
       "expected_files": [
         "motor_claims/mock_data.py"
       ],
-      "rank": null,
+      "rank": 6,
       "top_files": [
         "README.md",
-        "tests/test_eval.py",
-        "tests/test_eval.py",
-        "tests/test_core.py",
-        "README.md"
+        "README.md",
+        "eval/SCHEMA.md",
+        "eval/SCHEMA.md",
+        "eval/outcomes.py"
       ]
     },
     {
@@ -139,13 +139,13 @@
       "expected_files": [
         "api.py"
       ],
-      "rank": 5,
+      "rank": 2,
       "top_files": [
         "README.md",
-        "tests/test_api_integration.py",
-        "tests/test_api_integration.py",
-        "tests/test_core.py",
-        "api.py"
+        "api.py",
+        "api.py",
+        "README.md",
+        "motor_claims/triage.py"
       ]
     },
     {
@@ -160,7 +160,7 @@
         "README.md",
         "api.py",
         "eval/outcomes.py",
-        "tests/test_eval.py"
+        "api.py"
       ]
     },
     {
@@ -173,8 +173,8 @@
         "README.md",
         "eval/harness.py",
         "eval/harness.py",
-        "tests/test_eval.py",
-        "tests/test_eval.py"
+        "motor_claims/scoring.py",
+        "README.md"
       ]
     },
     {
@@ -182,13 +182,13 @@
       "expected_files": [
         "eval/harness.py"
       ],
-      "rank": 4,
+      "rank": 2,
       "top_files": [
-        "tests/test_eval.py",
-        "tests/test_eval.py",
         "README.md",
         "eval/harness.py",
-        "eval/harness.py"
+        "eval/harness.py",
+        "README.md",
+        "eval/SCHEMA.md"
       ]
     },
     {
@@ -201,8 +201,8 @@
         "README.md",
         "README.md",
         "motor_claims/triage.py",
-        "tests/test_api_integration.py",
-        "motor_claims/recommendation.py"
+        "motor_claims/recommendation.py",
+        "motor_claims/narrative.py"
       ]
     }
   ]

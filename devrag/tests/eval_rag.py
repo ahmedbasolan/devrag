@@ -250,7 +250,7 @@ def run_evaluation(repo_path: str = None, include_tests: bool = False) -> dict:
     if not include_tests:
         excluded = tuple(sorted(set(excluded) | set(_test_files_in(repo_path))))
 
-    chunks = ingest_directory(repo_path, exclude_files=excluded)
+    chunks = ingest_directory(repo_path, exclude_files=excluded, include_tests=include_tests)
     print(f"Indexed {len(chunks)} chunks")
     if excluded:
         print(f"Excluded from corpus: {', '.join(excluded)}")

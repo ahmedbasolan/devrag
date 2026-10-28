@@ -2,10 +2,10 @@
   "split": "dev",
   "repo": "https://github.com/ahmedbasolan/dubai-property-bot",
   "commit": "5580c90",
-  "chunks": 781,
-  "hit_rate_at_5": 0.5833333333333334,
-  "hit_rate_at_10": 0.8333333333333334,
-  "mrr": 0.5257936507936508,
+  "chunks": 599,
+  "hit_rate_at_5": 0.75,
+  "hit_rate_at_10": 0.9166666666666666,
+  "mrr": 0.5361111111111111,
   "total_queries": 12,
   "results": [
     {
@@ -31,9 +31,9 @@
       "top_files": [
         "src/dld_loader.py",
         "src/dld_loader.py",
-        "tests/test_dld_loader.py",
         "data/reports/meydan.md",
-        "data/reports/arjan.md"
+        "data/reports/arjan.md",
+        "data/reports/majan.md"
       ]
     },
     {
@@ -45,7 +45,7 @@
       "top_files": [
         "api/main.py",
         "api/main.py",
-        "tests/test_api.py",
+        "README.md",
         "docs/deploy.md",
         "REVIEW.md"
       ]
@@ -56,13 +56,13 @@
         "src/rag.py",
         "src/filters.py"
       ],
-      "rank": 2,
+      "rank": 1,
       "top_files": [
-        "tests/test_filters.py",
         "src/rag.py",
-        "tests/test_filters.py",
         "src/rag.py",
-        "README.md"
+        "CASE_STUDY.md",
+        "README.md",
+        "src/filters.py"
       ]
     },
     {
@@ -70,13 +70,13 @@
       "expected_files": [
         "src/build_reports.py"
       ],
-      "rank": 1,
+      "rank": 4,
       "top_files": [
-        "src/build_reports.py",
         "src/rag.py",
         "REVIEW.md",
         "src/ingest.py",
-        "src/build_reports.py"
+        "src/build_reports.py",
+        "src/rag.py"
       ]
     },
     {
@@ -89,8 +89,8 @@
         "src/calculators.py",
         "api/main.py",
         "src/calculators.py",
-        "eval/test_scoring.py",
-        "REVIEW.md"
+        "REVIEW.md",
+        "README.md"
       ]
     },
     {
@@ -98,13 +98,13 @@
       "expected_files": [
         "src/filters.py"
       ],
-      "rank": 7,
+      "rank": 3,
       "top_files": [
-        "tests/test_data_answer.py",
-        "tests/test_data_answer.py",
-        "tests/test_rag.py",
-        "tests/test_rag.py",
-        "tests/test_filters.py"
+        "README.md",
+        "eval/README.md",
+        "src/filters.py",
+        "eval/build_eval_set.py",
+        "CASE_STUDY.md"
       ]
     },
     {
@@ -112,13 +112,13 @@
       "expected_files": [
         "src/config.py"
       ],
-      "rank": 6,
+      "rank": 4,
       "top_files": [
-        "tests/test_rag.py",
         "src/rag.py",
-        "tests/test_rag.py",
         "src/rag.py",
-        "README.md"
+        "README.md",
+        "src/config.py",
+        "REVIEW.md"
       ]
     },
     {
@@ -160,8 +160,8 @@
         "api/main.py",
         "src/rag.py",
         "src/rag.py",
-        "tests/test_api.py",
-        "src/bayut_provider.py"
+        "src/bayut_provider.py",
+        "api/main.py"
       ]
     },
     {
@@ -169,13 +169,13 @@
       "expected_files": [
         "src/db_setup.py"
       ],
-      "rank": null,
+      "rank": 10,
       "top_files": [
         "api/main.py",
         "api/main.py",
-        "tests/test_rag.py",
         "src/data_answer.py",
-        "tests/test_data_answer.py"
+        "eval/build_eval_set.py",
+        "eval/build_eval_set.py"
       ]
     }
   ]

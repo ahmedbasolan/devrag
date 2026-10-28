@@ -158,12 +158,63 @@ def test_ingest_directory_excludes_test_files():
         (Path(tmpdir) / "retriever.py").write_text("def search_rrf(q): pass\n")
         (Path(tmpdir) / "test_retriever.py").write_text("def test_search_rrf(): pass\n")
 
-        with_tests = ingest_directory(tmpdir)
+        with_tests = ingest_directory(tmpdir, include_tests=True)
         assert any("test_retriever" in c.source_file for c in with_tests)
 
-        without_tests = ingest_directory(tmpdir, exclude_files=("test_retriever.py",))
+        without_tests = ingest_directory(
+            tmpdir, include_tests=True, exclude_files=("test_retriever.py",)
+        )
         assert not any("test_retriever" in c.source_file for c in without_tests)
         assert any("retriever.py" in c.source_file for c in without_tests)
+
+
+def _layout(root: Path, files: list[str]) -> None:
+    for rel in files:
+        path = root / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if rel.endswith(".md"):
+            path.write_text("# Notes\n\nHow the fixtures are built.\n")
+        else:
+            path.write_text(f"def f_{path.stem}(): pass\n")
+
+
+CODE_FILES = ["app.py", "src/latest.py", "src/contest.py", "testing_utils.py", "docs/guide.md"]
+TEST_FILES = [
+    "test_app.py",
+    "app_test.py",
+    "conftest.py",
+    "tests/helpers.py",
+    "tests/README.md",
+    "test/test_cli.py",
+    "backend/tests/test_api.py",
+]
+
+
+def test_tests_are_left_out_by_default():
+    """On three repos DevRAG wasn't built against, test files ranked above the
+    code they test: a test names the same functions, so it matches the same
+    questions. Both layouts are common: test_*.py beside the code, or a tests/
+    directory."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        root = Path(tmpdir)
+        _layout(root, CODE_FILES + TEST_FILES)
+
+        indexed = {
+            Path(c.source_file).relative_to(root).as_posix() for c in ingest_directory(tmpdir)
+        }
+
+        assert indexed == set(CODE_FILES)
+
+
+def test_tests_can_still_be_included():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        root = Path(tmpdir)
+        _layout(root, CODE_FILES + TEST_FILES)
+
+        chunks = ingest_directory(tmpdir, include_tests=True)
+        indexed = {Path(c.source_file).relative_to(root).as_posix() for c in chunks}
+
+        assert indexed == set(CODE_FILES + TEST_FILES)
 
 
 def test_ingest_directory_skips_cache_and_build_dirs():

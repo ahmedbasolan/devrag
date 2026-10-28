@@ -2,12 +2,12 @@
   "metrics": {
     "hit_rate_at_5": 0.9523809523809523,
     "hit_rate_at_10": 1.0,
-    "mrr": 0.8544973544973544,
+    "mrr": 0.4920634920634921,
     "total_queries": 21
   },
   "corpus": {
     "repo_path": "C:\\Users\\ahmed\\Projects\\devrag\\devrag",
-    "chunk_count": 160,
+    "chunk_count": 156,
     "excluded_files": [
       "eval_rag.py",
       "test_generator.py",
@@ -20,10 +20,18 @@
       "query": "How do I parse Python AST and extract functions?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.03332648000493929,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
           "file": "src/parser.py",
           "name": "parse_python_file",
           "type": "function",
@@ -31,27 +39,19 @@
           "source": "rrf"
         },
         {
-          "rank": 2,
+          "rank": 3,
           "file": "src/parser.py",
           "name": "_parse_function",
           "type": "function",
-          "score": 0.03177805800756621,
-          "source": "rrf"
-        },
-        {
-          "rank": 3,
-          "file": "src/generator.py",
-          "name": "_fallback",
-          "type": "function",
-          "score": 0.027346637102734665,
+          "score": 0.031544957774465976,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "tests/eval_external.py",
-          "name": "main",
+          "file": "src/generator.py",
+          "name": "_fallback",
           "type": "function",
-          "score": 0.02684684684684685,
+          "score": 0.02749719416386083,
           "source": "rrf"
         },
         {
@@ -59,7 +59,7 @@
           "file": "src/retriever.py",
           "name": "_is_decision_record",
           "type": "function",
-          "score": 0.02564102564102564,
+          "score": 0.025657894736842105,
           "source": "rrf"
         }
       ]
@@ -68,46 +68,46 @@
       "query": "How does the hybrid retrieval work with BM25 and vector search?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "src/retriever.py",
-          "name": "search_bm25",
-          "type": "method",
-          "score": 0.031746031746031744,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.07451508592465717,
           "source": "rrf"
         },
         {
           "rank": 2,
           "file": "src/retriever.py",
-          "name": "search_rrf",
+          "name": "search_bm25",
           "type": "method",
-          "score": 0.030776515151515152,
+          "score": 0.03149801587301587,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "tests/eval_external.py",
-          "name": "score",
-          "type": "function",
-          "score": 0.027071520029266508,
+          "file": "src/retriever.py",
+          "name": "search_rrf",
+          "type": "method",
+          "score": 0.030117753623188408,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "stress_test.py",
-          "name": "module code (L7)",
-          "type": "module_code",
-          "score": 0.026785714285714288,
+          "file": "mock_data/src/app.py",
+          "name": "search_products",
+          "type": "function",
+          "score": 0.024891774891774892,
           "source": "rrf"
         },
         {
           "rank": 5,
           "file": "README.md",
-          "name": "Evaluation",
+          "name": "How It Works",
           "type": "markdown",
-          "score": 0.025305295479714086,
+          "score": 0.01626123744050767,
           "source": "rrf"
         }
       ]
@@ -116,22 +116,22 @@
       "query": "How to build a Streamlit UI with search and citations?",
       "hit_at_5": false,
       "hit_at_10": true,
-      "mrr": 0.1111111111111111,
+      "mrr": 0.16666666666666666,
       "top_results": [
         {
           "rank": 1,
-          "file": "run.py",
-          "name": "module code (L9)",
-          "type": "module_code",
-          "score": 0.027071520029266508,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.043785381285381286,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "src/retriever.py",
-          "name": "index_chunks",
-          "type": "method",
-          "score": 0.02694394213381555,
+          "file": "run.py",
+          "name": "module code (L9)",
+          "type": "module_code",
+          "score": 0.02658450704225352,
           "source": "rrf"
         },
         {
@@ -139,23 +139,23 @@
           "file": "src/generator.py",
           "name": "_get_provider",
           "type": "function",
-          "score": 0.02649122807017544,
+          "score": 0.026334026334026334,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "src/generator.py",
-          "name": "_get_api_key",
-          "type": "function",
-          "score": 0.025937081659973226,
+          "file": "src/retriever.py",
+          "name": "index_chunks",
+          "type": "method",
+          "score": 0.026333907056798625,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "tests/eval_external.py",
-          "name": "score",
+          "file": "src/generator.py",
+          "name": "_get_api_key",
           "type": "function",
-          "score": 0.023959827833572454,
+          "score": 0.025793650793650792,
           "source": "rrf"
         }
       ]
@@ -164,46 +164,46 @@
       "query": "How are markdown files chunked and parsed?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 0.5,
+      "mrr": 0.3333333333333333,
       "top_results": [
         {
           "rank": 1,
-          "file": "src/retriever.py",
-          "name": "_is_decision_record",
-          "type": "function",
-          "score": 0.03021353930031804,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.07566198542239262,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "src/parser.py",
-          "name": "parse_markdown_file",
+          "file": "src/retriever.py",
+          "name": "_is_decision_record",
           "type": "function",
-          "score": 0.03009207275993712,
+          "score": 0.029827662395050816,
           "source": "rrf"
         },
         {
           "rank": 3,
           "file": "src/parser.py",
-          "name": "ingest_directory",
+          "name": "parse_markdown_file",
           "type": "function",
-          "score": 0.028484848484848488,
+          "score": 0.029726775956284153,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "tests/eval_external.py",
-          "name": "score",
+          "file": "src/parser.py",
+          "name": "ingest_directory",
           "type": "function",
-          "score": 0.026553280111072546,
+          "score": 0.028814262023217248,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "src/app.py",
-          "name": "main",
-          "type": "function",
-          "score": 0.02594183740912095,
+          "file": "src/retriever.py",
+          "name": "search_rrf",
+          "type": "method",
+          "score": 0.014492753623188406,
           "source": "rrf"
         }
       ]
@@ -212,46 +212,46 @@
       "query": "How are code chunks indexed into ChromaDB?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "src/retriever.py",
-          "name": "index_chunks",
-          "type": "method",
-          "score": 0.032266458495966696,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.05953919075785454,
           "source": "rrf"
         },
         {
           "rank": 2,
           "file": "src/retriever.py",
-          "name": "__init__",
+          "name": "index_chunks",
           "type": "method",
-          "score": 0.031754032258064516,
+          "score": 0.032018442622950824,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "src/parser.py",
-          "name": "_module_code_chunks",
-          "type": "function",
-          "score": 0.026875901875901876,
+          "file": "src/retriever.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.0315136476426799,
           "source": "rrf"
         },
         {
           "rank": 4,
           "file": "src/parser.py",
-          "name": "_parse_class",
+          "name": "_module_code_chunks",
           "type": "function",
-          "score": 0.026171741361614778,
+          "score": 0.02649122807017544,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "tests/eval_external.py",
-          "name": "score",
+          "file": "src/parser.py",
+          "name": "parse_python_file",
           "type": "function",
-          "score": 0.026153846153846153,
+          "score": 0.025603392041748205,
           "source": "rrf"
         }
       ]
@@ -267,7 +267,7 @@
           "file": "mock_data/src/app.py",
           "name": "login",
           "type": "function",
-          "score": 0.029910714285714284,
+          "score": 0.029709507042253523,
           "source": "rrf"
         },
         {
@@ -275,7 +275,7 @@
           "file": "mock_data/src/app.py",
           "name": "module code (L15)",
           "type": "module_code",
-          "score": 0.029211087420042643,
+          "score": 0.028991596638655463,
           "source": "rrf"
         },
         {
@@ -283,7 +283,7 @@
           "file": "src/retriever.py",
           "name": "_tokenize",
           "type": "method",
-          "score": 0.028484848484848488,
+          "score": 0.028258706467661692,
           "source": "rrf"
         },
         {
@@ -291,7 +291,7 @@
           "file": "mock_data/src/cache.py",
           "name": "warm_user_sessions",
           "type": "method",
-          "score": 0.02690501986276634,
+          "score": 0.026709401709401708,
           "source": "rrf"
         },
         {
@@ -308,26 +308,34 @@
       "query": "How does the payment processing service handle transactions?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/app.py",
-          "name": "process_payment",
-          "type": "method",
-          "score": 0.03200204813108039,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.053294808702543835,
           "source": "rrf"
         },
         {
           "rank": 2,
           "file": "mock_data/src/app.py",
-          "name": "refund",
+          "name": "process_payment",
           "type": "method",
-          "score": 0.03125763125763126,
+          "score": 0.031754032258064516,
           "source": "rrf"
         },
         {
           "rank": 3,
+          "file": "mock_data/src/app.py",
+          "name": "refund",
+          "type": "method",
+          "score": 0.030798389007344232,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
           "file": "README.md",
           "name": "Example Questions",
           "type": "markdown",
@@ -335,19 +343,11 @@
           "source": "rrf"
         },
         {
-          "rank": 4,
+          "rank": 5,
           "file": "mock_data/docs/api.md",
           "name": "Overview",
           "type": "markdown",
-          "score": 0.015640273704789834,
-          "source": "rrf"
-        },
-        {
-          "rank": 5,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.013273558368495076,
+          "score": 0.015512265512265512,
           "source": "rrf"
         }
       ]
@@ -356,30 +356,30 @@
       "query": "How does the Redis cache manager handle invalidation?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/cache.py",
-          "name": "__init__",
-          "type": "method",
-          "score": 0.032266458495966696,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.057201968087206886,
           "source": "rrf"
         },
         {
           "rank": 2,
           "file": "mock_data/src/cache.py",
-          "name": "delete",
+          "name": "__init__",
           "type": "method",
-          "score": 0.031754032258064516,
+          "score": 0.03252247488101534,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.024814265742535785,
+          "file": "mock_data/src/cache.py",
+          "name": "delete",
+          "type": "method",
+          "score": 0.03149801587301587,
           "source": "rrf"
         },
         {
@@ -387,7 +387,7 @@
           "file": "mock_data/docs/decisions.md",
           "name": "ADR-004: Cache Invalidation Strategy",
           "type": "markdown",
-          "score": 0.015038444142921756,
+          "score": 0.014928698752228164,
           "source": "rrf"
         },
         {
@@ -395,7 +395,7 @@
           "file": "README.md",
           "name": "Example Questions",
           "type": "markdown",
-          "score": 0.014294282287085167,
+          "score": 0.01436956081764825,
           "source": "rrf"
         }
       ]
@@ -404,10 +404,18 @@
       "query": "How are database migrations created and applied?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.0748180347927881,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
           "file": "mock_data/src/db_migration.py",
           "name": "__init__",
           "type": "method",
@@ -415,19 +423,11 @@
           "source": "rrf"
         },
         {
-          "rank": 2,
+          "rank": 3,
           "file": "mock_data/src/db_migration.py",
           "name": "MigrationManager",
           "type": "class",
           "score": 0.031746031746031744,
-          "source": "rrf"
-        },
-        {
-          "rank": 3,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.02616502458077013,
           "source": "rrf"
         },
         {
@@ -452,46 +452,46 @@
       "query": "How does the rate limiting decorator prevent abuse?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/app.py",
-          "name": "rate_limit",
-          "type": "function",
-          "score": 0.032266458495966696,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.0873477877109096,
           "source": "rrf"
         },
         {
           "rank": 2,
-          "file": "src/generator.py",
-          "name": "_check_rate_limit",
+          "file": "mock_data/src/app.py",
+          "name": "rate_limit",
           "type": "function",
-          "score": 0.031024531024531024,
+          "score": 0.032018442622950824,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/cache.py",
-          "name": "cached",
+          "file": "src/generator.py",
+          "name": "_check_rate_limit",
           "type": "function",
-          "score": 0.030536130536130537,
+          "score": 0.030798389007344232,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/app.py",
-          "name": "module code (L324)",
-          "type": "module_code",
-          "score": 0.030117753623188408,
+          "file": "mock_data/src/cache.py",
+          "name": "cached",
+          "type": "function",
+          "score": 0.030303030303030304,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "src/generator.py",
-          "name": "module code (L9)",
+          "file": "mock_data/src/app.py",
+          "name": "module code (L324)",
           "type": "module_code",
-          "score": 0.02946912242686891,
+          "score": 0.029513888888888888,
           "source": "rrf"
         }
       ]
@@ -500,10 +500,18 @@
       "query": "How are customer orders created from cart items?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.038936005311845684,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
           "file": "mock_data/src/app.py",
           "name": "to_dict",
           "type": "method",
@@ -511,7 +519,7 @@
           "source": "rrf"
         },
         {
-          "rank": 2,
+          "rank": 3,
           "file": "mock_data/src/app.py",
           "name": "Order",
           "type": "class",
@@ -519,7 +527,7 @@
           "source": "rrf"
         },
         {
-          "rank": 3,
+          "rank": 4,
           "file": "mock_data/docs/api.md",
           "name": "Orders",
           "type": "markdown",
@@ -527,19 +535,11 @@
           "source": "rrf"
         },
         {
-          "rank": 4,
+          "rank": 5,
           "file": "mock_data/docs/api.md",
           "name": "Create Order",
           "type": "markdown",
-          "score": 0.015141165755919854,
-          "source": "rrf"
-        },
-        {
-          "rank": 5,
-          "file": "README.md",
-          "name": "Example Questions",
-          "type": "markdown",
-          "score": 0.014314516129032258,
+          "score": 0.01523897483260217,
           "source": "rrf"
         }
       ]
@@ -548,10 +548,18 @@
       "query": "How does the product search endpoint filter results?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.060699290373416585,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
           "file": "mock_data/src/app.py",
           "name": "search_products",
           "type": "function",
@@ -559,35 +567,27 @@
           "source": "rrf"
         },
         {
-          "rank": 2,
+          "rank": 3,
           "file": "src/retriever.py",
           "name": "search_chroma",
           "type": "method",
-          "score": 0.030536130536130537,
-          "source": "rrf"
-        },
-        {
-          "rank": 3,
-          "file": "mock_data/src/app.py",
-          "name": "list_products",
-          "type": "function",
-          "score": 0.029877369007803793,
+          "score": 0.030090497737556562,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "src/retriever.py",
-          "name": "search_bm25",
-          "type": "method",
-          "score": 0.029411764705882353,
+          "file": "mock_data/src/app.py",
+          "name": "list_products",
+          "type": "function",
+          "score": 0.029418126757516764,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "tests/eval_external.py",
-          "name": "score",
-          "type": "function",
-          "score": 0.027046783625730993,
+          "file": "src/retriever.py",
+          "name": "search_bm25",
+          "type": "method",
+          "score": 0.02919863597612958,
           "source": "rrf"
         }
       ]
@@ -596,10 +596,18 @@
       "query": "How does the notification service send emails?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.055084166460438275,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
           "file": "mock_data/src/app.py",
           "name": "_send",
           "type": "method",
@@ -607,19 +615,11 @@
           "source": "rrf"
         },
         {
-          "rank": 2,
-          "file": "mock_data/src/app.py",
-          "name": "__init__",
-          "type": "method",
-          "score": 0.03128054740957967,
-          "source": "rrf"
-        },
-        {
           "rank": 3,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.020339954163483574,
+          "file": "mock_data/src/app.py",
+          "name": "send_order_confirmation",
+          "type": "method",
+          "score": 0.03125763125763126,
           "source": "rrf"
         },
         {
@@ -632,10 +632,10 @@
         },
         {
           "rank": 5,
-          "file": "mock_data/docs/api.md",
-          "name": "Authentication",
-          "type": "markdown",
-          "score": 0.013060330299966297,
+          "file": "src/generator.py",
+          "name": "__module_doc__",
+          "type": "module_docstring",
+          "score": 0.0125,
           "source": "rrf"
         }
       ]
@@ -644,30 +644,30 @@
       "query": "How does the admin dashboard aggregate store statistics?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/app.py",
-          "name": "admin_stats",
-          "type": "function",
-          "score": 0.030834914611005692,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.08321628946610024,
           "source": "rrf"
         },
         {
           "rank": 2,
           "file": "mock_data/src/app.py",
-          "name": "module code (L324)",
-          "type": "module_code",
-          "score": 0.027730294396961064,
+          "name": "admin_stats",
+          "type": "function",
+          "score": 0.0304147465437788,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.02697641847436649,
+          "file": "mock_data/src/app.py",
+          "name": "module code (L324)",
+          "type": "module_code",
+          "score": 0.026916221033868093,
           "source": "rrf"
         },
         {
@@ -675,7 +675,7 @@
           "file": "mock_data/docs/api.md",
           "name": "Dashboard Stats",
           "type": "markdown",
-          "score": 0.01626123744050767,
+          "score": 0.016133229247983348,
           "source": "rrf"
         },
         {
@@ -692,46 +692,46 @@
       "query": "How does the cache warming pre-populate frequently accessed data?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/cache.py",
-          "name": "get",
-          "type": "method",
-          "score": 0.030834914611005692,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.0669641956872869,
           "source": "rrf"
         },
         {
           "rank": 2,
           "file": "mock_data/src/cache.py",
-          "name": "CacheManager",
-          "type": "class",
-          "score": 0.029850746268656716,
+          "name": "get",
+          "type": "method",
+          "score": 0.03057889822595705,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.026752514020860946,
+          "file": "mock_data/src/cache.py",
+          "name": "CacheManager",
+          "type": "class",
+          "score": 0.029631255487269532,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/app.py",
-          "name": "create_product",
-          "type": "function",
-          "score": 0.015625,
+          "file": "mock_data/docs/decisions.md",
+          "name": "ADR-004: Cache Invalidation Strategy",
+          "type": "markdown",
+          "score": 0.015268065268065269,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "mock_data/docs/decisions.md",
-          "name": "ADR-004: Cache Invalidation Strategy",
-          "type": "markdown",
-          "score": 0.015512265512265512,
+          "file": "mock_data/src/app.py",
+          "name": "create_product",
+          "type": "function",
+          "score": 0.015151515151515152,
           "source": "rrf"
         }
       ]
@@ -747,7 +747,7 @@
           "file": "README.md",
           "name": "Evaluation",
           "type": "markdown",
-          "score": 0.023452773704789834,
+          "score": 0.05454211967185319,
           "source": "rrf"
         },
         {
@@ -779,7 +779,7 @@
           "file": "mock_data/docs/api.md",
           "name": "Authentication",
           "type": "markdown",
-          "score": 0.01562881562881563,
+          "score": 0.015504807692307693,
           "source": "rrf"
         }
       ]
@@ -788,30 +788,30 @@
       "query": "How does a product go from listing to being delivered to a customer?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/app.py",
-          "name": "to_dict",
-          "type": "method",
-          "score": 0.03131881575727918,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.04361731577944427,
           "source": "rrf"
         },
         {
           "rank": 2,
           "file": "mock_data/src/app.py",
-          "name": "get_product",
-          "type": "function",
-          "score": 0.03125763125763126,
+          "name": "to_dict",
+          "type": "method",
+          "score": 0.030679156908665108,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.015512265512265512,
+          "file": "mock_data/src/app.py",
+          "name": "get_product",
+          "type": "function",
+          "score": 0.03057889822595705,
           "source": "rrf"
         },
         {
@@ -824,10 +824,10 @@
         },
         {
           "rank": 5,
-          "file": "mock_data/docs/api.md",
-          "name": "Overview",
+          "file": "README.md",
+          "name": "Example Questions",
           "type": "markdown",
-          "score": 0.014756944444444444,
+          "score": 0.014690227804981904,
           "source": "rrf"
         }
       ]
@@ -843,7 +843,7 @@
           "file": "README.md",
           "name": "Evaluation",
           "type": "markdown",
-          "score": 0.0213698382578838,
+          "score": 0.057734326219984124,
           "source": "rrf"
         },
         {
@@ -867,7 +867,7 @@
           "file": "mock_data/docs/decisions.md",
           "name": "ADR-004: Cache Invalidation Strategy",
           "type": "markdown",
-          "score": 0.014953478068232167,
+          "score": 0.014525835235526044,
           "source": "rrf"
         },
         {
@@ -884,10 +884,18 @@
       "query": "Why was Flask chosen over Django for this project?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.09971832483172531,
+          "source": "rrf"
+        },
+        {
+          "rank": 2,
           "file": "mock_data/docs/decisions.md",
           "name": "ADR-001: Use Flask over Django",
           "type": "markdown",
@@ -895,7 +903,15 @@
           "source": "rrf"
         },
         {
-          "rank": 2,
+          "rank": 3,
+          "file": "mock_data/docs/decisions.md",
+          "name": "ADR-003: SQLite for Development",
+          "type": "markdown",
+          "score": 0.03194007490636704,
+          "source": "rrf"
+        },
+        {
+          "rank": 4,
           "file": "mock_data/src/app.py",
           "name": "module code (L15)",
           "type": "module_code",
@@ -903,27 +919,11 @@
           "source": "rrf"
         },
         {
-          "rank": 3,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.029437229437229435,
-          "source": "rrf"
-        },
-        {
-          "rank": 4,
+          "rank": 5,
           "file": "README.md",
           "name": "3. Index Your Own Code",
           "type": "markdown",
-          "score": 0.02844551282051282,
-          "source": "rrf"
-        },
-        {
-          "rank": 5,
-          "file": "mock_data/src/app.py",
-          "name": "to_dict",
-          "type": "method",
-          "score": 0.026120660599932594,
+          "score": 0.028612012987012988,
           "source": "rrf"
         }
       ]
@@ -939,7 +939,7 @@
           "file": "README.md",
           "name": "Evaluation",
           "type": "markdown",
-          "score": 0.055549553257532885,
+          "score": 0.15157298008526487,
           "source": "rrf"
         },
         {
@@ -947,7 +947,7 @@
           "file": "mock_data/docs/decisions.md",
           "name": "ADR-004: Cache Invalidation Strategy",
           "type": "markdown",
-          "score": 0.04194639604475671,
+          "score": 0.041311475409836075,
           "source": "rrf"
         },
         {
@@ -955,23 +955,23 @@
           "file": "mock_data/src/cache.py",
           "name": "cached",
           "type": "function",
-          "score": 0.02964426877470356,
+          "score": 0.02904040404040404,
           "source": "rrf"
         },
         {
           "rank": 4,
-          "file": "mock_data/src/cache.py",
-          "name": "get_or_set",
-          "type": "method",
-          "score": 0.029211087420042643,
-          "source": "rrf"
-        },
-        {
-          "rank": 5,
           "file": "README.md",
           "name": "Example Questions",
           "type": "markdown",
           "score": 0.0287391216352965,
+          "source": "rrf"
+        },
+        {
+          "rank": 5,
+          "file": "mock_data/src/cache.py",
+          "name": "__init__",
+          "type": "method",
+          "score": 0.02854251012145749,
           "source": "rrf"
         }
       ]
@@ -980,46 +980,46 @@
       "query": "What happens when a product is out of stock during checkout?",
       "hit_at_5": true,
       "hit_at_10": true,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "top_results": [
         {
           "rank": 1,
-          "file": "mock_data/src/app.py",
-          "name": "to_dict",
-          "type": "method",
-          "score": 0.03200204813108039,
+          "file": "README.md",
+          "name": "Evaluation",
+          "type": "markdown",
+          "score": 0.06506956376014393,
           "source": "rrf"
         },
         {
           "rank": 2,
           "file": "mock_data/src/app.py",
-          "name": "Product",
-          "type": "class",
-          "score": 0.03200204813108039,
+          "name": "create_order",
+          "type": "function",
+          "score": 0.031099324975891997,
           "source": "rrf"
         },
         {
           "rank": 3,
-          "file": "mock_data/src/cache.py",
-          "name": "invalidate_product",
-          "type": "method",
-          "score": 0.027972027972027972,
+          "file": "mock_data/src/app.py",
+          "name": "Product",
+          "type": "class",
+          "score": 0.031054405392392875,
           "source": "rrf"
         },
         {
           "rank": 4,
           "file": "mock_data/src/cache.py",
-          "name": "warm_products",
+          "name": "invalidate_product",
           "type": "method",
-          "score": 0.025708635464733027,
+          "score": 0.02749719416386083,
           "source": "rrf"
         },
         {
           "rank": 5,
-          "file": "README.md",
-          "name": "Evaluation",
-          "type": "markdown",
-          "score": 0.014709063378758382,
+          "file": "mock_data/src/cache.py",
+          "name": "warm_products",
+          "type": "method",
+          "score": 0.02541827541827542,
           "source": "rrf"
         }
       ]

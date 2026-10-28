@@ -1,0 +1,208 @@
+{
+  "split": "held-out",
+  "repo": "https://github.com/ahmedbasolan/customs-copilot",
+  "commit": "719704c",
+  "chunks": 109,
+  "hit_rate_at_5": 0.9285714285714286,
+  "hit_rate_at_10": 0.9285714285714286,
+  "mrr": 0.6130952380952381,
+  "total_queries": 14,
+  "results": [
+    {
+      "query": "How does the app decide whether a document is a bill of lading, an invoice or a packing list?",
+      "expected_files": [
+        "detection.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "CONTEXT.md",
+        "detection.py",
+        "generate_mock_docs.py",
+        "detection.py",
+        "CASE_STUDY.md"
+      ]
+    },
+    {
+      "query": "What happens when the text of a PDF can't be read for auto-detection?",
+      "expected_files": [
+        "detection.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "CONTEXT.md",
+        "detection.py",
+        "detection.py",
+        "CASE_STUDY.md",
+        "CASE_STUDY.md"
+      ]
+    },
+    {
+      "query": "How are PDF pages turned into images for the vision model?",
+      "expected_files": [
+        "extraction.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "extraction.py",
+        "extraction.py",
+        "detection.py",
+        "CONTEXT.md",
+        "CASE_STUDY.md"
+      ]
+    },
+    {
+      "query": "How is an uploaded file's real type identified, regardless of its filename?",
+      "expected_files": [
+        "extraction.py"
+      ],
+      "rank": 3,
+      "top_files": [
+        "CONTEXT.md",
+        "detection.py",
+        "extraction.py",
+        "extraction.py",
+        "detection.py"
+      ]
+    },
+    {
+      "query": "Which AI providers and models can be used for extraction?",
+      "expected_files": [
+        "extraction.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "extraction.py",
+        "extraction.py",
+        "CONTEXT.md",
+        "SPEC.md",
+        ".scratch/customs-copilot/issues/03-extraction-pipeline.md"
+      ]
+    },
+    {
+      "query": "How is the model's JSON reply turned into declaration fields?",
+      "expected_files": [
+        "extraction.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "extraction.py",
+        "extraction.py",
+        "CASE_STUDY.md",
+        "SPEC.md",
+        ".scratch/customs-copilot/issues/03-extraction-pipeline.md"
+      ]
+    },
+    {
+      "query": "How are the document images sent to Anthropic's API?",
+      "expected_files": [
+        "extraction.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "extraction.py",
+        "extraction.py",
+        "CONTEXT.md",
+        "CASE_STUDY.md",
+        "CASE_STUDY.md"
+      ]
+    },
+    {
+      "query": "What makes an HS code valid?",
+      "expected_files": [
+        "validation.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "validation.py",
+        "validation.py",
+        "CONTEXT.md",
+        "SPEC.md",
+        "README.md"
+      ]
+    },
+    {
+      "query": "How is the consignee's TRN checked?",
+      "expected_files": [
+        "validation.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "CONTEXT.md",
+        "validation.py",
+        "CASE_STUDY.md",
+        "SPEC.md",
+        "CASE_STUDY.md"
+      ]
+    },
+    {
+      "query": "What format must a container number have?",
+      "expected_files": [
+        "validation.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "CONTEXT.md",
+        "validation.py",
+        "validation.py",
+        "extraction.py",
+        "README.md"
+      ]
+    },
+    {
+      "query": "What happens when the gross weight is lower than the net weight?",
+      "expected_files": [
+        "validation.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "CONTEXT.md",
+        "validation.py",
+        "extraction.py",
+        "extraction.py",
+        "detection.py"
+      ]
+    },
+    {
+      "query": "How is a shipment with several containers or HS codes validated?",
+      "expected_files": [
+        "validation.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "CONTEXT.md",
+        "validation.py",
+        "app.py",
+        "validation.py",
+        "CASE_STUDY.md"
+      ]
+    },
+    {
+      "query": "How is the reviewed declaration exported as JSON?",
+      "expected_files": [
+        "app.py"
+      ],
+      "rank": null,
+      "top_files": [
+        "extraction.py",
+        "CONTEXT.md",
+        ".scratch/customs-copilot/issues/07-export-features.md",
+        "README.md",
+        "CASE_STUDY.md"
+      ]
+    },
+    {
+      "query": "How are the mock shipping documents for the demo generated?",
+      "expected_files": [
+        "generate_mock_docs.py"
+      ],
+      "rank": 4,
+      "top_files": [
+        "CONTEXT.md",
+        "CASE_STUDY.md",
+        ".scratch/customs-copilot/issues/02-mock-documents.md",
+        "generate_mock_docs.py",
+        "SPEC.md"
+      ]
+    }
+  ]
+}

@@ -358,20 +358,34 @@ DEFAULT_EXCLUDE_DIRS = frozenset(
     }
 )
 
+# The two common pytest layouts: a tests/ (or test/) directory, or test files
+# beside the code they test.
+TEST_DIR_NAMES = frozenset({"tests", "test"})
+
+
+def is_test_path(relative: Path) -> bool:
+    """True for a test file or anything under a test directory, by path alone."""
+    if any(part in TEST_DIR_NAMES for part in relative.parts[:-1]):
+        return True
+    name = relative.name
+    return name == "conftest.py" or (
+        name.endswith(".py") and (name.startswith("test_") or name.endswith("_test.py"))
+    )
+
 
 def ingest_directory(
     dir_path: str,
     extensions: tuple = (".py", ".md"),
     exclude_dirs: frozenset[str] | None = None,
     exclude_files: tuple[str, ...] = (),
+    include_tests: bool = False,
 ) -> list[CodeChunk]:
     """Recursively ingest a directory, returning all parsed chunks.
 
-    `exclude_dirs` skips whole subtrees by name; `exclude_files` skips
-    specific file names. Callers measuring retrieval quality normally want to
-    exclude the test suite: a test file references the same function names as
-    the code it exercises, so it competes for those queries and can displace
-    the real definition from the top-k.
+    Tests are left out unless `include_tests` is set: a test names the same
+    functions as the code it exercises, so it matches the same questions and
+    displaces the real definition from the top results. `exclude_dirs` skips
+    whole subtrees by name; `exclude_files` skips specific file names.
     """
     all_chunks: list[CodeChunk] = []
     root = Path(dir_path).resolve()
@@ -390,6 +404,8 @@ def ingest_directory(
         if any(part in excluded for part in relative.parts[:-1]):
             continue
         if file_path.name in exclude_files:
+            continue
+        if not include_tests and is_test_path(relative):
             continue
 
         ext = file_path.suffix.lower()

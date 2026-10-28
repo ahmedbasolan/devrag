@@ -1,0 +1,209 @@
+{
+  "split": "held-out",
+  "repo": "https://github.com/ahmedbasolan/Sift",
+  "commit": "0fa5bcd",
+  "chunks": 245,
+  "hit_rate_at_5": 0.9285714285714286,
+  "hit_rate_at_10": 1.0,
+  "mrr": 0.6547619047619048,
+  "total_queries": 14,
+  "results": [
+    {
+      "query": "How are uploaded documents split into chunks before indexing?",
+      "expected_files": [
+        "backend/app/ingest.py"
+      ],
+      "rank": 5,
+      "top_files": [
+        "backend/app/embeddings.py",
+        "backend/app/search.py",
+        "backend/app/search.py",
+        "backend/app/api/upload.py",
+        "backend/app/ingest.py"
+      ]
+    },
+    {
+      "query": "How are PowerPoint slides turned into text?",
+      "expected_files": [
+        "backend/app/ingest.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "backend/app/ingest.py",
+        "backend/app/analysis.py",
+        "backend/app/ingest.py",
+        "backend/app/api/report.py",
+        "backend/app/analysis.py"
+      ]
+    },
+    {
+      "query": "What happens when an upload is larger than the size limit?",
+      "expected_files": [
+        "backend/app/api/upload.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "backend/app/api/upload.py",
+        "backend/app/api/upload.py",
+        "backend/app/models.py",
+        "backend/app/models.py",
+        "README.md"
+      ]
+    },
+    {
+      "query": "How are uploaded filenames sanitized?",
+      "expected_files": [
+        "backend/app/api/upload.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "backend/app/models.py",
+        "backend/app/api/upload.py",
+        "backend/app/database.py",
+        "backend/app/api/upload.py",
+        "README.md"
+      ]
+    },
+    {
+      "query": "How does the API key middleware protect the endpoints?",
+      "expected_files": [
+        "backend/app/auth.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "backend/app/auth.py",
+        "backend/app/main.py",
+        "backend/app/auth.py",
+        "backend/app/api/report.py",
+        "backend/app/api/__init__.py"
+      ]
+    },
+    {
+      "query": "How are keyword and vector search results combined?",
+      "expected_files": [
+        "backend/app/search.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "backend/app/search.py",
+        "backend/app/embeddings.py",
+        "backend/app/search.py",
+        "backend/app/api/chat.py",
+        "backend/app/analysis.py"
+      ]
+    },
+    {
+      "query": "What does the app do when Groq rate-limits a request?",
+      "expected_files": [
+        "backend/app/llm.py"
+      ],
+      "rank": 3,
+      "top_files": [
+        "backend/app/api/report.py",
+        "backend/app/config.py",
+        "backend/app/llm.py",
+        "backend/app/llm.py",
+        "README.md"
+      ]
+    },
+    {
+      "query": "How are risk findings parsed out of the model's reply?",
+      "expected_files": [
+        "backend/app/analysis.py"
+      ],
+      "rank": 3,
+      "top_files": [
+        "backend/app/models.py",
+        "backend/app/report.py",
+        "backend/app/analysis.py",
+        "backend/app/models.py",
+        "backend/app/llm.py"
+      ]
+    },
+    {
+      "query": "How is the confidence score read from the executive summary?",
+      "expected_files": [
+        "backend/app/analysis.py"
+      ],
+      "rank": 2,
+      "top_files": [
+        "backend/app/models.py",
+        "backend/app/analysis.py",
+        "backend/app/models.py",
+        "backend/app/api/report.py",
+        "backend/app/analysis.py"
+      ]
+    },
+    {
+      "query": "How is an analysis exported as an HTML report?",
+      "expected_files": [
+        "backend/app/report.py",
+        "backend/app/api/report.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "backend/app/report.py",
+        "backend/app/api/report.py",
+        "backend/app/report.py",
+        "backend/app/api/analyze.py",
+        "backend/app/api/analyze.py"
+      ]
+    },
+    {
+      "query": "What does chat return when no LLM key is configured?",
+      "expected_files": [
+        "backend/app/api/chat.py"
+      ],
+      "rank": 5,
+      "top_files": [
+        "backend/app/llm.py",
+        "backend/app/llm.py",
+        "backend/app/models.py",
+        "backend/app/models.py",
+        "backend/app/api/chat.py"
+      ]
+    },
+    {
+      "query": "How are chunks embedded and stored in the vector database?",
+      "expected_files": [
+        "backend/app/embeddings.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "backend/app/embeddings.py",
+        "backend/app/ingest.py",
+        "backend/app/embeddings.py",
+        "backend/app/search.py",
+        "backend/app/search.py"
+      ]
+    },
+    {
+      "query": "Where are settings like chunk size and the Groq model configured?",
+      "expected_files": [
+        "backend/app/config.py"
+      ],
+      "rank": 1,
+      "top_files": [
+        "backend/app/config.py",
+        "backend/app/models.py",
+        "backend/app/api/report.py",
+        "backend/app/llm.py",
+        "backend/app/search.py"
+      ]
+    },
+    {
+      "query": "How are uploads and analyses stored in the database?",
+      "expected_files": [
+        "backend/app/database.py"
+      ],
+      "rank": 10,
+      "top_files": [
+        "backend/app/api/analyze.py",
+        "README.md",
+        "README.md",
+        "sample_data/acme_robotics_sample.md",
+        "backend/app/api/upload.py"
+      ]
+    }
+  ]
+}
