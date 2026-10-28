@@ -24,6 +24,7 @@ class CodeChunk:
     docstring: str | None = None
     parent_class: str | None = None
     metadata: dict = field(default_factory=dict)
+    relative_path: str = ""  # from the ingest root; set by ingest_directory
 
     @property
     def citation(self) -> str:
@@ -414,10 +415,16 @@ def ingest_directory(
 
         try:
             if ext == ".py":
-                all_chunks.extend(parse_python_file(str(resolved)))
+                parsed = parse_python_file(str(resolved))
             elif ext == ".md":
-                all_chunks.extend(parse_markdown_file(str(resolved)))
+                parsed = parse_markdown_file(str(resolved))
+            else:
+                continue
         except Exception as e:
             print(f"Warning: failed to parse {file_path}: {e}")
+            continue
+        for chunk in parsed:
+            chunk.relative_path = relative.as_posix()
+        all_chunks.extend(parsed)
 
     return all_chunks
