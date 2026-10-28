@@ -44,6 +44,23 @@ jobs:
           pip install streamlit
           python tests/eval_rag.py
 
+      - name: Retrieval on other repos (fails on a drop)
+        run: |
+          cd devrag
+          status=0
+          for set in tests/external/*.json; do
+            case "$set" in *.results.json) continue ;; esac
+            # Clone under the repo's own name: root-level files are indexed with
+            # their folder name, so the baselines assume the usual clone name.
+            repo="$(jq -r .repo "$set")"
+            dir="$RUNNER_TEMP/$(basename "$repo")"
+            git clone --quiet --filter=blob:none "$repo" "$dir"
+            git -C "$dir" checkout --quiet "$(jq -r .commit "$set")"
+            python tests/eval_external.py "$set" --repo-path "$dir" \
+              --baseline "${set%.json}.results.json" || status=1
+          done
+          exit $status
+
   build:
     needs: test
     runs-on: ubuntu-latest

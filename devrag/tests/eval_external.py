@@ -6,7 +6,7 @@ codebase". This scores the same retriever on other repositories, pinned to a
 commit, with each question's answer file chosen from the code by hand.
 
 The corpus is built exactly as the app builds it for a user's folder
-(ingest_directory defaults: Python and Markdown, tests included). A question
+(ingest_directory defaults: Python and Markdown, tests left out). A question
 counts as a hit only when one of its expected *source* files is in the top-k;
 a README or doc ranking first is a miss, because the README promises answers
 about the code.
@@ -18,6 +18,11 @@ otherwise, since a moved file would score as a miss.
 
 Sets carry a "split": "dev" was used while developing retrieval changes, so its
 score is optimistic; "held-out" was written before a change and run once after.
+
+With --baseline (CI passes each set's committed .results.json), the run fails
+when Hit@5 falls below the baseline or MRR falls more than --mrr-tolerance
+below it, and lists the questions that ranked worse. A change that improves
+the scores should commit the new results with --out, so the floor moves up.
 """
 
 import argparse
@@ -77,11 +82,35 @@ def score(eval_set: dict, repo_path: Path, top_k: int = 10) -> dict:
     }
 
 
+def regressions(report: dict, baseline: dict, mrr_tolerance: float) -> list[str]:
+    """What got worse than the baseline run; empty when the scores held."""
+    problems = []
+    if report["hit_rate_at_5"] < baseline["hit_rate_at_5"] - 1e-9:
+        problems.append(
+            f"Hit@5 {report['hit_rate_at_5']:.2f} is below the baseline {baseline['hit_rate_at_5']:.2f}"
+        )
+    if report["mrr"] < baseline["mrr"] - mrr_tolerance:
+        problems.append(
+            f"MRR {report['mrr']:.3f} is more than {mrr_tolerance} below the baseline {baseline['mrr']:.3f}"
+        )
+    if problems:
+        before = {r["query"]: r["rank"] for r in baseline["results"]}
+        for r in report["results"]:
+            old = before.get(r["query"])
+            if old and (r["rank"] is None or r["rank"] > old):
+                problems.append(f"  rank {old} -> {r['rank']}: {r['query']}")
+    return problems
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("eval_set", type=Path)
     parser.add_argument("--repo-path", type=Path, required=True)
     parser.add_argument("--out", type=Path, default=None, help="write results JSON here")
+    parser.add_argument(
+        "--baseline", type=Path, default=None, help="fail if worse than this results JSON"
+    )
+    parser.add_argument("--mrr-tolerance", type=float, default=0.02)
     args = parser.parse_args()
 
     eval_set = json.loads(args.eval_set.read_text(encoding="utf-8"))
@@ -104,6 +133,14 @@ def main() -> int:
     )
     if args.out:
         args.out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    if args.baseline:
+        baseline = json.loads(args.baseline.read_text(encoding="utf-8"))
+        problems = regressions(report, baseline, args.mrr_tolerance)
+        if problems:
+            print("\nRetrieval got worse than " + args.baseline.as_posix() + ":")
+            print("\n".join(problems))
+            return 1
+        print(f"Held against {args.baseline.as_posix()}.")
     return 0
 
 
