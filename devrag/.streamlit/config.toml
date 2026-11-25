@@ -4,6 +4,10 @@ address = "127.0.0.1"
 port = 8501
 enableCORS = false
 enableXsrfProtection = true
+# The default watcher imports every module it scans, and transformers ships
+# optional modules that need torchvision: first launch logged ~2,000 lines of
+# tracebacks. Restart after editing code instead.
+fileWatcherType = "none"
 
 [browser]
 gatherUsageStats = false

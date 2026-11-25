@@ -71,4 +71,3 @@ jobs:
         run: |
           cd devrag
           docker build -t devrag:latest .
-        continue-on-error: true
