@@ -13,6 +13,12 @@ def test_retriever_creation():
     assert retriever is not None
 
 
+def test_tests_never_write_to_the_apps_index():
+    from src.retriever import CHROMA_DIR
+
+    assert HybridRetriever().chroma_dir != CHROMA_DIR
+
+
 def test_tokenize_simple():
     retriever = HybridRetriever()
     tokens = retriever._tokenize("def get_user_by_id()")

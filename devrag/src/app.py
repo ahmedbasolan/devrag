@@ -829,9 +829,11 @@ def main():
         unsafe_allow_html=True,
     )
 
-    # Check if API key is set
+    # Check if API key is set. Fallback mode is an explicit choice: "Continue
+    # without AI" used to clear the key and rerun, which landed straight back on
+    # this screen, so search was unreachable without a key.
     api_key = _get_api_key()
-    if not api_key:
+    if not api_key and not st.session_state.get("fallback_mode"):
         # Show API key setup screen
         st.markdown(
             f"""
@@ -839,7 +841,7 @@ def main():
             <div style="display:flex; justify-content:center; margin-bottom:16px; color:{COLORS["accent"]}; filter:drop-shadow(0 0 14px rgba(245,158,11,0.4));">{icon("key", 44)}</div>
             <h2 style="color:{COLORS["text"]}; margin-bottom:8px; letter-spacing:-0.02em;">Welcome to DevRAG</h2>
             <p style="color:{COLORS["text_dim"]}; font-size:14px; max-width:400px; margin:0 auto;">
-                Choose your AI provider and enter your API key to get started.
+                Search runs entirely on your machine. Add an API key for written answers, or continue without one below.
             </p>
         </div>
         """,
@@ -963,6 +965,7 @@ def main():
 
         if st.button("Continue without AI →", type="secondary", use_container_width=True):
             st.session_state.api_key = ""
+            st.session_state.fallback_mode = True
             st.rerun()
 
         return

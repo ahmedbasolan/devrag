@@ -1,6 +1,7 @@
 """Stress test DevRAG retrieval and generation."""
 
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -49,7 +50,7 @@ def main():
     chunks = ingest_directory(str(Path(__file__).parent))
     print(f"    {len(chunks)} chunks in {time.time() - t0:.2f}s")
 
-    retriever = HybridRetriever()
+    retriever = HybridRetriever(chroma_dir=tempfile.mkdtemp())  # not the app's index
     t0 = time.time()
     count = retriever.index_chunks(chunks)
     print(f"    Indexed {count} in {time.time() - t0:.2f}s")

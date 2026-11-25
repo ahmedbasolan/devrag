@@ -8,6 +8,7 @@ against sample codebase queries.
 import json
 import os
 import sys
+import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -256,7 +257,7 @@ def run_evaluation(repo_path: str = None, include_tests: bool = False) -> dict:
         print(f"Excluded from corpus: {', '.join(excluded)}")
     print()
 
-    retriever = HybridRetriever()
+    retriever = HybridRetriever(chroma_dir=tempfile.mkdtemp())  # not the app's index
     retriever.index_chunks(chunks)
 
     print("Running evaluation queries...\n")

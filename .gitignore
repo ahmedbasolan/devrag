@@ -20,3 +20,9 @@ Thumbs.db
 
 # Local vector index (rebuilt on first run)
 .chroma/
+
+# Local AI-agent setup (kept on each machine, not part of the project)
+.scratch/
+CLAUDE.md
+docs/agents/
+design-system/

@@ -46,8 +46,10 @@ class RankedResult:
 class HybridRetriever:
     """Hybrid retriever combining BM25 sparse and ChromaDB dense search with RRF."""
 
-    def __init__(self, chroma_dir: str = CHROMA_DIR):
-        self.chroma_dir = chroma_dir
+    def __init__(self, chroma_dir: str | None = None):
+        # DEVRAG_CHROMA_DIR lets tests and evals keep their throwaway indexes out
+        # of the app's: the app loads whatever index it finds at CHROMA_DIR.
+        self.chroma_dir = chroma_dir or os.environ.get("DEVRAG_CHROMA_DIR") or CHROMA_DIR
         self._embedder: SentenceTransformer | None = None
         self._chroma_client: chromadb.ClientAPI | None = None
         self._collection: chromadb.Collection | None = None
