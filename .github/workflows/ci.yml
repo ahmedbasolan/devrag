@@ -50,8 +50,6 @@ jobs:
           status=0
           for set in tests/external/*.json; do
             case "$set" in *.results.json) continue ;; esac
-            # Clone under the repo's own name: root-level files are indexed with
-            # their folder name, so the baselines assume the usual clone name.
             repo="$(jq -r .repo "$set")"
             dir="$RUNNER_TEMP/$(basename "$repo")"
             git clone --quiet --filter=blob:none "$repo" "$dir"
